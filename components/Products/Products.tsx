@@ -1,41 +1,56 @@
 import ProductPreview from '../ProductPreview/ProductPreview';
 import product from '../../types/product';
-import { stringify } from 'querystring';
+import styles from './Products.module.css';
 type RequiredProps = {};
 
 const productData: Array<product> = [
   {
     id: 1,
-    name: '14 NewYears kisses',
-    href: '/products/hat',
+    name: 'Ligther',
+    href: '/products/ligther',
     price: '55',
-    imageSrc: '/capo.png',
-    imageAlt: 'hat',
+    imageSrc: '/images/fire.png',
+    imageAlt: 'ligther',
   },
   {
     id: 2,
-    name: 'two face inside/out',
-    href: '/products/knit',
+    name: '14 NewYears kisses',
+    href: '/products/hat',
     price: '55',
-    imageSrc: '/knit-inside-out.png',
-    imageAlt: 'crew neck',
+    imageSrc: '/images/capo.png',
+    imageAlt: 'hat',
   },
   {
     id: 3,
-    name: 'hat',
-    href: '/products/ligther',
+    name: 'two face inside/out',
+    href: '/products/knit',
     price: '55',
-    imageSrc: '/fire.png',
-    imageAlt: 'ligther',
+    imageSrc: '/images/knit-inside-out.png',
+    imageAlt: 'crew neck',
   },
 ];
 
 const Products: React.FC<RequiredProps> = () => {
   return (
     <>
-      {productData.map((p) => {
-        return <>{<ProductPreview name={p.name}></ProductPreview>}</>;
-      })}
+      <div className={styles.productsList}>
+        {productData.map((p) => {
+          return (
+            <>
+              {
+                <ProductPreview
+                  id={p.id}
+                  name={p.name}
+                  href={p.href}
+                  price={p.price}
+                  imageSrc={p.imageSrc}
+                  imageAlt={p.imageAlt}
+                ></ProductPreview>
+              }
+            </>
+          );
+        })}
+      </div>
     </>
   );
 };
