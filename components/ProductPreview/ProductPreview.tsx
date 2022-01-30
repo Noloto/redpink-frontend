@@ -4,7 +4,7 @@ type RequiredProps = {
   name: string;
 };
 
-const ProductPreview: React.FunctionComponent<RequiredProps> = ({ name }) => {
+const ProductPreview: React.FC<RequiredProps> = ({ name }) => {
   return (
     <>
       <p className={styles.color}>{name}</p>
