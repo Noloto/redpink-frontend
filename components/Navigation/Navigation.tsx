@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './Navigation.module.css';
+import cx from 'classnames';
 
 import { NAVIGATION_ITEMS, NAVIGATION_TITLES } from '../../enums/navigation';
 import {
@@ -7,10 +8,14 @@ import {
   SOCIAL_MEDIA_TITLE,
 } from '../../enums/social-media';
 
-const Navigation: React.FC = ({}) => {
+type OptionalProps = {
+  className?: string;
+};
+
+const Navigation: React.FC<OptionalProps> = ({ className }) => {
   return (
     <>
-      <div className={styles.navigationWrapper}>
+      <div className={cx(styles.navigationWrapper, className)}>
         <div className={styles.navigationSection}>
           <Link href={NAVIGATION_ITEMS.HOME} passHref>
             <a>{NAVIGATION_TITLES.HOME}</a>
