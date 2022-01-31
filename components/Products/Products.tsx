@@ -1,7 +1,9 @@
 import ProductPreview from '../ProductPreview/ProductPreview';
 import product from '../../types/product';
 import styles from './Products.module.css';
-type RequiredProps = {};
+type RequiredProps = {
+  products: any;
+};
 
 const productData: Array<product> = [
   {
@@ -30,11 +32,12 @@ const productData: Array<product> = [
   },
 ];
 
-const Products: React.FC<RequiredProps> = () => {
+const Products: React.FC<RequiredProps> = ({ products }) => {
   return (
     <>
+      <p>{products}</p>
       <div className={styles.productsList}>
-        {productData.map((p) => {
+        {productData.map((p: any) => {
           return (
             <>
               {
