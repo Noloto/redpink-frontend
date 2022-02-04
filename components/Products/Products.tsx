@@ -1,57 +1,31 @@
 import ProductPreview from '../ProductPreview/ProductPreview';
-import product from '../../types/product';
 import styles from './Products.module.css';
+import { useEffect, useState } from 'react';
 type RequiredProps = {
   products: any;
 };
 
-const productData: Array<product> = [
-  {
-    id: 1,
-    name: 'Ligther',
-    href: '/products/ligther',
-    price: '55',
-    imageSrc: '/images/fire.png',
-    imageAlt: 'ligther',
-  },
-  {
-    id: 2,
-    name: '14 NewYears kisses',
-    href: '/products/hat',
-    price: '55',
-    imageSrc: '/images/capo.png',
-    imageAlt: 'hat',
-  },
-  {
-    id: 3,
-    name: 'two face inside/out',
-    href: '/products/knit',
-    price: '55',
-    imageSrc: '/images/knit-inside-out.png',
-    imageAlt: 'crew neck',
-  },
-];
-
 const Products: React.FC<RequiredProps> = ({ products }) => {
+  const [productData, setProducts] = useState([]);
+  useEffect(() => {
+    products = Object.values(products);
+    setProducts(products);
+  }, []);
   return (
     <>
-      <p>{products}</p>
       <div className={styles.productsList}>
-        {productData.map((p: any) => {
-          return (
-            <>
-              {
-                <ProductPreview
-                  id={p.id}
-                  name={p.name}
-                  href={p.href}
-                  price={p.price}
-                  imageSrc={p.imageSrc}
-                  imageAlt={p.imageAlt}
-                ></ProductPreview>
-              }
-            </>
-          );
+        {productData.map((product: any) => {
+          return product.map((p: any, idx: number) => {
+            console.log(p);
+            return (
+              <ProductPreview
+                imageSrc={p.node.images.edges[0].node.url}
+                price={p.node.priceRange.minVariantPrice.amount}
+                name={p.node.title}
+                key={idx}
+              ></ProductPreview>
+            );
+          });
         })}
       </div>
     </>

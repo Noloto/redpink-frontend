@@ -1,11 +1,10 @@
 import styles from '../styles/Home.module.css';
-
-import type { NextPage } from 'next';
-import { NAVIGATION_ITEMS } from '../enums/navigation';
-
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import type { NextPage } from 'next';
+import { NAVIGATION_ITEMS } from '../enums/navigation';
 
 const Home: NextPage = () => {
   return (
@@ -16,14 +15,16 @@ const Home: NextPage = () => {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
 
-      <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-        <Image
-          src="/images/mawsoni-hero-animation.gif"
-          className={styles.background}
-          layout="fill"
-          alt=""
-        ></Image>
-      </Link>
+      <a href={NAVIGATION_ITEMS.SHOP} className={styles.heroWrapper}>
+        <div className={styles.imageContainer}>
+          <Image
+            src="/images/mawsoni-hero-animation.gif"
+            className={styles.image}
+            layout="fill"
+            alt=""
+          />
+        </div>
+      </a>
     </>
   );
 };

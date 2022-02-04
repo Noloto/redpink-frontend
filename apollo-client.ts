@@ -1,30 +1,22 @@
-import {
-  ApolloClient,
-  HttpLink,
-  ApolloLink,
-  InMemoryCache,
-  concat,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 
-const httpLink = new HttpLink({
-  uri: 'https://red-p-nk.myshopify.com/admin/api/2022-1/graphql.json',
+const httpLink = createHttpLink({
+  uri: 'https://red-p-nk.myshopify.com/api/2022-01/graphql.json',
 });
 
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  operation.setContext(({ headers = {} }) => ({
+const authLink = setContext((_, { headers }) => {
+  return {
     headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': 'c1a3dd0ecfcd5281ded53c915ee881e9',
       ...headers,
+      'X-Shopify-Storefront-Access-Token': 'e23dd9ff1a35281881b81718ec10d51c',
     },
-  }));
-
-  return forward(operation);
+  };
 });
 
-const client = new ApolloClient({
+const ShopifyClient = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
-  link: concat(authMiddleware, httpLink),
 });
-export default client;
+
+export default ShopifyClient;

@@ -1,16 +1,16 @@
 import type { NextPage } from 'next';
+import ShopifyClient from '../../apollo-client';
 import { productsQuery } from '../../common/queries/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
 import Products from '../../components/Products/Products';
 import styles from '../../styles/Shop.module.css';
-import client from '../../apollo-client';
 
 type RequiredProps = {
   products: any;
 };
 
-const Shop: NextPage<RequiredProps> = ({ products }) => {
+const Shop: NextPage<RequiredProps> = ({ ...products }) => {
   return (
     <>
       <div className={styles.background}>
@@ -22,13 +22,11 @@ const Shop: NextPage<RequiredProps> = ({ products }) => {
 };
 
 export async function getStaticProps() {
-  const { data } = await client.query({
+  const { data } = await ShopifyClient.query({
     query: productsQuery,
   });
   return {
-    props: {
-      products: data.products,
-    },
+    props: JSON.parse(JSON.stringify({ products: data.products.edges })),
   };
 }
 

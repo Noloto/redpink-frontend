@@ -2,15 +2,16 @@ import styles from './ProductPreview.module.css';
 import Image from 'next/image';
 
 type RequiredProps = {
-  name: string;
   price: string;
   imageSrc: string;
 };
 
 type OptionalProps = {
+  name?: string;
   id?: number;
   href?: string;
   imageAlt?: string;
+  className?: string;
 };
 
 const ProductPreview: React.FC<RequiredProps & OptionalProps> = ({
