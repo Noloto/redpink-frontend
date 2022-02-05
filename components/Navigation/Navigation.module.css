@@ -1,0 +1,25 @@
+.navigationWrapper {
+  display: flex;
+  align-items: center;
+  height: 10vh;
+  color: #ed7878;
+  justify-content: space-around;
+}
+
+.navigationSection {
+  display: inline-block;
+  justify-content: center;
+}
+
+.navigationSection > a {
+  margin: 20px;
+}
+
+.cartSection {
+  display: inline-block;
+  justify-content: center;
+}
+
+.cartSection > a {
+  margin: 20px;
+}

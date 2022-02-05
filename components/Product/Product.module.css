@@ -1,0 +1,7 @@
+.productWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #ed7878;
+  cursor: pointer;
+}

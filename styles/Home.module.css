@@ -1,11 +1,15 @@
-.main {
-  min-height: 100vh;
-  min-width: 100vw;
-  padding: 4rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.imageContainer {
+  width: 100%;
+}
+
+.imageContainer > div {
+  position: unset !important;
+}
+
+.image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
   background-color: black;
 }

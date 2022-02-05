@@ -1,20 +1,42 @@
 import type { NextPage } from 'next';
-import Image from 'next/image';
-import Products from '../../components/Products/Products';
-import styles from './shop.module.css';
+import ShopifyClient from '../../shopify-client';
+import { productsQuery } from '../../common/queries/products.query';
 
-const Shop: NextPage = () => {
+import Navigation from '../../components/Navigation/Navigation';
+import ProductList from '../../components/ProductList/ProductList';
+import styles from '../../styles/Shop.module.css';
+import { useEffect, useState } from 'react';
+
+type RequiredProps = {
+  productData: Array<Object>;
+};
+const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
+  const [products, setProducts] = useState<Array<Object>>([]);
+
+  useEffect(() => {
+    const productsArray: Array<Object> = Object.values(productData);
+    setProducts(productsArray[0] as Array<Object>);
+  }, []);
+
   return (
     <>
-      <Products></Products>
-      <Image
-        src="/howlround.gif"
-        layout="fill"
-        alt="howl round"
-        className={styles.background}
-      ></Image>
+      <div className={styles.background}>
+        <Navigation></Navigation>
+        <ProductList products={products}></ProductList>
+      </div>
     </>
   );
 };
+
+export async function getStaticProps() {
+  const { data } = await ShopifyClient.query({
+    query: productsQuery,
+  });
+  return {
+    props: {
+      productData: data.products.edges,
+    },
+  };
+}
 
 export default Shop;

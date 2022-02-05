@@ -1,6 +1,8 @@
 {
   "name": "red-pink",
   "private": true,
+  "version": "0.1.1",
+  "Author": "Noël Willener",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -8,6 +10,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.5.8",
+    "@shopify/shopify-api": "^2.0.0",
+    "classnames": "^2.3.1",
+    "graphql": "^16.3.0",
     "next": "12.0.9",
     "react": "17.0.2",
     "react-dom": "17.0.2"
