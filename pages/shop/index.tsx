@@ -1,21 +1,28 @@
 import type { NextPage } from 'next';
-import ShopifyClient from '../../apollo-client';
+import ShopifyClient from '../../shopify-client';
 import { productsQuery } from '../../common/queries/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
-import Products from '../../components/Products/Products';
+import ProductList from '../../components/ProductList/ProductList';
 import styles from '../../styles/Shop.module.css';
+import { useEffect, useState } from 'react';
 
 type RequiredProps = {
-  products: any;
+  productData: Array<Object>;
 };
+const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
+  const [products, setProducts] = useState<Array<Object>>([]);
 
-const Shop: NextPage<RequiredProps> = ({ ...products }) => {
+  useEffect(() => {
+    const productsArray: Array<Object> = Object.values(productData);
+    setProducts(productsArray[0] as Array<Object>);
+  }, []);
+
   return (
     <>
       <div className={styles.background}>
         <Navigation></Navigation>
-        <Products products={products}></Products>
+        <ProductList products={products}></ProductList>
       </div>
     </>
   );
@@ -26,7 +33,9 @@ export async function getStaticProps() {
     query: productsQuery,
   });
   return {
-    props: JSON.parse(JSON.stringify({ products: data.products.edges })),
+    props: {
+      productData: data.products.edges,
+    },
   };
 }
 

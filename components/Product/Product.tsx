@@ -1,4 +1,4 @@
-import styles from './ProductPreview.module.css';
+import styles from './Product.module.css';
 import Image from 'next/image';
 
 type RequiredProps = {
@@ -14,7 +14,7 @@ type OptionalProps = {
   className?: string;
 };
 
-const ProductPreview: React.FC<RequiredProps & OptionalProps> = ({
+const Product: React.FC<RequiredProps & OptionalProps> = ({
   id,
   name,
   href,
@@ -33,4 +33,4 @@ const ProductPreview: React.FC<RequiredProps & OptionalProps> = ({
     </>
   );
 };
-export default ProductPreview;
+export default Product;
