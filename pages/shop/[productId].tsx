@@ -3,7 +3,7 @@ import { productsQuery } from '../../common/queries/products.query';
 import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
-import styles from '../../styles/Product.module.css';
+import styles from '../../styles/product.module.css';
 import Image from 'next/image';
 
 type RequiredProps = {
