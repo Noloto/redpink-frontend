@@ -19,7 +19,7 @@
 .productDetails {
   display: flex;
   flex-direction: column;
-  margin-left: 5vw;
+  margin-left: 6vw;
 }
 
 .nameWarpper {
