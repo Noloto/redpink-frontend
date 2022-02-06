@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import styles from './Navigation.module.css';
 import cx from 'classnames';
+import Image from 'next/image';
 
 import { NAVIGATION_ITEMS, NAVIGATION_TITLES } from '../../enums/navigation';
 import {
@@ -34,7 +35,12 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
         </div>
         <div className={styles.cartSection}>
           <Link href={SOCIAL_MEDIA_LINK.INSTAGRAM} passHref>
-            <a>{SOCIAL_MEDIA_TITLE.INSTAGRAM}</a>
+            <Image
+              src="/images/instagram.svg"
+              alt="instagram"
+              width={30}
+              height={30}
+            />
           </Link>
           <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
             <a>{NAVIGATION_TITLES.CART}</a>

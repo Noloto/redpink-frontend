@@ -35,7 +35,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className={styles.productDetails}>
             <p className={styles.nameWarpper}>{name}</p>
             <p>{price}</p>
-            <button>Add To Cart</button>
+            <button className={styles.button}>Add To Cart</button>
           </div>
         </div>
       </div>
