@@ -4,6 +4,7 @@ import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 type RequiredProps = {
   productData: any;
@@ -14,6 +15,10 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [imageSrc, setImageSrc] = useState('/');
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
+  const [pathName, setPathName] = useState('');
+
+  const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
+
   useEffect(() => {
     productData.map((p: any) => {
       if (p != null) {
@@ -25,6 +30,28 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     });
   }, [product, imageSrc, price, name, productData]);
 
+  useEffect(() => {
+    setPathName(window.location.pathname);
+  }, []);
+  if (pathName === '/shop/two%20face%20reversible') {
+    return (
+      <>
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen flex justify-center items-center flex-col">
+          <p>CHOOSE YOUR SIZE</p>
+          {hoodieSizes.map((size) => {
+            return (
+              <Link
+                key={size}
+                href={`/shop/two-face-inside-out-variants/${size}`}
+              >
+                <a>{size}</a>
+              </Link>
+            );
+          })}
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
