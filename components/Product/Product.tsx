@@ -1,4 +1,3 @@
-import styles from './Product.module.css';
 import Image from 'next/image';
 
 type RequiredProps = {
@@ -24,11 +23,9 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({
 }) => {
   return (
     <>
-      <div className={styles.productWrapper}>
-        <div className={styles.imageWrapper}>
-          <Image src={imageSrc} alt={imageAlt} width={450} height={375} />
-        </div>
-        <p className={styles.productName}>{name}</p>
+      <div className="flex place-items-center flex-col">
+        <Image src={imageSrc} alt={imageAlt} width={450} height={375} />
+        <p>{name}</p>
       </div>
     </>
   );

@@ -4,7 +4,6 @@ import { productsQuery } from '../../common/queries/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
 import ProductList from '../../components/ProductList/ProductList';
-import styles from '../../styles/Shop.module.css';
 import { useEffect, useState } from 'react';
 
 type RequiredProps = {
@@ -20,7 +19,7 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
 
   return (
     <>
-      <div className={styles.background}>
+      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation></Navigation>
         <ProductList products={products}></ProductList>
       </div>

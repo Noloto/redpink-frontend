@@ -1,9 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'SyneMono';
-  background: url('/images/howlround.gif') no-repeat center fixed;
+  background: black no-repeat center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -11,8 +15,12 @@ body {
 }
 
 a {
-  color: inherit;
+  color: #ed7878;
   text-decoration: none;
+}
+
+p {
+  color: #ed7878;
 }
 
 @font-face {

@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 export const productsQuery = gql`
   {
-    products(first: 3) {
+    products(first: 10) {
       edges {
         node {
           title

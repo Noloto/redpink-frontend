@@ -3,7 +3,6 @@ import { productsQuery } from '../../common/queries/products.query';
 import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
-import styles from '../../styles/productId.module.css';
 import Image from 'next/image';
 
 type RequiredProps = {
@@ -28,14 +27,18 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
 
   return (
     <>
-      <Navigation></Navigation>
-      <div className={styles.orderContainer}>
-        <div className={styles.productWrapper}>
-          <Image src={imageSrc} alt="product" width={450} height={375} />
-          <div className={styles.productDetails}>
-            <p className={styles.nameWarpper}>{name}</p>
+      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+        <Navigation></Navigation>
+        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
+          <div className="flex items-center justify-center">
+            <Image src={imageSrc} alt="product" width={450} height={375} />
+          </div>
+          <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
+            <p>{name}</p>
             <p>{price}</p>
-            <button className={styles.button}>Add To Cart</button>
+            <button className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink">
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>

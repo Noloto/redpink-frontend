@@ -1,7 +1,5 @@
-import styles from '../styles/Home.module.css';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import type { NextPage } from 'next';
 import { NAVIGATION_ITEMS } from '../enums/navigation';
@@ -15,13 +13,13 @@ const Home: NextPage = () => {
         <link rel="icon" href="/images/favicon.ico" />
       </Head>
 
-      <a href={NAVIGATION_ITEMS.SHOP} className={styles.heroWrapper}>
-        <div className={styles.imageContainer}>
+      <a href={NAVIGATION_ITEMS.SHOP}>
+        <div className="w-screen h-screen">
           <Image
             src="/images/mawsoni-hero-animation.gif"
-            className={styles.image}
+            className="relative object-contain w-full h-full"
             layout="fill"
-            alt=""
+            alt="Click to get to the shop"
           />
         </div>
       </a>

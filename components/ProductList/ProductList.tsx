@@ -1,5 +1,4 @@
 import Product from '../Product/Product';
-import styles from './ProductList.module.css';
 import Link from 'next/link';
 type RequiredProps = {
   products: Array<Object>;
@@ -8,7 +7,7 @@ type RequiredProps = {
 const Products: React.FC<RequiredProps> = ({ products }) => {
   return (
     <>
-      <div className={styles.productsList}>
+      <div className="grid md:grid-cols-3 sm:grid-cols-1 w-full h-full p-10 place-content-center">
         {products.map((p: any, idx: number) => {
           return (
             <Link href={`/shop/${p.node.title}`} key={p.node.title} passHref>
