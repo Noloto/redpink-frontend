@@ -30,20 +30,27 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
 
   return (
     <>
-      <Navigation></Navigation>
-      {productSizeVariants.map((productVariant: any) => {
-        return (
-          <>
-            <Image
-              key={productVariant}
-              src={productVariant.node.image.url}
-              alt={productVariant.node.image.altText ?? 'alt'}
-              width={100}
-              height={100}
-            ></Image>
-          </>
-        );
-      })}
+      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+        <Navigation></Navigation>
+        <div className="grid sm:grid-cols-1 md:grid-cols-5">
+          {productSizeVariants.map((productVariant: any) => {
+            return (
+              <>
+                <div className="w-full h-full m-5">
+                  <Image
+                    key={productVariant}
+                    src={productVariant.node.image.url}
+                    alt={productVariant.node.image.altText ?? 'alt'}
+                    className="cursor-pointer bg-[#330b0b] bg-opacity-50 rounded-xl"
+                    width={300}
+                    height={350}
+                  ></Image>
+                </div>
+              </>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 };
