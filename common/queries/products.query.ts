@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 export const productsQuery = gql`
   {
-    products(first: 10) {
+    products(first: 100) {
       edges {
         node {
           title
@@ -11,7 +11,7 @@ export const productsQuery = gql`
               currencyCode
             }
           }
-          images(first: 3) {
+          images(first: 5) {
             edges {
               node {
                 url
