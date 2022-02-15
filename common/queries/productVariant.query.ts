@@ -8,6 +8,7 @@ export const productVariantsQuery = gql`
           variants(first: 100) {
             edges {
               node {
+                id
                 title
                 image {
                   url
