@@ -30,9 +30,9 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
         <Navigation></Navigation>
-        <div className="grid sm:grid-cols-1 md:grid-cols-5">
+        <div className="grid w-full justify-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {productSizeVariants.map((productVariant: any) => {
             return (
               <>
@@ -41,7 +41,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
                     key={productVariant}
                     src={productVariant.node.image.url}
                     alt={productVariant.node.image.altText ?? 'alt'}
-                    className="cursor-pointer bg-[#330b0b] bg-opacity-50 rounded-xl"
+                    className="cursor-pointer"
                     width={300}
                     height={350}
                   ></Image>
