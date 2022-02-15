@@ -1,9 +1,10 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     assignees:
-      - "noloto"
+      - 'noloto'
     open-pull-requests-limit: 10
+    target-branch: 'development'
