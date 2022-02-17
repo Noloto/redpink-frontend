@@ -19,14 +19,34 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
   return (
     <>
       {showMe ? (
-        <p
-          className="absolute bg-redpink text-[black] cursor-pointer p-5 text-5xl"
+        <>
+          <p
+            className="absolute bg-redpink text-[black] cursor-pointer p-5 text-5xl "
+            onClick={toggle}
+          >
+            x
+          </p>
+          <div
+            className={`w-screen h-screen bg-redpink ${
+              showMe ? 'flex' : 'hidden'
+            } flex justify-center items-center flex-col gap-10 text-5xl`}
+          >
+            <Link href={NAVIGATION_ITEMS.HOME} passHref>
+              <a className="text-[black]">{NAVIGATION_TITLES.HOME}</a>
+            </Link>
+            <Link href={NAVIGATION_ITEMS.SHOP} passHref>
+              <a className="text-[black]">{NAVIGATION_TITLES.SHOP}</a>
+            </Link>
+            <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
+              <a className="text-[black]">{NAVIGATION_TITLES.CONTACT}</a>
+            </Link>
+          </div>
+        </>
+      ) : (
+        <div
+          className="flex visible lg:hidden cursor-pointer p-5"
           onClick={toggle}
         >
-          x
-        </p>
-      ) : (
-        <div className="visible lg:hidden cursor-pointer p-5" onClick={toggle}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-10 h-10 stroke-redpink"
@@ -40,24 +60,15 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
               d="M4 6h16M4 12h16M4 18h16"
             />
           </svg>
+          <div className="flex justify-self-center w-3/6 self-center m-[0_auto]">
+            <Link href={NAVIGATION_ITEMS.HOME}>
+              <a className="flex text-2xl">
+                ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+              </a>
+            </Link>
+          </div>
         </div>
       )}
-
-      <div
-        className={`w-screen h-screen bg-redpink ${
-          showMe ? 'flex' : 'hidden'
-        } flex justify-center items-center flex-col gap-10 text-5xl`}
-      >
-        <Link href={NAVIGATION_ITEMS.HOME} passHref>
-          <a className="text-[black]">{NAVIGATION_TITLES.HOME}</a>
-        </Link>
-        <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-          <a className="text-[black]">{NAVIGATION_TITLES.SHOP}</a>
-        </Link>
-        <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
-          <a className="text-[black]">{NAVIGATION_TITLES.CONTACT}</a>
-        </Link>
-      </div>
 
       <div
         className={cx(
@@ -67,18 +78,18 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
       >
         <div className="flex w-2/6 justify-evenly">
           <Link href={NAVIGATION_ITEMS.HOME} passHref>
-            <a className="mx-10">{NAVIGATION_TITLES.HOME}</a>
+            <a>{NAVIGATION_TITLES.HOME}</a>
           </Link>
           <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-            <a className="mx-10">{NAVIGATION_TITLES.SHOP}</a>
+            <a>{NAVIGATION_TITLES.SHOP}</a>
           </Link>
           <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
-            <a className="mx-10">{NAVIGATION_TITLES.CONTACT}</a>
+            <a>{NAVIGATION_TITLES.CONTACT}</a>
           </Link>
         </div>
         <div className="flex w-2/6 justify-center items-center">
           <Link href={NAVIGATION_ITEMS.HOME}>
-            <a className=" text-3xl">
+            <a className=" text-2xl">
               ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
             </a>
           </Link>
