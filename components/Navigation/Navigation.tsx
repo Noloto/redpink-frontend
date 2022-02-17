@@ -78,7 +78,9 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
         </div>
         <div className="flex w-2/6 justify-center items-center">
           <Link href={NAVIGATION_ITEMS.HOME}>
-            <a>･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°</a>
+            <a className=" text-3xl">
+              ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+            </a>
           </Link>
         </div>
         <div className="flex w-2/6 justify-evenly">

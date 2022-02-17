@@ -7,7 +7,7 @@ type RequiredProps = {
 const Products: React.FC<RequiredProps> = ({ products }) => {
   return (
     <>
-      <div className="grid md:grid-cols-3 sm:grid-cols-1 w-full h-[calc(100vh-10vh)] p-10 justify-center items-center">
+      <div className="grid md:grid-cols-3 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] p-10 justify-center items-center">
         {products.map((p: any, idx: number) => {
           return (
             <Link href={`/shop/${p.node.title}`} key={p.node.title} passHref>
