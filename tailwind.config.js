@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     colors: {
       redpink: '#ed7878',
+      slate: '#f8fafc',
     },
     extend: {},
   },

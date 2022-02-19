@@ -32,16 +32,16 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
         <Navigation></Navigation>
-        <div className="grid w-full justify-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
             return (
               <>
-                <div className="w-full h-full m-5">
+                <div className="flex w-full h-full justify-center">
                   <Image
-                    key={productVariant}
+                    key={productVariant.title}
                     src={productVariant.node.image.url}
                     alt={productVariant.node.image.altText ?? 'alt'}
-                    className="cursor-pointer"
+                    className="cursor-pointer object-cover"
                     width={300}
                     height={350}
                   ></Image>

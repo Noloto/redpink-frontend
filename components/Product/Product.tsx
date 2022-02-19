@@ -23,8 +23,14 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({
 }) => {
   return (
     <>
-      <div className="flex place-items-center flex-col">
-        <Image src={imageSrc} alt={imageAlt} width={450} height={375} />
+      <div className="flex place-items-center flex-col text-xl">
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
+          width={500}
+          height={450}
+          className="object-cover"
+        />
         <p>{name}</p>
       </div>
     </>

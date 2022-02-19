@@ -76,7 +76,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
           className
         )}
       >
-        <div className="flex w-2/6 justify-evenly">
+        <div className="flex w-2/6 justify-evenly text-xl">
           <Link href={NAVIGATION_ITEMS.HOME} passHref>
             <a>{NAVIGATION_TITLES.HOME}</a>
           </Link>
@@ -87,11 +87,9 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
             <a>{NAVIGATION_TITLES.CONTACT}</a>
           </Link>
         </div>
-        <div className="flex w-2/6 justify-center items-center">
+        <div className="flex w-2/6 justify-center items-center m-[0_auto]">
           <Link href={NAVIGATION_ITEMS.HOME}>
-            <a className=" text-2xl">
-              ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
-            </a>
+            <a className=" text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
           </Link>
         </div>
         <div className="flex w-2/6 justify-evenly">
@@ -100,17 +98,17 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
               src="/images/instagram.svg"
               alt="instagram"
               className="cursor-pointer"
-              width={30}
-              height={30}
+              width={35}
+              height={35}
             />
           </Link>
-          <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
+          <Link href={NAVIGATION_ITEMS.CART} passHref>
             <Image
               src="/images/redpink-shopping-cart.png"
               alt="instagram"
               className="cursor-pointer"
-              width={30}
-              height={30}
+              width={35}
+              height={35}
             />
           </Link>
         </div>
