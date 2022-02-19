@@ -33,7 +33,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   useEffect(() => {
     setPathName(window.location.pathname);
   }, []);
-  if (pathName === '/shop/two%20face%20reversible') {
+  if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen flex justify-center items-center flex-col">
@@ -58,11 +58,17 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
         <Navigation></Navigation>
         <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex items-center justify-center">
-            <Image src={imageSrc} alt="product" width={450} height={375} />
+            <Image
+              src={imageSrc}
+              alt="product"
+              width={500}
+              height={450}
+              className="object-cover"
+            />
           </div>
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
-            <p>{name}</p>
-            <p>{price}</p>
+            <p className="text-xl">{name}</p>
+            <p className=" text-lg">{price}</p>
             <button className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink">
               Add To Cart
             </button>
