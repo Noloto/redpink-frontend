@@ -1,4 +1,4 @@
-![alt text](https://github.com/Noloto/redpink-frontend/blob/main/public/redpink-github.png?raw=true)
+![alt text](/public/images/redpink-github.png)
 
 ## Getting Started
 
