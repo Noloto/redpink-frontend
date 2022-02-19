@@ -36,18 +36,23 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen flex justify-center items-center flex-col">
-          <p>CHOOSE YOUR SIZE</p>
-          {hoodieSizes.map((size) => {
-            return (
-              <Link
-                key={size}
-                href={`/shop/two-face-inside-out-variants/${size}`}
-              >
-                <a>{size}</a>
-              </Link>
-            );
-          })}
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+          <Navigation></Navigation>
+          <div className="flex justify-center items-center flex-col min-h-[calc(100vh-30vh)] gap-36">
+            <p className="text-3xl">CHOOSE YOUR SIZE</p>
+            <div className="grid gap-20 grid-flow-col ">
+              {hoodieSizes.map((size) => {
+                return (
+                  <Link
+                    key={size}
+                    href={`/shop/two-face-inside-out-variants/${size}`}
+                  >
+                    <a className="border-2 px-16 py-4 text-xl">{size}</a>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </>
     );

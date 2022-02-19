@@ -102,7 +102,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
               height={35}
             />
           </Link>
-          <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
+          <Link href={NAVIGATION_ITEMS.CART} passHref>
             <Image
               src="/images/redpink-shopping-cart.png"
               alt="instagram"
