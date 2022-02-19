@@ -1,3 +1,5 @@
+![alt text](https://github.com/Noloto/redpink-frontend/blob/main/public/redpink-github.png?raw=true)
+
 ## Getting Started
 
 Install all the dependencies needed with `yarn` or `npm`
@@ -25,5 +27,5 @@ Follow the follwing steps to display the data given by the Storefront API in the
 First create the file `.env.local` in the root folder
 Create following environment variables with the value given by the Storefront API:
 
-STOREFRONT_API_URL=<STOREFRONT_API_URL>
-STOREFRONT_ACCESS_TOKEN=<STOREFRONT_ACCESS_TOKEN>
+`STOREFRONT_API_URL="STOREFRONT_API_URL"`
+`STOREFRONT_ACCESS_TOKEN="STOREFRONT_ACCESS_TOKEN"`
