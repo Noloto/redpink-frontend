@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import ShopifyClient from '../../shopify-client';
-import { productsQuery } from '../../common/queries/products.query';
+import { productsQuery } from '../../common/queries/products/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
 import ProductList from '../../components/ProductList/ProductList';

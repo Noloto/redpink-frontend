@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import ShopifyClient from '../../shopify-client';
-import { productsQuery } from '../queries/products.query';
+import { productsQuery } from '../queries/products/products.query';
 
 async function fetchProducts(): Promise<any> {
   const { data } = await ShopifyClient.query({
