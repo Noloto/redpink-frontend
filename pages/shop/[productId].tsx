@@ -1,5 +1,5 @@
 import ShopifyClient from '../../shopify-client';
-import { productsQuery } from '../../common/queries/products.query';
+import { productsQuery } from '../../common/queries/products/products.query';
 import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';

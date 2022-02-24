@@ -1,7 +1,7 @@
 import ShopifyClient from '../../../shopify-client';
 import { GetStaticPaths, NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { productVariantsQuery } from '../../../common/queries/productVariant.query';
+import { productVariantsQuery } from '../../../common/queries/products/productVariant.query';
 import Image from 'next/image';
 import Navigation from '../../../components/Navigation/Navigation';
 
