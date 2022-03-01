@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@apollo/client": "^3.5.9",
+    "@apollo/client": "^3.5.10",
     "@shopify/shopify-api": "^2.1.0",
     "classnames": "^2.3.1",
     "graphql": "^16.3.0",
