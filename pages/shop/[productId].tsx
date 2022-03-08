@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useLocalStorage } from '../../common/utils/useLocalStorage';
 
 type RequiredProps = {
   productData: any;
@@ -16,8 +17,28 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
+  const [quantity, setQuantity] = useState('1');
 
   const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
+
+  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
+
+  const addToCart = () => {
+    const CartItem: CartItem = {
+      productName: name,
+      price: price,
+      amount: quantity,
+      imageSrc: imageSrc,
+    };
+
+    const isCartItem = cart.findIndex((e: any) => e.productName === name);
+
+    if (isCartItem == -1) {
+      setCartItem((prevState) => [...prevState, CartItem]);
+    } else {
+      console.log(cart);
+    }
+  };
 
   useEffect(() => {
     productData.map((p: any) => {
@@ -74,7 +95,17 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
             <p className="text-xl">{name}</p>
             <p className=" text-lg">{price}</p>
-            <button className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink">
+            <input
+              type="number"
+              className="border-[#ed7878] border-[2px] text-redpink"
+              onChange={(e) => setQuantity(e.target.value)}
+              min={1}
+              max={100}
+            ></input>
+            <button
+              className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
+              onClick={addToCart}
+            >
               Add To Cart
             </button>
           </div>

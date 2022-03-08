@@ -23,6 +23,10 @@ p {
   color: #ed7878;
 }
 
+input[type='number'] {
+  background: transparent;
+}
+
 @font-face {
   font-family: 'SyneMono';
   src: url(/fonts/SyneMono-Regular.ttf);
