@@ -61,7 +61,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
             />
           </svg>
           <div className="flex justify-self-center w-3/6 self-center m-[0_auto]">
-            <Link href={NAVIGATION_ITEMS.HOME}>
+            <Link href={NAVIGATION_ITEMS.HOME} passHref>
               <a className="flex text-2xl">
                 ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
               </a>
@@ -89,27 +89,31 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
         </div>
         <div className="flex w-2/6 justify-center items-center m-[0_auto]">
           <Link href={NAVIGATION_ITEMS.HOME}>
-            <a className=" text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
+            <a className="text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
           </Link>
         </div>
         <div className="flex w-2/6 justify-evenly">
           <Link href={SOCIAL_MEDIA_LINK.INSTAGRAM} passHref>
-            <Image
-              src="/images/instagram.svg"
-              alt="instagram"
-              className="cursor-pointer"
-              width={35}
-              height={35}
-            />
+            <a>
+              <Image
+                src="/images/instagram.svg"
+                alt="instagram"
+                className="cursor-pointer"
+                width={35}
+                height={35}
+              />
+            </a>
           </Link>
           <Link href={NAVIGATION_ITEMS.CART} passHref>
-            <Image
-              src="/images/redpink-shopping-cart.png"
-              alt="instagram"
-              className="cursor-pointer"
-              width={35}
-              height={35}
-            />
+            <a>
+              <Image
+                src="/images/redpink-shopping-cart.png"
+                alt="instagram"
+                className="cursor-pointer"
+                width={35}
+                height={35}
+              />
+            </a>
           </Link>
         </div>
       </div>
