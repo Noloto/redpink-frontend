@@ -8,9 +8,11 @@ type RequiredProps = {};
 const Shop: NextPage<RequiredProps> = () => {
   const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
 
-  const removeItem = () => {
-    console.log(cart);
+  const removeItem = (e: any) => {
+    const name = e.target.getAttribute('name');
+    setCartItem(cart.filter((item) => item.productName !== name));
   };
+
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
@@ -35,7 +37,11 @@ const Shop: NextPage<RequiredProps> = () => {
                 <p>{item.price}</p>
                 <p>{item.amount}</p>
               </div>
-              <button className="pointer" onClick={removeItem}>
+              <button
+                name={item.productName}
+                className="pointer"
+                onClick={removeItem}
+              >
                 x
               </button>
             </div>
