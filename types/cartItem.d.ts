@@ -1,6 +1,6 @@
 type CartItem = {
   productName: string;
   price: string;
-  amount: string;
+  amount: number;
   imageSrc: string;
 };

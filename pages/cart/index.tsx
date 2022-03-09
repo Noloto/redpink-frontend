@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import Navigation from '../../components/Navigation/Navigation';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import Image from 'next/image';
+import { useState } from 'react';
 
 type RequiredProps = {};
 
@@ -11,6 +12,15 @@ const Shop: NextPage<RequiredProps> = () => {
   const removeItem = (e: any) => {
     const name = e.target.getAttribute('name');
     setCartItem(cart.filter((item) => item.productName !== name));
+  };
+
+  const updateAmount = (e: any) => {
+    const name = e.target.getAttribute('name');
+    const isCartItem = cart.findIndex((e) => e.productName === name);
+
+    let newCart = [...cart];
+    newCart[isCartItem].amount = +e.target.value;
+    setCartItem(newCart);
   };
 
   return (
@@ -35,7 +45,12 @@ const Shop: NextPage<RequiredProps> = () => {
               <div className="flex gap-10">
                 <p>{item.productName}</p>
                 <p>{item.price}</p>
-                <p>{item.amount}</p>
+                <input
+                  type="number"
+                  name={item.productName}
+                  value={item.amount}
+                  onChange={updateAmount}
+                ></input>
               </div>
               <button
                 name={item.productName}
@@ -47,8 +62,8 @@ const Shop: NextPage<RequiredProps> = () => {
             </div>
           );
         })}
-        <button className="border-[#ed7878] border-[2px] border-solid flex justify-self-end">
-          checkout
+        <button className="border-[#ed7878] border-[2px] border-solid flex justify-self-end text-redpink">
+          Checkout
         </button>
       </div>
     </>
