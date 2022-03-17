@@ -1,5 +1,5 @@
 enum NAVIGATION_ITEMS {
-  HOME = '/',
+  HOME = '/shop',
   SHOP = '/shop',
   CONTACT = '/contact',
   CART = '/cart',

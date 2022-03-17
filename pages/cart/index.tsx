@@ -3,6 +3,8 @@ import Navigation from '../../components/Navigation/Navigation';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import Image from 'next/image';
 import { useState } from 'react';
+import cx from 'classnames';
+import styles from './Cart.module.css';
 
 type RequiredProps = {};
 
@@ -52,17 +54,19 @@ const Shop: NextPage<RequiredProps> = () => {
                   onChange={updateAmount}
                 ></input>
               </div>
-              <button
-                name={item.productName}
-                className="pointer"
+              <Image
+                key={item.productName}
+                className={cx('pointer', styles.filterRedpink)}
                 onClick={removeItem}
-              >
-                x
-              </button>
+                src="/images/redpink-trash.svg"
+                alt="remove item from cart"
+                width={30}
+                height={30}
+              />
             </div>
           );
         })}
-        <button className="border-[#ed7878] border-[2px] border-solid flex justify-self-end text-redpink">
+        <button className="border-[#ed7878] border-[2px] border-solid flex justify-self-end">
           Checkout
         </button>
       </div>

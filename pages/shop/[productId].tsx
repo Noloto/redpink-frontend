@@ -97,13 +97,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
             <p className="text-xl">{name}</p>
             <p className=" text-lg">{price}</p>
-            <input
-              type="number"
-              className="border-[#ed7878] border-[2px] text-redpink"
-              onChange={(e) => setQuantity(+e.target.value)}
-              min={1}
-              max={100}
-            ></input>
             <button
               className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
               onClick={addToCart}
