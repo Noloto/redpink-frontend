@@ -72,9 +72,11 @@ const Shop: NextPage<RequiredProps> = () => {
             </div>
           );
         })}
-        <button className="border-[#ed7878] border-[2px] border-solid flex justify-self-end">
-          Checkout
-        </button>
+        <div className="flex justify-end px-10">
+          <button className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8">
+            Checkout
+          </button>
+        </div>
       </div>
     </>
   );
