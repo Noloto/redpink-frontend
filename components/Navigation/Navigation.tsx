@@ -43,15 +43,13 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
           </div>
         </>
       ) : (
-        <div
-          className="flex visible lg:hidden cursor-pointer p-5"
-          onClick={toggle}
-        >
+        <div className="flex visible lg:hidden cursor-pointer p-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-10 h-10 stroke-redpink"
             fill="none"
             viewBox="0 0 24 24"
+            onClick={toggle}
           >
             <path
               strokeLinecap="round"
@@ -64,6 +62,19 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
             <Link href={NAVIGATION_ITEMS.HOME} passHref>
               <a className="flex text-2xl">
                 ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+              </a>
+            </Link>
+          </div>
+          <div className="flex w-2/6 justify-evenly z-10">
+            <Link href={NAVIGATION_ITEMS.CART} passHref>
+              <a>
+                <Image
+                  src="/images/redpink-shopping-cart.png"
+                  alt="instagram"
+                  className="cursor-pointer"
+                  width={35}
+                  height={35}
+                />
               </a>
             </Link>
           </div>
