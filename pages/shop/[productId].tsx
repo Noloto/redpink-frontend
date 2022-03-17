@@ -17,7 +17,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
-  const [quantity, setQuantity] = useState('1');
+  const [quantity, setQuantity] = useState(1);
 
   const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
 
@@ -32,11 +32,13 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     };
 
     const isCartItem = cart.findIndex((e: any) => e.productName === name);
-
+    // TODO: Check for variant
     if (isCartItem == -1) {
       setCartItem((prevState) => [...prevState, CartItem]);
     } else {
-      console.log(cart);
+      let newCart = [...cart];
+      newCart[isCartItem].amount = quantity + newCart[isCartItem].amount;
+      setCartItem(newCart);
     }
   };
 
@@ -98,7 +100,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
             <input
               type="number"
               className="border-[#ed7878] border-[2px] text-redpink"
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => setQuantity(+e.target.value)}
               min={1}
               max={100}
             ></input>
