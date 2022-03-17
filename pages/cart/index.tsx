@@ -17,11 +17,16 @@ const Shop: NextPage<RequiredProps> = () => {
 
   const updateAmount = (data: any, element: any) => {
     const index = cart.findIndex((e) => e.uuid == data.uuid);
-
-    if (index !== -1) {
+    if (index !== -1 && +element.target.value < 1) {
+      console.log('REMOVE');
+      removeItem(data.uuid);
+    } else if (index !== -1 && +element.target.value <= 25) {
       let newCart = [...cart];
-      console.log(data.amount);
       newCart[index].amount = +element.target.value;
+      setCartItem(newCart);
+    } else if (index !== -1 && +element.target.value > 25) {
+      let newCart = [...cart];
+      newCart[index].amount = 25;
       setCartItem(newCart);
     }
   };
@@ -49,8 +54,10 @@ const Shop: NextPage<RequiredProps> = () => {
                 <p>{item.price}</p>
                 <input
                   type="number"
+                  className="text-redpink w-8"
                   name={item.productName}
                   value={item.amount}
+                  max={25}
                   onChange={(e) => updateAmount(item, e)}
                 ></input>
               </div>
