@@ -1,4 +1,5 @@
 .filterRedpink {
   filter: invert(54%) sepia(50%) saturate(475%) hue-rotate(314deg)
     brightness(95%) contrast(85%);
+  cursor: pointer;
 }

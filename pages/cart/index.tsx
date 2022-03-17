@@ -11,20 +11,20 @@ type RequiredProps = {};
 const Shop: NextPage<RequiredProps> = () => {
   const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
 
-  const removeItem = (e: any) => {
-    const name = e.target.getAttribute('name');
-    setCartItem(cart.filter((item) => item.productName !== name));
+  const removeItem = (uuid: string) => {
+    setCartItem(cart.filter((r) => r.uuid !== uuid));
   };
 
-  const updateAmount = (e: any) => {
-    const name = e.target.getAttribute('name');
-    const isCartItem = cart.findIndex((e) => e.productName === name);
+  const updateAmount = (data: any, element: any) => {
+    const index = cart.findIndex((e) => e.uuid == data.uuid);
 
-    let newCart = [...cart];
-    newCart[isCartItem].amount = +e.target.value;
-    setCartItem(newCart);
+    if (index !== -1) {
+      let newCart = [...cart];
+      console.log(data.amount);
+      newCart[index].amount = +element.target.value;
+      setCartItem(newCart);
+    }
   };
-
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
@@ -51,13 +51,12 @@ const Shop: NextPage<RequiredProps> = () => {
                   type="number"
                   name={item.productName}
                   value={item.amount}
-                  onChange={updateAmount}
+                  onChange={(e) => updateAmount(item, e)}
                 ></input>
               </div>
               <Image
-                key={item.productName}
                 className={cx('pointer', styles.filterRedpink)}
-                onClick={removeItem}
+                onClick={() => removeItem(item.uuid)}
                 src="/images/redpink-trash.svg"
                 alt="remove item from cart"
                 width={30}
