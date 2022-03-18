@@ -6,6 +6,7 @@ import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
+import { nanoid } from 'nanoid';
 
 type RequiredProps = {
   productData: any;
@@ -13,6 +14,7 @@ type RequiredProps = {
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [product, setProduct] = useState<any>([]);
+  const [uuid, setUUID] = useState(nanoid());
   const [imageSrc, setImageSrc] = useState('/');
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
@@ -25,6 +27,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
 
   const addToCart = () => {
     const CartItem: CartItem = {
+      uuid: uuid,
       productName: name,
       price: price,
       amount: quantity,
@@ -97,13 +100,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
             <p className="text-xl">{name}</p>
             <p className=" text-lg">{price}</p>
-            <input
-              type="number"
-              className="border-[#ed7878] border-[2px] text-redpink"
-              onChange={(e) => setQuantity(+e.target.value)}
-              min={1}
-              max={100}
-            ></input>
             <button
               className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
               onClick={addToCart}
