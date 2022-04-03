@@ -3,8 +3,11 @@ import cx from 'classnames';
 import Image from 'next/image';
 import styles from './Navigation.module.css';
 
-import { NAVIGATION_ITEMS, NAVIGATION_TITLES } from '../../enums/navigation';
-import { SOCIAL_MEDIA_LINK } from '../../enums/social-media';
+import {
+  NAVIGATION_ITEMS,
+  NAVIGATION_TITLES,
+} from '../../common/enums/navigation';
+import { SOCIAL_MEDIA_LINK } from '../../common/enums/social-media';
 import { useState } from 'react';
 
 type OptionalProps = {

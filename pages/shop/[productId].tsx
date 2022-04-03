@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
+import { hoodieSizes } from '../../common/enums/constants';
 
 type RequiredProps = {
   productData: any;
@@ -19,8 +20,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
   const [quantity, setQuantity] = useState(1);
-
-  const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
 
   const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
 
