@@ -14,7 +14,6 @@ type RequiredProps = {
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [product, setProduct] = useState<any>([]);
-  const [uuid, setUUID] = useState(nanoid());
   const [imageSrc, setImageSrc] = useState('/');
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
@@ -27,7 +26,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
 
   const addToCart = () => {
     const CartItem: CartItem = {
-      uuid: uuid,
+      uuid: nanoid(),
       productName: name,
       price: price,
       amount: quantity,
