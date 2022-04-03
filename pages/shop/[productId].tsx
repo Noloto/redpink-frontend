@@ -6,6 +6,7 @@ import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
+import { nanoid } from 'nanoid';
 
 type RequiredProps = {
   productData: any;
@@ -13,11 +14,12 @@ type RequiredProps = {
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [product, setProduct] = useState<any>([]);
+  const [uuid, setUUID] = useState(nanoid());
   const [imageSrc, setImageSrc] = useState('/');
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
-  const [quantity, setQuantity] = useState('1');
+  const [quantity, setQuantity] = useState(1);
 
   const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
 
@@ -25,6 +27,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
 
   const addToCart = () => {
     const CartItem: CartItem = {
+      uuid: uuid,
       productName: name,
       price: price,
       amount: quantity,
@@ -32,11 +35,13 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     };
 
     const isCartItem = cart.findIndex((e: any) => e.productName === name);
-
+    // TODO: Check for variant
     if (isCartItem == -1) {
       setCartItem((prevState) => [...prevState, CartItem]);
     } else {
-      console.log(cart);
+      let newCart = [...cart];
+      newCart[isCartItem].amount = quantity + newCart[isCartItem].amount;
+      setCartItem(newCart);
     }
   };
 
@@ -57,19 +62,21 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
           <Navigation></Navigation>
-          <div className="flex justify-center items-center flex-col min-h-[calc(100vh-30vh)] gap-36">
+          <div className="grid items-center justify-center mt-32">
             <p className="text-3xl">CHOOSE YOUR SIZE</p>
-            <div className="grid gap-20 grid-flow-col ">
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
               {hoodieSizes.map((size) => {
                 return (
-                  <Link
+                  <div
                     key={size}
-                    href={`/shop/two-face-inside-out-variants/${size}`}
+                    className="border-2 border-redpink rounded-sm text-center py-3 text-xl mt-8 md:mr-8 md:px-16"
                   >
-                    <a className="border-2 px-16 py-4 text-xl">{size}</a>
-                  </Link>
+                    <Link href={`/shop/two-face-inside-out-variants/${size}`}>
+                      <a className="">{size}</a>
+                    </Link>
+                  </div>
                 );
               })}
             </div>
@@ -95,13 +102,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
             <p className="text-xl">{name}</p>
             <p className=" text-lg">{price}</p>
-            <input
-              type="number"
-              className="border-[#ed7878] border-[2px] text-redpink"
-              onChange={(e) => setQuantity(e.target.value)}
-              min={1}
-              max={100}
-            ></input>
             <button
               className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
               onClick={addToCart}

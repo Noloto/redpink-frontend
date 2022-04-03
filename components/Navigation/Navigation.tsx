@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import cx from 'classnames';
 import Image from 'next/image';
+import styles from './Navigation.module.css';
 
 import { NAVIGATION_ITEMS, NAVIGATION_TITLES } from '../../enums/navigation';
 import { SOCIAL_MEDIA_LINK } from '../../enums/social-media';
@@ -43,27 +44,40 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
           </div>
         </>
       ) : (
-        <div
-          className="flex visible lg:hidden cursor-pointer p-5"
-          onClick={toggle}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-10 h-10 stroke-redpink"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-          <div className="flex justify-self-center w-3/6 self-center m-[0_auto]">
-            <Link href={NAVIGATION_ITEMS.HOME} passHref>
-              <a className="flex text-2xl">
+        <div className="flex visible lg:hidden p-5 items-center">
+          <div className=" flex justify-center w-1/6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="flex justify-center cursor-pointer w-10 h-10 stroke-redpink"
+              fill="none"
+              viewBox="0 0 24 24"
+              onClick={toggle}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </div>
+          <div className="w-4/6">
+            <Link href={NAVIGATION_ITEMS.SHOP} passHref>
+              <a className="text-2xl">
                 ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+              </a>
+            </Link>
+          </div>
+          <div className="flex justify-center w-1/6">
+            <Link href={NAVIGATION_ITEMS.CART} passHref>
+              <a>
+                <Image
+                  src="/images/redpink-shopping-cart.png"
+                  alt="instagram"
+                  className="cursor-pointer"
+                  width={35}
+                  height={35}
+                />
               </a>
             </Link>
           </div>
@@ -88,7 +102,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
           </Link>
         </div>
         <div className="flex w-2/6 justify-center items-center m-[0_auto]">
-          <Link href={NAVIGATION_ITEMS.HOME}>
+          <Link href={NAVIGATION_ITEMS.SHOP}>
             <a className="text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
           </Link>
         </div>
