@@ -14,7 +14,6 @@ type RequiredProps = {
 };
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
-  const [product, setProduct] = useState<any>([]);
   const [imageSrc, setImageSrc] = useState('/');
   const [price, setPrice] = useState('');
   const [name, setName] = useState('');
@@ -30,6 +29,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
       price: price,
       amount: quantity,
       imageSrc: imageSrc,
+      onlyOne: false,
     };
 
     const isCartItem = cart.findIndex((e: any) => e.productName === name);
@@ -52,11 +52,12 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
         setName(product.title);
       }
     });
-  }, [product, imageSrc, price, name, productData]);
+  }, [imageSrc, price, name, productData]);
 
   useEffect(() => {
     setPathName(window.location.pathname);
   }, []);
+
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>

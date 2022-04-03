@@ -4,6 +4,9 @@ import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import Image from 'next/image';
 import cx from 'classnames';
 import styles from './Cart.module.css';
+import { useEffect } from 'react';
+import ShopifyClient from '../../shopify-client';
+import { createCart } from '../../common/queries/cart/createCart.mutation';
 
 type RequiredProps = {};
 
@@ -16,19 +19,32 @@ const Shop: NextPage<RequiredProps> = () => {
 
   const updateAmount = (data: any, element: any) => {
     const index = cart.findIndex((e) => e.uuid == data.uuid);
-    if (index !== -1 && +element.target.value < -1) {
-      console.log('REMOVE');
+    let newCart = [...cart];
+
+    if (index !== -1 && cart.map((i) => i.onlyOne)) {
+      newCart[index].amount = 1;
+    } else if (index !== -1 && +element.target.value < -1) {
       removeItem(data.uuid);
     } else if (index !== -1 && +element.target.value <= 25) {
-      let newCart = [...cart];
       newCart[index].amount = +element.target.value;
       setCartItem(newCart);
     } else if (index !== -1 && +element.target.value > 25) {
-      let newCart = [...cart];
       newCart[index].amount = 25;
       setCartItem(newCart);
     }
   };
+
+  /*useEffect(() => {
+    const getCart = async () => {
+
+
+      const { data } = await ShopifyClient.query({
+        query: createCart,
+      });
+
+      setCartItem({ data.cartId })
+    };
+  }, []);*/
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">

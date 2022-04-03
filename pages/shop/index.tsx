@@ -7,14 +7,23 @@ import ProductList from '../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
 
 type RequiredProps = {
-  productData: Array<Object>;
+  productData: any;
 };
+
 const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
-  const [products, setProducts] = useState<Array<Object>>([]);
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    const productsArray: Array<Object> = Object.values(productData);
-    setProducts(productsArray[0] as Array<Object>);
+    setProducts(
+      productData.productData.map((p: any) => {
+        return {
+          id: p.node?.id,
+          title: p.node?.title,
+          price: p.node?.priceRange?.minVariantPrice?.amount,
+          images: p.node?.images?.edges,
+        };
+      })
+    );
   }, []);
 
   return (

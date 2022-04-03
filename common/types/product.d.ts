@@ -1,11 +1,7 @@
-type product = {
-  id: number;
-  name: string;
-  href: string;
+type Product = {
+  id: string;
+  title: string;
   price: string;
-  desription?: string;
-  imageSrc: string;
-  imageAlt: string;
+  images: Image[];
+  variants: Variant[];
 };
-
-export default product;
