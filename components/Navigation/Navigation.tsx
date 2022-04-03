@@ -62,7 +62,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
             </svg>
           </div>
           <div className="w-4/6">
-            <Link href={NAVIGATION_ITEMS.HOME} passHref>
+            <Link href={NAVIGATION_ITEMS.SHOP} passHref>
               <a className="text-2xl">
                 ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
               </a>
@@ -102,7 +102,7 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
           </Link>
         </div>
         <div className="flex w-2/6 justify-center items-center m-[0_auto]">
-          <Link href={NAVIGATION_ITEMS.HOME}>
+          <Link href={NAVIGATION_ITEMS.SHOP}>
             <a className="text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
           </Link>
         </div>

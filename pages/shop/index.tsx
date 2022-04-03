@@ -19,9 +19,11 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
         <Navigation></Navigation>
-        <ProductList products={products}></ProductList>
+        <div className="grid md:grid-cols-3 sm:grid-cols-1">
+          <ProductList products={products}></ProductList>
+        </div>
       </div>
     </>
   );

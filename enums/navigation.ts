@@ -1,12 +1,12 @@
 enum NAVIGATION_ITEMS {
-  HOME = '/shop',
+  HOME = '/',
   SHOP = '/shop',
   CONTACT = '/contact',
   CART = '/cart',
 }
 
 enum NAVIGATION_TITLES {
-  HOME = 'Home',
+  HOME = 'MANDALA',
   SHOP = 'Shop',
   CONTACT = 'Contact',
   CART = 'Cart',

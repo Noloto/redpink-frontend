@@ -2,7 +2,6 @@ import type { NextPage } from 'next';
 import Navigation from '../../components/Navigation/Navigation';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import Image from 'next/image';
-import { useState } from 'react';
 import cx from 'classnames';
 import styles from './Cart.module.css';
 
@@ -17,7 +16,7 @@ const Shop: NextPage<RequiredProps> = () => {
 
   const updateAmount = (data: any, element: any) => {
     const index = cart.findIndex((e) => e.uuid == data.uuid);
-    if (index !== -1 && +element.target.value < 1) {
+    if (index !== -1 && +element.target.value < -1) {
       console.log('REMOVE');
       removeItem(data.uuid);
     } else if (index !== -1 && +element.target.value <= 25) {
@@ -51,7 +50,7 @@ const Shop: NextPage<RequiredProps> = () => {
               </div>
               <div className="flex gap-10">
                 <p>{item.productName}</p>
-                <p>{item.price}</p>
+                <p>{+item.price * item.amount}</p>
                 <input
                   type="number"
                   className="text-redpink w-8"
