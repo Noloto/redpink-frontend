@@ -15,23 +15,39 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   const [productSizeVariants, setProductSizeVariants] = useState<Array<any>>(
     []
   );
-  const [quantity, setQuantity] = useState(1);
 
-  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
 
-  const addToCart = (title: string, image: string, price: string) => {
+  const addToCart = (
+    id: string,
+    title: string,
+    price: string,
+    images: Image[],
+    variants: Variant[]
+  ) => {
     const CartItem: CartItem = {
-      uuid: nanoid(),
-      onlyOne: true,
-      productName: title,
+      id: id,
+      title: title,
       price: price,
-      amount: quantity,
-      imageSrc: image,
+      images: images,
+      variants: variants,
+      uuid: nanoid(),
+      amount: 1,
+      onlyOne: true,
     };
 
-    const isCartItem = cart.findIndex((e: any) => e.productName === title);
+    const isCartItem = cart.products.findIndex(
+      (e: CartItem) => e.title === title
+    );
+
     if (isCartItem == -1) {
-      setCartItem((prevState) => [...prevState, CartItem]);
+      let newProducts = cart.products;
+      newProducts.push(CartItem);
+      updateCart({ ...cart, products: newProducts });
     } else return;
   };
 
@@ -68,12 +84,14 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
                     height={350}
                     onClick={() =>
                       addToCart(
+                        productVariant.node.id,
                         productVariant.node.title,
-                        productVariant.node.image.url,
-                        productVariant.node.priceV2.amount
+                        productVariant.node.priceV2.amount,
+                        productVariant.node.image,
+                        productVariant.node.variants
                       )
                     }
-                  ></Image>
+                  />
                 </div>
               </>
             );

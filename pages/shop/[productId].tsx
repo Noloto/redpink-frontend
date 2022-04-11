@@ -14,49 +14,64 @@ type RequiredProps = {
 };
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
-  const [imageSrc, setImageSrc] = useState('/');
-  const [price, setPrice] = useState('');
-  const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
-  const [quantity, setQuantity] = useState(1);
 
-  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
 
-  const addToCart = () => {
-    const CartItem: CartItem = {
-      uuid: nanoid(),
-      productName: name,
-      price: price,
-      amount: quantity,
-      imageSrc: imageSrc,
-      onlyOne: false,
-    };
-
-    const isCartItem = cart.findIndex((e: any) => e.productName === name);
-    // TODO: Check for variant
-    if (isCartItem == -1) {
-      setCartItem((prevState) => [...prevState, CartItem]);
-    } else {
-      let newCart = [...cart];
-      newCart[isCartItem].amount = quantity + newCart[isCartItem].amount;
-      setCartItem(newCart);
-    }
-  };
-
-  useEffect(() => {
-    productData.map((p: any) => {
-      if (p != null) {
-        const product: any = Object.values(p)[1];
-        setImageSrc(product.images.edges[0].node.url);
-        setPrice(product.priceRange.minVariantPrice.amount);
-        setName(product.title);
-      }
-    });
-  }, [imageSrc, price, name, productData]);
+  const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
     setPathName(window.location.pathname);
   }, []);
+
+  useEffect(() => {
+    productData.map((p: any) => {
+      if (p !== null) {
+        setProduct({
+          id: p.node?.id,
+          title: p.node?.title,
+          price: p.node?.priceRange?.minVariantPrice?.amount,
+          images: p.node?.images?.edges,
+          variants: p.node?.variants?.edges,
+        });
+      }
+    });
+  }, []);
+
+  const addToCart = () => {
+    if (product) {
+      const CartItem: CartItem = {
+        id: product.id,
+        uuid: nanoid(),
+        title: product.title,
+        price: product.price,
+        images: product.images,
+        variants: product.variants,
+        onlyOne: false,
+        amount: 1,
+      };
+
+      let newCart: Cart = cart;
+
+      const isCartItem = cart.products.findIndex(
+        (e: CartItem) => e.title === product?.title
+      );
+
+      if (isCartItem == -1) {
+        let newProducts = cart.products;
+        newProducts.push(CartItem);
+        updateCart({ ...cart, products: newProducts });
+      } else {
+        newCart.products[isCartItem].amount =
+          1 + newCart.products[isCartItem].amount!;
+        updateCart(newCart);
+      }
+    }
+  };
 
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
@@ -91,7 +106,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
         <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex items-center justify-center">
             <Image
-              src={imageSrc}
+              src={product?.images[0].node.url ?? '/images/capo.png'}
               alt="product"
               width={500}
               height={450}
@@ -99,8 +114,8 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
             />
           </div>
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
-            <p className="text-xl">{name}</p>
-            <p className=" text-lg">{price}</p>
+            <p className="text-xl">{product?.title}</p>
+            <p className=" text-lg">{product?.price}</p>
             <button
               className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
               onClick={addToCart}

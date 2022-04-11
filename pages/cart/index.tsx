@@ -4,52 +4,79 @@ import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import Image from 'next/image';
 import cx from 'classnames';
 import styles from './Cart.module.css';
-import { useEffect } from 'react';
 import ShopifyClient from '../../shopify-client';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
+import { useEffect } from 'react';
 
 type RequiredProps = {};
 
 const Shop: NextPage<RequiredProps> = () => {
-  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
 
   const removeItem = (uuid: string) => {
-    setCartItem(cart.filter((r) => r.uuid !== uuid));
+    updateCart({
+      ...cart,
+      products: cart.products.filter((r) => r.uuid !== uuid),
+    });
   };
 
   const updateAmount = (data: any, element: any) => {
-    const index = cart.findIndex((e) => e.uuid == data.uuid);
-    let newCart = [...cart];
+    const index = cart.products.findIndex((e) => e.uuid == data.uuid);
+    let newCart = cart;
 
-    if (index !== -1 && cart.map((i) => i.onlyOne)) {
-      newCart[index].amount = 1;
+    if (index !== -1 && cart.products.map((i) => i.onlyOne)) {
+      newCart.products[index].amount = 1;
     } else if (index !== -1 && +element.target.value < -1) {
       removeItem(data.uuid);
     } else if (index !== -1 && +element.target.value <= 25) {
-      newCart[index].amount = +element.target.value;
-      setCartItem(newCart);
+      newCart.products[index].amount = +element.target.value;
+      updateCart(newCart);
     } else if (index !== -1 && +element.target.value > 25) {
-      newCart[index].amount = 25;
-      setCartItem(newCart);
+      newCart.products[index].amount = 25;
+      updateCart(newCart);
     }
   };
 
-  /*useEffect(() => {
-    const getCart = async () => {
+  useEffect(() => {
+    let localCartData = JSON.parse(
+      window.localStorage.getItem('CART') as string
+    );
 
-
-      const { data } = await ShopifyClient.query({
-        query: createCart,
+    if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
+      console.log('halo');
+      updateCart({
+        id: localCartData?.id,
+        checkoutUrl: localCartData?.checkoutUrl,
+        products: cart?.products,
       });
 
-      setCartItem({ data.cartId })
+      return;
+    }
+
+    const getCart = async () => {
+      const { data } = await ShopifyClient.mutate({
+        mutation: createCart,
+      });
+
+      updateCart({
+        id: data.cartCreate.cart.id,
+        checkoutUrl: data.cartCreate.cart.checkoutUrl,
+        products: cart.products,
+      });
     };
-  }, []);*/
+
+    getCart();
+  }, []);
+
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
         <Navigation></Navigation>
-        {cart.map((item, idx) => {
+        {cart.products.map((product, idx) => {
           return (
             <div
               key={idx}
@@ -57,7 +84,11 @@ const Shop: NextPage<RequiredProps> = () => {
             >
               <div className="w-32 md:w-56">
                 <Image
-                  src={item.imageSrc}
+                  src={
+                    // TODO: notfound image & hoodie image
+                    product?.images[0]?.node?.url ??
+                    '/images/mawsoni-hero-animation.gif'
+                  }
                   alt="Product in the Cart"
                   width={500}
                   height={450}
@@ -65,20 +96,20 @@ const Shop: NextPage<RequiredProps> = () => {
                 />
               </div>
               <div className="flex gap-10">
-                <p>{item.productName}</p>
-                <p>{+item.price * item.amount}</p>
+                <p>{product.title}</p>
+                <p>{+product.price! * product.amount!}</p>
                 <input
                   type="number"
                   className="text-redpink w-8"
-                  name={item.productName}
-                  value={item.amount}
+                  name={product.title}
+                  value={product.amount}
                   max={25}
-                  onChange={(e) => updateAmount(item, e)}
+                  onChange={(e) => updateAmount(product, e)}
                 ></input>
               </div>
               <Image
                 className={cx('pointer', styles.filterRedpink)}
-                onClick={() => removeItem(item.uuid)}
+                onClick={() => removeItem(product.uuid)}
                 src="/images/redpink-trash.svg"
                 alt="remove item from cart"
                 width={30}
