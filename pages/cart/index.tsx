@@ -9,11 +9,14 @@ import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { useEffect } from 'react';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { useRouter } from 'next/router';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {};
 
 const Shop: NextPage<RequiredProps> = () => {
   const router = useRouter();
+
+  const [showMe, setShowMe] = useCycle(false, true);
 
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
@@ -89,7 +92,7 @@ const Shop: NextPage<RequiredProps> = () => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation></Navigation>
+        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         {cart.products.map((product, idx) => {
           return (
             <div

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Navigation from '../../../components/Navigation/Navigation';
 import { useLocalStorage } from '../../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {
   productVariants: any;
@@ -15,6 +16,8 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   const [productSizeVariants, setProductSizeVariants] = useState<Array<any>>(
     []
   );
+
+  const [showMe, setShowMe] = useCycle(false, true);
 
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
@@ -69,7 +72,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation></Navigation>
+        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
             return (

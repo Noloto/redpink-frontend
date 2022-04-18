@@ -10,6 +10,7 @@ import { nanoid } from 'nanoid';
 import { hoodieSizes } from '../../common/enums/constants';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {
   productData: any;
@@ -17,6 +18,7 @@ type RequiredProps = {
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [pathName, setPathName] = useState('');
+  const [showMe, setShowMe] = useCycle(false, true);
 
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
@@ -89,7 +91,10 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     return (
       <>
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
-          <Navigation></Navigation>
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
           <div className="grid items-center justify-center mt-32">
             <p className="text-3xl">CHOOSE YOUR SIZE</p>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
@@ -114,7 +119,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
-        <Navigation></Navigation>
+        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex items-center justify-center">
             <Image

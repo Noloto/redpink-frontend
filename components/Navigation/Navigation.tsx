@@ -13,15 +13,22 @@ import { animate, AnimatePresence, motion, useCycle } from 'framer-motion';
 import { BurgerX } from '../common/BurgerX/BurgerX';
 import { useDimensions } from '../../common/utils/use-dimensions';
 
+type RequiredProps = {
+  showMe: boolean;
+  setShowMe: () => void;
+};
 type OptionalProps = {
   className?: string;
 };
 
-const Navigation: React.FC<OptionalProps> = ({ className }) => {
+const Navigation: React.FC<RequiredProps & OptionalProps> = ({
+  className,
+  showMe,
+  setShowMe,
+}) => {
   const [whereAmI, setWhereAmI] = useState<string>();
 
   const containerRef = useRef(null);
-  const [showMe, setShowMe] = useCycle(false, true);
   const height = useDimensions(containerRef);
 
   useEffect(() => {
@@ -106,31 +113,33 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
         </motion.div>
       </motion.nav>
       {/**MOBILE CLOSED */}
-      <div className="flex visible lg:hidden p-5 items-center">
-        <div className=" flex justify-center w-1/6">
-          <BurgerX toggle={() => setShowMe()} />
+      {!showMe && (
+        <div className="flex visible lg:hidden p-5 items-center">
+          <div className=" flex justify-center w-1/6">
+            <BurgerX toggle={() => setShowMe()} />
+          </div>
+          <div className="w-4/6">
+            <Link href={NAVIGATION_ITEMS.SHOP} passHref>
+              <a className="text-2xl ml-6">
+                ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+              </a>
+            </Link>
+          </div>
+          <div className="flex justify-center w-1/6">
+            <Link href={NAVIGATION_ITEMS.CART} passHref>
+              <a>
+                <Image
+                  src="/images/redpink-shopping-cart.png"
+                  alt="instagram"
+                  className="cursor-pointer"
+                  width={35}
+                  height={35}
+                />
+              </a>
+            </Link>
+          </div>
         </div>
-        <div className="w-4/6">
-          <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-            <a className="text-2xl ml-6">
-              ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
-            </a>
-          </Link>
-        </div>
-        <div className="flex justify-center w-1/6">
-          <Link href={NAVIGATION_ITEMS.CART} passHref>
-            <a>
-              <Image
-                src="/images/redpink-shopping-cart.png"
-                alt="instagram"
-                className="cursor-pointer"
-                width={35}
-                height={35}
-              />
-            </a>
-          </Link>
-        </div>
-      </div>
+      )}
 
       {/**DESKTOP */}
       <div
