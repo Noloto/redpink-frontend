@@ -205,10 +205,10 @@
   resolved "https://registry.yarnpkg.com/@shopify/network/-/network-1.6.4.tgz#fdfa8379cb6e06f05ee63d24aafcd6f8e275cb34"
   integrity sha512-V+//Et386LnYdtNhQ3e33AKYfU25XEt8H5XYeMqPvJZpVvC9Z1lHKQMpmM/zq13VXjPUjt9/sNxHxMP3I6cbJg==
 
-"@shopify/shopify-api@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-api/-/shopify-api-2.1.0.tgz#750519188cf4cad8c65170ed05e4bd4aa65a5285"
-  integrity sha512-CI+CUc0b2+Iv4AFhKaIAvMpbTddyTIKM3O2Qk0wS1gcj5nRdSFg6JbeVThNOYYu/7rzf93J8qYF1E4OZl920CQ==
+"@shopify/shopify-api@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-api/-/shopify-api-3.0.1.tgz#b059b291387677473939738301667bf643804dc2"
+  integrity sha512-ZeMQE2AyKfrA+3zH4dTCtd4EZ1fO3ejxeSZDzWix3yvzxn/w277VMLS0iIPavz6Mfkw3iniHEHNNyQX1ns1AsQ==
   dependencies:
     "@shopify/network" "^1.5.1"
     "@types/jsonwebtoken" "^8.5.0"
