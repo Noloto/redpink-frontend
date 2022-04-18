@@ -6,7 +6,7 @@ enum NAVIGATION_ITEMS {
 }
 
 enum NAVIGATION_TITLES {
-  HOME = 'MANDALA',
+  HOME = 'Mandala-Sun',
   SHOP = 'Shop',
   CONTACT = 'Contact',
   CART = 'Cart',

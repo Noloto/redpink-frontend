@@ -8,39 +8,90 @@ import {
   NAVIGATION_TITLES,
 } from '../../common/enums/navigation';
 import { SOCIAL_MEDIA_LINK } from '../../common/enums/social-media';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { animate, AnimatePresence, motion, useCycle } from 'framer-motion';
+import { BurgerX } from '../common/BurgerX/BurgerX';
+import { useDimensions } from '../../common/utils/use-dimensions';
 
 type OptionalProps = {
   className?: string;
 };
 
 const Navigation: React.FC<OptionalProps> = ({ className }) => {
-  const [showMe, setShowMe] = useState<boolean>(false);
   const [whereAmI, setWhereAmI] = useState<string>();
 
-  const toggle = () => {
-    setShowMe(!showMe);
-  };
+  const containerRef = useRef(null);
+  const [showMe, setShowMe] = useCycle(false, true);
+  const height = useDimensions(containerRef);
 
   useEffect(() => {
-    console.log(`/${window.location.pathname.split('/', 2)[1]}`);
     setWhereAmI(`/${window.location.pathname.split('/', 2)[1]}`);
   }, []);
 
+  const sidebar = {
+    open: (height = 1000) => ({
+      clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
+      transition: {
+        type: 'spring',
+        stiffness: 20,
+        restDelta: 2,
+      },
+    }),
+    closed: {
+      clipPath: 'circle(30px at 40px 40px)',
+      transition: {
+        delay: 0.5,
+        type: 'spring',
+        stiffness: 400,
+        damping: 40,
+      },
+    },
+  };
+
   return (
     <>
-      {showMe ? (
-        <>
-          <p
-            className="absolute bg-redpink text-[black] cursor-pointer p-5 text-5xl"
-            onClick={toggle}
-          >
-            x
-          </p>
+      {/**MOBILE OPEN */}
+      <motion.nav
+        initial={false}
+        animate={showMe ? 'open' : 'closed'}
+        custom={{ height }}
+        ref={containerRef}
+        className={`${showMe ? 'visible' : 'hidden'}`}
+      >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showMe ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+          className="w-screen h-screen bg-redpink"
+        >
+          <div className="flex visible lg:hidden p-5 items-center">
+            <div className="flex justify-center w-1/6">
+              <BurgerX toggle={() => setShowMe()} />
+            </div>
+            <div className="w-4/6">
+              <Link href={NAVIGATION_ITEMS.SHOP} passHref>
+                <a className="text-2xl ml-6 text-black">
+                  ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+                </a>
+              </Link>
+            </div>
+            <div className="flex justify-center w-1/6">
+              <Link href={NAVIGATION_ITEMS.CART} passHref>
+                <a>
+                  <Image
+                    src="/images/redpink-shopping-cart.png"
+                    alt="instagram"
+                    className="cursor-pointer"
+                    width={35}
+                    height={35}
+                  />
+                </a>
+              </Link>
+            </div>
+          </div>
+
           <div
-            className={`w-screen h-screen bg-redpink ${
-              showMe ? 'flex' : 'hidden'
-            } flex justify-center items-center flex-col gap-10 text-5xl`}
+            className={`h-2/3 flex justify-center items-center flex-col gap-10 text-3xl `}
           >
             <Link href={NAVIGATION_ITEMS.HOME} passHref>
               <a className="text-[black]">{NAVIGATION_TITLES.HOME}</a>
@@ -52,48 +103,36 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
               <a className="text-[black]">{NAVIGATION_TITLES.CONTACT}</a>
             </Link>
           </div>
-        </>
-      ) : (
-        <div className="flex visible lg:hidden p-5 items-center">
-          <div className=" flex justify-center w-1/6">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="flex justify-center cursor-pointer w-10 h-10 stroke-redpink"
-              fill="none"
-              viewBox="0 0 24 24"
-              onClick={toggle}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </div>
-          <div className="w-4/6">
-            <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-              <a className="text-2xl">
-                ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
-              </a>
-            </Link>
-          </div>
-          <div className="flex justify-center w-1/6">
-            <Link href={NAVIGATION_ITEMS.CART} passHref>
-              <a>
-                <Image
-                  src="/images/redpink-shopping-cart.png"
-                  alt="instagram"
-                  className="cursor-pointer"
-                  width={35}
-                  height={35}
-                />
-              </a>
-            </Link>
-          </div>
+        </motion.div>
+      </motion.nav>
+      {/**MOBILE CLOSED */}
+      <div className="flex visible lg:hidden p-5 items-center">
+        <div className=" flex justify-center w-1/6">
+          <BurgerX toggle={() => setShowMe()} />
         </div>
-      )}
+        <div className="w-4/6">
+          <Link href={NAVIGATION_ITEMS.SHOP} passHref>
+            <a className="text-2xl ml-6">
+              ･*。 　 　･° 　　　°。 * 。 　　　　　　 ･°
+            </a>
+          </Link>
+        </div>
+        <div className="flex justify-center w-1/6">
+          <Link href={NAVIGATION_ITEMS.CART} passHref>
+            <a>
+              <Image
+                src="/images/redpink-shopping-cart.png"
+                alt="instagram"
+                className="cursor-pointer"
+                width={35}
+                height={35}
+              />
+            </a>
+          </Link>
+        </div>
+      </div>
 
+      {/**DESKTOP */}
       <div
         className={cx(
           'hidden lg:flex grid-flow-col grid-cols-3 h-[10vh] items-center justify-between px-52 pt-6 w-full',
