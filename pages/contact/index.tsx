@@ -13,13 +13,6 @@ const Home: NextPage = () => {
           <a href="mailto:beispiel@example.org?subject=eine%20Mail%20von%20deinen%20Web-Seiten">
             redpink-help@hotmail.com
           </a>
-          <Image
-            src="/images/instagram.svg"
-            alt="instagram"
-            className="cursor-pointer"
-            width={40}
-            height={40}
-          />
         </div>
       </div>
     </>

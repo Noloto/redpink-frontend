@@ -8,6 +8,8 @@ import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
 import { hoodieSizes } from '../../common/enums/constants';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 
 type RequiredProps = {
   productData: any;
@@ -43,6 +45,16 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   }, []);
 
   const addToCart = () => {
+    const cartId = cart.id;
+    const variantId = product?.variants[0].node.id;
+
+    ShopifyClient.mutate({
+      mutation: addItemToCart,
+      variables: { cartId, variantId },
+    }).then((res) => {
+      console.log(res);
+    });
+
     if (product) {
       const CartItem: CartItem = {
         id: product.id,

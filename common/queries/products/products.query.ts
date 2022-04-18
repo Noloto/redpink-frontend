@@ -20,6 +20,21 @@ export const productsQuery = gql`
               }
             }
           }
+          variants(first: 100) {
+            edges {
+              node {
+                id
+                title
+                image {
+                  url
+                  altText
+                }
+                priceV2 {
+                  amount
+                }
+              }
+            }
+          }
         }
       }
     }

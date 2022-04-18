@@ -1,6 +1,8 @@
 type Variant = {
-  id: number;
-  title: string;
-  price: string;
-  images: String[];
+  node: {
+    id: number;
+    title: string;
+    priceV2: string;
+    image: VariantImage;
+  };
 };

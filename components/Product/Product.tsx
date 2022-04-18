@@ -15,12 +15,12 @@ type OptionalProps = {
 const Product: React.FC<RequiredProps & OptionalProps> = ({ name, images }) => {
   return (
     <>
-      <div className="flex place-items-center flex-col text-xl">
+      <div className="flex place-items-center flex-col text-sm">
         <Image
           src={images[0].node.url}
           alt={images[0].node.altText}
-          width={500}
-          height={450}
+          width={341}
+          height={341}
           className="object-cover"
         />
         <p>{name}</p>

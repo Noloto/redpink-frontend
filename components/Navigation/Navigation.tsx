@@ -8,24 +8,31 @@ import {
   NAVIGATION_TITLES,
 } from '../../common/enums/navigation';
 import { SOCIAL_MEDIA_LINK } from '../../common/enums/social-media';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 type OptionalProps = {
   className?: string;
 };
 
 const Navigation: React.FC<OptionalProps> = ({ className }) => {
-  const [showMe, setShowMe] = useState(false);
-  function toggle() {
+  const [showMe, setShowMe] = useState<boolean>(false);
+  const [whereAmI, setWhereAmI] = useState<string>();
+
+  const toggle = () => {
     setShowMe(!showMe);
-  }
+  };
+
+  useEffect(() => {
+    console.log(`/${window.location.pathname.split('/', 2)[1]}`);
+    setWhereAmI(`/${window.location.pathname.split('/', 2)[1]}`);
+  }, []);
 
   return (
     <>
       {showMe ? (
         <>
           <p
-            className="absolute bg-redpink text-[black] cursor-pointer p-5 text-5xl "
+            className="absolute bg-redpink text-[black] cursor-pointer p-5 text-5xl"
             onClick={toggle}
           >
             x
@@ -89,27 +96,43 @@ const Navigation: React.FC<OptionalProps> = ({ className }) => {
 
       <div
         className={cx(
-          'hidden lg:flex grid-flow-col grid-cols-3 h-[10vh] items-center justify-between p-5  w-full',
+          'hidden lg:flex grid-flow-col grid-cols-3 h-[10vh] items-center justify-between px-52 pt-6 w-full',
           className
         )}
       >
-        <div className="flex w-2/6 justify-evenly text-xl">
+        <div className="flex w-1/6 justify-evenly text-xs">
           <Link href={NAVIGATION_ITEMS.HOME} passHref>
-            <a>{NAVIGATION_TITLES.HOME}</a>
+            <a className="mr-6">{NAVIGATION_TITLES.HOME}</a>
           </Link>
           <Link href={NAVIGATION_ITEMS.SHOP} passHref>
-            <a>{NAVIGATION_TITLES.SHOP}</a>
+            <a
+              className={`mr-6 ${
+                whereAmI === NAVIGATION_ITEMS.SHOP
+                  ? 'border-b border-redpink'
+                  : ''
+              } `}
+            >
+              {NAVIGATION_TITLES.SHOP}
+            </a>
           </Link>
           <Link href={NAVIGATION_ITEMS.CONTACT} passHref>
-            <a>{NAVIGATION_TITLES.CONTACT}</a>
+            <a
+              className={`mr-6 ${
+                whereAmI === NAVIGATION_ITEMS.CONTACT
+                  ? 'border-b border-redpink'
+                  : ''
+              } `}
+            >
+              {NAVIGATION_TITLES.CONTACT}
+            </a>
           </Link>
         </div>
         <div className="flex w-2/6 justify-center items-center m-[0_auto]">
           <Link href={NAVIGATION_ITEMS.SHOP}>
-            <a className="text-2xl">･*。　 　･°　　　°。* 。　　　　　　･°</a>
+            <a className="text-2xl">･*。　 　･°　　　°。* 。　　･°</a>
           </Link>
         </div>
-        <div className="flex w-2/6 justify-evenly">
+        <div className="flex w-1/6 justify-evenly">
           <Link href={SOCIAL_MEDIA_LINK.INSTAGRAM} passHref>
             <a>
               <Image

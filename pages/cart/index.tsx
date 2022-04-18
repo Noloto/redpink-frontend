@@ -7,10 +7,14 @@ import styles from './Cart.module.css';
 import ShopifyClient from '../../shopify-client';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { useEffect } from 'react';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { useRouter } from 'next/router';
 
 type RequiredProps = {};
 
 const Shop: NextPage<RequiredProps> = () => {
+  const router = useRouter();
+
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
     checkoutUrl: 'NOT INIZIALIZED',
@@ -47,13 +51,19 @@ const Shop: NextPage<RequiredProps> = () => {
     );
 
     if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
-      console.log('halo');
+      const cartId = cart.id;
+      ShopifyClient.query({
+        query: getCartById,
+        variables: { cartId },
+      }).then((res) => {
+        console.log(res);
+      });
+
       updateCart({
         id: localCartData?.id,
         checkoutUrl: localCartData?.checkoutUrl,
         products: cart?.products,
       });
-
       return;
     }
 
@@ -71,6 +81,10 @@ const Shop: NextPage<RequiredProps> = () => {
 
     getCart();
   }, []);
+
+  const goToCheckout = () => {
+    router.push(cart.checkoutUrl);
+  };
 
   return (
     <>
@@ -119,7 +133,10 @@ const Shop: NextPage<RequiredProps> = () => {
           );
         })}
         <div className="flex justify-end px-10">
-          <button className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8">
+          <button
+            onClick={() => goToCheckout()}
+            className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8"
+          >
             Checkout
           </button>
         </div>
