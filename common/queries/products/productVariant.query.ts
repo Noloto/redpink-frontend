@@ -14,6 +14,9 @@ export const productVariantsQuery = gql`
                   url
                   altText
                 }
+                priceV2 {
+                  amount
+                }
               }
             }
           }

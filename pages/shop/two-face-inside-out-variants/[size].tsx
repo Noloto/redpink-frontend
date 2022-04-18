@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { productVariantsQuery } from '../../../common/queries/products/productVariant.query';
 import Image from 'next/image';
 import Navigation from '../../../components/Navigation/Navigation';
+import { useLocalStorage } from '../../../common/utils/useLocalStorage';
+import { nanoid } from 'nanoid';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {
   productVariants: any;
@@ -13,6 +16,44 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   const [productSizeVariants, setProductSizeVariants] = useState<Array<any>>(
     []
   );
+
+  const [showMe, setShowMe] = useCycle(false, true);
+
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
+
+  const addToCart = (
+    id: string,
+    title: string,
+    price: string,
+    images: Image[],
+    variants: Variant[]
+  ) => {
+    const CartItem: CartItem = {
+      id: id,
+      title: title,
+      price: price,
+      images: images,
+      variants: variants,
+      uuid: nanoid(),
+      amount: 1,
+      onlyOne: true,
+    };
+
+    const isCartItem = cart.products.findIndex(
+      (e: CartItem) => e.title === title
+    );
+
+    if (isCartItem == -1) {
+      let newProducts = cart.products;
+      newProducts.push(CartItem);
+      updateCart({ ...cart, products: newProducts });
+    } else return;
+  };
+
   useEffect(() => {
     productVariants.map(async (productVariant: any) => {
       const pathSizeName = await window.location.pathname.split(
@@ -31,20 +72,29 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation></Navigation>
+        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
             return (
               <>
                 <div className="flex w-full h-full justify-center">
                   <Image
-                    key={productVariant.title}
+                    key={productVariant.node.title}
                     src={productVariant.node.image.url}
                     alt={productVariant.node.image.altText ?? 'alt'}
                     className="cursor-pointer object-cover"
                     width={300}
                     height={350}
-                  ></Image>
+                    onClick={() =>
+                      addToCart(
+                        productVariant.node.id,
+                        productVariant.node.title,
+                        productVariant.node.priceV2.amount,
+                        productVariant.node.image,
+                        productVariant.node.variants
+                      )
+                    }
+                  />
                 </div>
               </>
             );

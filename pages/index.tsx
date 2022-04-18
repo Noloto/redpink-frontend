@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import type { NextPage } from 'next';
-import { NAVIGATION_ITEMS } from '../enums/navigation';
+import { NAVIGATION_ITEMS } from '../common/enums/navigation';
 
 const Home: NextPage = () => {
   return (

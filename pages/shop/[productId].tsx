@@ -7,63 +7,94 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
+import { hoodieSizes } from '../../common/enums/constants';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {
   productData: any;
 };
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
-  const [product, setProduct] = useState<any>([]);
-  const [uuid, setUUID] = useState(nanoid());
-  const [imageSrc, setImageSrc] = useState('/');
-  const [price, setPrice] = useState('');
-  const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  const [showMe, setShowMe] = useCycle(false, true);
 
-  const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
 
-  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
-
-  const addToCart = () => {
-    const CartItem: CartItem = {
-      uuid: uuid,
-      productName: name,
-      price: price,
-      amount: quantity,
-      imageSrc: imageSrc,
-    };
-
-    const isCartItem = cart.findIndex((e: any) => e.productName === name);
-    // TODO: Check for variant
-    if (isCartItem == -1) {
-      setCartItem((prevState) => [...prevState, CartItem]);
-    } else {
-      let newCart = [...cart];
-      newCart[isCartItem].amount = quantity + newCart[isCartItem].amount;
-      setCartItem(newCart);
-    }
-  };
-
-  useEffect(() => {
-    productData.map((p: any) => {
-      if (p != null) {
-        const product: any = Object.values(p)[1];
-        setImageSrc(product.images.edges[0].node.url);
-        setPrice(product.priceRange.minVariantPrice.amount);
-        setName(product.title);
-      }
-    });
-  }, [product, imageSrc, price, name, productData]);
+  const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
     setPathName(window.location.pathname);
   }, []);
+
+  useEffect(() => {
+    productData.map((p: any) => {
+      if (p !== null) {
+        setProduct({
+          id: p.node?.id,
+          title: p.node?.title,
+          price: p.node?.priceRange?.minVariantPrice?.amount,
+          images: p.node?.images?.edges,
+          variants: p.node?.variants?.edges,
+        });
+      }
+    });
+  }, []);
+
+  const addToCart = () => {
+    const cartId = cart.id;
+    const variantId = product?.variants[0].node.id;
+
+    ShopifyClient.mutate({
+      mutation: addItemToCart,
+      variables: { cartId, variantId },
+    }).then((res) => {
+      console.log(res);
+    });
+
+    if (product) {
+      const CartItem: CartItem = {
+        id: product.id,
+        uuid: nanoid(),
+        title: product.title,
+        price: product.price,
+        images: product.images,
+        variants: product.variants,
+        onlyOne: false,
+        amount: 1,
+      };
+
+      let newCart: Cart = cart;
+
+      const isCartItem = cart.products.findIndex(
+        (e: CartItem) => e.title === product?.title
+      );
+
+      if (isCartItem == -1) {
+        let newProducts = cart.products;
+        newProducts.push(CartItem);
+        updateCart({ ...cart, products: newProducts });
+      } else {
+        newCart.products[isCartItem].amount =
+          1 + newCart.products[isCartItem].amount!;
+        updateCart(newCart);
+      }
+    }
+  };
+
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
-          <Navigation></Navigation>
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
           <div className="grid items-center justify-center mt-32">
             <p className="text-3xl">CHOOSE YOUR SIZE</p>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
@@ -88,11 +119,11 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
-        <Navigation></Navigation>
+        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex items-center justify-center">
             <Image
-              src={imageSrc}
+              src={product?.images[0].node.url ?? '/images/capo.png'}
               alt="product"
               width={500}
               height={450}
@@ -100,8 +131,8 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
             />
           </div>
           <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
-            <p className="text-xl">{name}</p>
-            <p className=" text-lg">{price}</p>
+            <p className="text-xl">{product?.title}</p>
+            <p className=" text-lg">{product?.price}</p>
             <button
               className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
               onClick={addToCart}
