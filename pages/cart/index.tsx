@@ -103,8 +103,7 @@ const Shop: NextPage<RequiredProps> = () => {
                 <Image
                   src={
                     // TODO: notfound image & hoodie image
-                    product?.images[0]?.node?.url ??
-                    '/images/mawsoni-hero-animation.gif'
+                    product?.images[0]?.node?.url ?? '/images/heroAnimation.gif'
                   }
                   alt="Product in the Cart"
                   width={500}

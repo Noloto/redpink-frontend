@@ -16,7 +16,7 @@ const Home: NextPage = () => {
       <a href={NAVIGATION_ITEMS.SHOP}>
         <div className="w-screen h-screen">
           <Image
-            src="/images/mawsoni-hero-animation.gif"
+            src="/images/heroAnimation.gif"
             className="relative object-contain w-full h-full"
             layout="fill"
             alt="Click to get to the shop"
