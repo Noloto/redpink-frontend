@@ -91,58 +91,78 @@ const Shop: NextPage<RequiredProps> = () => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        {cart.products.map((product, idx) => {
-          return (
-            <div
-              key={idx}
-              className="flex justify-evenly items-center my-16 w-full"
-            >
-              <div className="w-32 md:w-56">
+      {cart.products.length > 0 ? (
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
+          {cart.products.map((product, idx) => {
+            return (
+              <div
+                key={idx}
+                className="flex justify-evenly items-center my-16 w-full"
+              >
+                <div className="w-32 md:w-56">
+                  <Image
+                    src={
+                      // TODO: notfound image & hoodie image
+                      product?.images[0]?.node?.url ??
+                      '/images/heroAnimation.gif'
+                    }
+                    alt="Product in the Cart"
+                    width={500}
+                    height={450}
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex gap-10">
+                  <p>{product.title}</p>
+                  <p>{+product.price! * product.amount!}</p>
+                  <input
+                    type="number"
+                    className="text-redpink w-8"
+                    name={product.title}
+                    value={product.amount}
+                    max={25}
+                    onChange={(e) => updateAmount(product, e)}
+                  ></input>
+                </div>
                 <Image
-                  src={
-                    // TODO: notfound image & hoodie image
-                    product?.images[0]?.node?.url ?? '/images/heroAnimation.gif'
-                  }
-                  alt="Product in the Cart"
-                  width={500}
-                  height={450}
-                  className="object-cover"
+                  className={cx('pointer', styles.filterRedpink)}
+                  onClick={() => removeItem(product.uuid)}
+                  src="/images/redpink-trash.svg"
+                  alt="remove item from cart"
+                  width={30}
+                  height={30}
                 />
               </div>
-              <div className="flex gap-10">
-                <p>{product.title}</p>
-                <p>{+product.price! * product.amount!}</p>
-                <input
-                  type="number"
-                  className="text-redpink w-8"
-                  name={product.title}
-                  value={product.amount}
-                  max={25}
-                  onChange={(e) => updateAmount(product, e)}
-                ></input>
-              </div>
-              <Image
-                className={cx('pointer', styles.filterRedpink)}
-                onClick={() => removeItem(product.uuid)}
-                src="/images/redpink-trash.svg"
-                alt="remove item from cart"
-                width={30}
-                height={30}
-              />
-            </div>
-          );
-        })}
-        <div className="flex justify-end px-10">
-          <button
-            onClick={() => goToCheckout()}
-            className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8"
-          >
-            Checkout
-          </button>
+            );
+          })}
+          <div className="flex justify-end px-10">
+            <button
+              onClick={() => goToCheckout()}
+              className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8"
+            >
+              Checkout
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
+          <div className="flex justify-center flex-col items-center h-[calc(100vh-30vh)] gap-16">
+            <p className="text-4xl">૮₍˶ •. • ⑅₎ა ♡</p>
+            <p className="text-2xl text-center	">
+              your shopping cart seems empty so theres nothing to show here...
+              really
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 };

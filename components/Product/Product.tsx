@@ -19,8 +19,8 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({ name, images }) => {
         <Image
           src={images[0].node.url}
           alt={images[0].node.altText}
-          width={341}
-          height={341}
+          width={1920}
+          height={1080}
           className="object-cover"
         />
         <p>{name}</p>

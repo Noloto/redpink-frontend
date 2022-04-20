@@ -69,6 +69,43 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
     });
   }, [productVariants]);
 
+  useEffect(() => {
+    let localCartData = JSON.parse(
+      window.localStorage.getItem('CART') as string
+    );
+
+    if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
+      const cartId = cart.id;
+      ShopifyClient.query({
+        query: getCartById,
+        variables: { cartId },
+      }).then((res) => {
+        console.log(res);
+      });
+
+      updateCart({
+        id: localCartData?.id,
+        checkoutUrl: localCartData?.checkoutUrl,
+        products: cart?.products,
+      });
+      return;
+    }
+
+    const getCart = async () => {
+      const { data } = await ShopifyClient.mutate({
+        mutation: createCart,
+      });
+
+      updateCart({
+        id: data.cartCreate.cart.id,
+        checkoutUrl: data.cartCreate.cart.checkoutUrl,
+        products: cart.products,
+      });
+    };
+
+    getCart();
+  }, []);
+
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">

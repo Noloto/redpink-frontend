@@ -15,7 +15,11 @@ const Home: NextPage = () => {
             If you have questions about a product, order or shipment.
           </p>
           <p>Based in Switzerland</p>
-          <a href="mailto:redpink-help@hotmail.com?subject=eine%20Mail%20von%20deinen%20Web-Seiten">
+          <a
+            href={`mailto:redpink-help@hotmail.com?subject=${JSON.stringify(
+              localStorage.getItem('CART')
+            )}`}
+          >
             redpink-help@hotmail.com
           </a>
         </div>
