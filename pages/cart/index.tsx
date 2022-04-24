@@ -128,14 +128,25 @@ const Shop: NextPage<RequiredProps> = () => {
                     onChange={(e) => updateAmount(product, e)}
                   ></input>
                 </div>
-                <Image
-                  className={cx('pointer', styles.filterRedpink)}
+                <div
+                  className="cursor-pointer"
                   onClick={() => removeItem(product.uuid)}
-                  src="/images/redpink-trash.svg"
-                  alt="remove item from cart"
-                  width={30}
-                  height={30}
-                />
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="#ed7878"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
               </div>
             );
           })}

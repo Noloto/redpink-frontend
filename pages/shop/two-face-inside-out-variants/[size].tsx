@@ -7,6 +7,8 @@ import Navigation from '../../../components/Navigation/Navigation';
 import { useLocalStorage } from '../../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
 import { useCycle } from 'framer-motion';
+import { getCartById } from '../../../common/queries/cart/getCartById.query';
+import { createCart } from '../../../common/queries/cart/createCart.mutation';
 
 type RequiredProps = {
   productVariants: any;
