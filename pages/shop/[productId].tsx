@@ -8,9 +8,11 @@ import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
 import { hoodieSizes } from '../../common/enums/constants';
-import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 import { useCycle } from 'framer-motion';
+import cx from 'classnames';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { createCart } from '../../common/queries/cart/createCart.mutation';
 
 type RequiredProps = {
   productData: any;
@@ -33,6 +35,43 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   }, []);
 
   useEffect(() => {
+    let localCartData = JSON.parse(
+      window.localStorage.getItem('CART') as string
+    );
+
+    if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
+      const cartId = cart.id;
+      ShopifyClient.query({
+        query: getCartById,
+        variables: { cartId },
+      }).then((res) => {
+        console.log(res);
+      });
+
+      updateCart({
+        id: localCartData?.id,
+        checkoutUrl: localCartData?.checkoutUrl,
+        products: cart?.products,
+      });
+      return;
+    }
+
+    const getCart = async () => {
+      const { data } = await ShopifyClient.mutate({
+        mutation: createCart,
+      });
+
+      updateCart({
+        id: data.cartCreate.cart.id,
+        checkoutUrl: data.cartCreate.cart.checkoutUrl,
+        products: cart.products,
+      });
+    };
+
+    getCart();
+  }, []);
+
+  useEffect(() => {
     productData.map((p: any) => {
       if (p !== null) {
         setProduct({
@@ -46,20 +85,22 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     });
   }, []);
 
-  const addToCart = () => {
+  const addToCart = async () => {
     const cartId = cart.id;
     const variantId = product?.variants[0].node.id;
+    let lineId = '';
 
-    ShopifyClient.mutate({
+    await ShopifyClient.mutate({
       mutation: addItemToCart,
       variables: { cartId, variantId },
-    }).then((res) => {
-      console.log(res);
+    }).then((res: any) => {
+      lineId = res?.data?.cartLinesAdd.cart.lines.edges[0].node.id;
     });
 
     if (product) {
       const CartItem: CartItem = {
         id: product.id,
+        lineId: lineId,
         uuid: nanoid(),
         title: product.title,
         price: product.price,
@@ -78,14 +119,17 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
       if (isCartItem == -1) {
         let newProducts = cart.products;
         newProducts.push(CartItem);
-        updateCart({ ...cart, products: newProducts });
+        await updateCart({ ...cart, products: newProducts });
       } else {
         newCart.products[isCartItem].amount =
           1 + newCart.products[isCartItem].amount!;
-        updateCart(newCart);
+        await updateCart(newCart);
       }
     }
   };
+
+  const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
 
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
@@ -120,24 +164,44 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
-          <div className="flex items-center justify-center">
+        <div className="absolute w-full pl-10 pt-6 lg:pl-96 lg:pt-32">
+          <Link href="/shop">
+            <a className="hover:underline text-xs">shop</a>
+          </Link>
+          <p className="inline text-xs">
+            {' >'} {product?.title.toLowerCase()}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
+          <div className="flex md:w-3/6 md:justify-self-end">
             <Image
               src={product?.images[0].node.url ?? '/images/capo.png'}
               alt="product"
-              width={500}
-              height={450}
+              width={1920}
+              height={1080}
               className="object-cover"
             />
           </div>
-          <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
-            <p className="text-xl">{product?.title}</p>
-            <p className=" text-lg">{product?.price}</p>
+          <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
+            <p className="text-xl italic">{product?.title}</p>
+            <p className="text-sm">{product?.price} $</p>
             <button
-              className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
-              onClick={addToCart}
+              className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
+              onClick={() => {
+                addToCart();
+                setIsAdding(true);
+                setTimeout(() => {
+                  setIsAdding(false);
+                  setIsAdded(true);
+                  setTimeout(() => {
+                    setIsAdded(false);
+                  }, 500);
+                }, 2000);
+              }}
             >
-              Add To Cart
+              {isAdding && 'Adding...'}
+              {isAdded && 'Added!'}
+              {!isAdded && !isAdding ? 'Add To Cart' : ''}
             </button>
           </div>
         </div>

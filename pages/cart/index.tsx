@@ -6,10 +6,11 @@ import cx from 'classnames';
 import styles from './Cart.module.css';
 import ShopifyClient from '../../shopify-client';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { useRouter } from 'next/router';
 import { useCycle } from 'framer-motion';
+import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity.mutation';
 
 type RequiredProps = {};
 
@@ -24,11 +25,40 @@ const Shop: NextPage<RequiredProps> = () => {
     products: [],
   });
 
-  const removeItem = (uuid: string) => {
-    updateCart({
-      ...cart,
-      products: cart.products.filter((r) => r.uuid !== uuid),
-    });
+  const [isSSR, setIsSSR] = useState(true);
+  useEffect(() => {
+    setIsSSR(false);
+  }, []);
+
+  useEffect(() => {
+    cart.products.length === 0 ?? localStorage.clear;
+  }, [cart]);
+
+  const removeItem = async (uuid: string) => {
+    const index = cart.products.findIndex((e) => e.uuid == uuid);
+    let newCart = cart;
+
+    const cartId = cart.id;
+    const lineId = cart.products[index].lineId;
+    const quantity = 0;
+
+    console.log(cartId);
+    console.log(lineId);
+    console.log(quantity);
+    await ShopifyClient.mutate({
+      mutation: updateLineQuantity,
+      variables: { cartId, lineId, quantity },
+    })
+      .then(async (res: any) => {
+        await updateCart({
+          ...cart,
+          products: cart.products.filter((r) => r.uuid !== uuid),
+        });
+      })
+      .catch((err) => {
+        localStorage.clear;
+        console.log(err);
+      });
   };
 
   const updateAmount = (data: any, element: any) => {
@@ -41,7 +71,26 @@ const Shop: NextPage<RequiredProps> = () => {
       removeItem(data.uuid);
     } else if (index !== -1 && +element.target.value <= 25) {
       newCart.products[index].amount = +element.target.value;
-      updateCart(newCart);
+
+      const cartId = cart.id;
+      const lineId = cart.products[index].id;
+      const quantity = cart.products[index].amount;
+
+      ShopifyClient.query({
+        query: updateLineQuantity,
+        variables: { cartId, lineId, quantity },
+      })
+        .then((res: any) => {
+          updateCart({
+            id: res?.data.cart.id,
+            checkoutUrl: res?.data.cart.checkoutUrl,
+            products: newCart?.products,
+          });
+        })
+        .catch((err) => {
+          localStorage.clear;
+          return;
+        });
     } else if (index !== -1 && +element.target.value > 25) {
       newCart.products[index].amount = 25;
       updateCart(newCart);
@@ -55,18 +104,23 @@ const Shop: NextPage<RequiredProps> = () => {
 
     if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
       const cartId = cart.id;
+
       ShopifyClient.query({
         query: getCartById,
         variables: { cartId },
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res: any) => {
+          updateCart({
+            id: res?.data.cart.id,
+            checkoutUrl: res?.data.cart.checkoutUrl,
+            products: localCartData?.products,
+          });
+        })
+        .catch((err) => {
+          localStorage.clear;
+          return;
+        });
 
-      updateCart({
-        id: localCartData?.id,
-        checkoutUrl: localCartData?.checkoutUrl,
-        products: cart?.products,
-      });
       return;
     }
 
@@ -91,59 +145,89 @@ const Shop: NextPage<RequiredProps> = () => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        {cart.products.map((product, idx) => {
-          return (
-            <div
-              key={idx}
-              className="flex justify-evenly items-center my-16 w-full"
+      {!isSSR && cart.products.length > 0 ? (
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
+          {cart.products.map((product, idx) => {
+            return (
+              <div
+                key={idx}
+                className="flex justify-evenly items-center my-16 w-full"
+              >
+                <div className="w-32 md:w-56">
+                  <Image
+                    src={
+                      // TODO: notfound image & hoodie image
+                      product?.images[0]?.node?.url ??
+                      '/images/heroAnimation.gif'
+                    }
+                    alt="Product in the Cart"
+                    width={500}
+                    height={450}
+                    className="object-cover"
+                  />
+                </div>
+                <div className="flex gap-10">
+                  <p>{product.title}</p>
+                  <p>{+product.price! * product.amount!}</p>
+                  <input
+                    type="number"
+                    className="text-redpink w-8"
+                    name={product.title}
+                    value={product.amount}
+                    max={25}
+                    onChange={(e) => updateAmount(product, e)}
+                  ></input>
+                </div>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => removeItem(product.uuid)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="#ed7878"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+              </div>
+            );
+          })}
+          <div className="flex justify-end px-10">
+            <button
+              onClick={() => goToCheckout()}
+              className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-1/3 md:w-1/12 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
             >
-              <div className="w-32 md:w-56">
-                <Image
-                  src={
-                    // TODO: notfound image & hoodie image
-                    product?.images[0]?.node?.url ??
-                    '/images/mawsoni-hero-animation.gif'
-                  }
-                  alt="Product in the Cart"
-                  width={500}
-                  height={450}
-                  className="object-cover"
-                />
-              </div>
-              <div className="flex gap-10">
-                <p>{product.title}</p>
-                <p>{+product.price! * product.amount!}</p>
-                <input
-                  type="number"
-                  className="text-redpink w-8"
-                  name={product.title}
-                  value={product.amount}
-                  max={25}
-                  onChange={(e) => updateAmount(product, e)}
-                ></input>
-              </div>
-              <Image
-                className={cx('pointer', styles.filterRedpink)}
-                onClick={() => removeItem(product.uuid)}
-                src="/images/redpink-trash.svg"
-                alt="remove item from cart"
-                width={30}
-                height={30}
-              />
-            </div>
-          );
-        })}
-        <div className="flex justify-end px-10">
-          <button
-            onClick={() => goToCheckout()}
-            className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8"
-          >
-            Checkout
-          </button>
+              Checkout
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+          <Navigation
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
+          <div className="flex justify-center flex-col items-center h-[calc(100vh-30vh)] gap-16">
+            <p className="text-4xl">૮₍˶ •. • ⑅₎ა ♡</p>
+            <p className="text-2xl text-center	">
+              your shopping cart seems empty so theres nothing to show here...
+              really
+            </p>
+          </div>
+        </div>
+      )}
     </>
   );
 };

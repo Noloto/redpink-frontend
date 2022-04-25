@@ -8,6 +8,7 @@ module.exports = {
       redpink: '#ed7878',
       slate: '#f8fafc',
       black: '#000000',
+      white: '#FFFFFF',
     },
     extend: {},
   },
