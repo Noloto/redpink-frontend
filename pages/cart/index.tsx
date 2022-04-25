@@ -153,7 +153,7 @@ const Shop: NextPage<RequiredProps> = () => {
           <div className="flex justify-end px-10">
             <button
               onClick={() => goToCheckout()}
-              className="border-[#ed7878] border-[2px] border-solid text-redpink py-2 px-5 md:py-4 md:px-8"
+              className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-1/3 md:w-1/12 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
             >
               Checkout
             </button>
