@@ -14,11 +14,12 @@ const Home: NextPage = () => {
       </Head>
 
       <a href={NAVIGATION_ITEMS.SHOP}>
-        <div className="w-screen h-screen">
+        <div className="flex w-screen h-screen">
           <Image
             src="/images/heroAnimation.gif"
-            className="relative object-contain w-full h-full"
-            layout="fill"
+            className="object-cover md:object-contain"
+            width={1920}
+            height={1080}
             alt="Click to get to the shop"
           />
         </div>
