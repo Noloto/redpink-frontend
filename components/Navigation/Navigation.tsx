@@ -141,7 +141,7 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
       {/**DESKTOP */}
       <div
         className={cx(
-          'hidden lg:flex grid-flow-col grid-cols-3 h-[10vh] items-center justify-between px-52 pt-6 w-full',
+          'hidden lg:flex grid-flow-col grid-cols-3 h-[10vh] items-center justify-between px-24 pt-6 w-full',
           className
         )}
       >
