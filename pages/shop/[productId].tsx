@@ -128,6 +128,9 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     }
   };
 
+  const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
@@ -184,9 +187,21 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
             <p className="text-sm">{product?.price} $</p>
             <button
               className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
-              onClick={() => addToCart()}
+              onClick={() => {
+                addToCart();
+                setIsAdding(true);
+                setTimeout(() => {
+                  setIsAdding(false);
+                  setIsAdded(true);
+                  setTimeout(() => {
+                    setIsAdded(false);
+                  }, 500);
+                }, 2000);
+              }}
             >
-              Add To Cart
+              {isAdding && 'Adding...'}
+              {isAdded && 'Added!'}
+              {!isAdded && !isAdding ? 'Add To Cart' : ''}
             </button>
           </div>
         </div>
