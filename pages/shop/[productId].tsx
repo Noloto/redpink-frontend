@@ -159,7 +159,15 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        <div className="grid grid-cols-1 md:grid-cols-2 w-screen h-[calc(100vh-30vh)] place-items-center ">
+        <div className="absolute w-full pl-10 pt-6 lg:pl-80 lg:pt-32">
+          <Link href="/shop">
+            <a className="hover:underline text-xs">shop</a>
+          </Link>
+          <p className="inline text-xs">
+            {' >'} {product?.title.toLowerCase()}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex md:w-4/6 justify-self-end">
             <Image
               src={product?.images[0].node.url ?? '/images/capo.png'}

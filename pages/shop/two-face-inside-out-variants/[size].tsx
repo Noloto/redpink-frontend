@@ -116,25 +116,23 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
           {productSizeVariants.map((productVariant: any) => {
             return (
               <>
-                <div className="flex w-full h-full justify-center">
-                  <Image
-                    key={productVariant.node.title}
-                    src={productVariant.node.image.url}
-                    alt={productVariant.node.image.altText ?? 'alt'}
-                    className="cursor-pointer object-cover"
-                    width={300}
-                    height={350}
-                    onClick={() =>
-                      addToCart(
-                        productVariant.node.id,
-                        productVariant.node.title,
-                        productVariant.node.priceV2.amount,
-                        productVariant.node.image,
-                        productVariant.node.variants
-                      )
-                    }
-                  />
-                </div>
+                <Image
+                  key={productVariant.node.title}
+                  src={productVariant.node.image.url}
+                  alt={productVariant.node.image.altText ?? 'alt'}
+                  className="cursor-pointer object-cover"
+                  width={300}
+                  height={350}
+                  onClick={() =>
+                    addToCart(
+                      productVariant.node.id,
+                      productVariant.node.title,
+                      productVariant.node.priceV2.amount,
+                      productVariant.node.image,
+                      productVariant.node.variants
+                    )
+                  }
+                />
               </>
             );
           })}

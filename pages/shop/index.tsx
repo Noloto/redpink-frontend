@@ -32,11 +32,7 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
         <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        {!showMe && (
-          <div className="grid md:grid-cols-3 sm:grid-cols-1 lg:px-48 mb-16 h-[calc(100vh-30vh)] items-center">
-            <ProductList products={products}></ProductList>
-          </div>
-        )}
+        {!showMe && <ProductList products={products}></ProductList>}
       </div>
     </>
   );
