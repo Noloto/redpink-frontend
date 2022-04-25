@@ -29,6 +29,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
 
   const addToCart = (
     id: string,
+    lineId: string,
     title: string,
     price: string,
     images: Image[],
@@ -36,6 +37,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   ) => {
     const CartItem: CartItem = {
       id: id,
+      lineId: lineId,
       title: title,
       price: price,
       images: images,
@@ -114,6 +116,9 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
         <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
         <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
+            {
+              console.log(productVariant.node);
+            }
             return (
               <>
                 <Image
@@ -125,6 +130,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
                   height={350}
                   onClick={() =>
                     addToCart(
+                      productVariant.node.id,
                       productVariant.node.id,
                       productVariant.node.title,
                       productVariant.node.priceV2.amount,

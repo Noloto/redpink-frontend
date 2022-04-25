@@ -6,10 +6,11 @@ import cx from 'classnames';
 import styles from './Cart.module.css';
 import ShopifyClient from '../../shopify-client';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { useRouter } from 'next/router';
 import { useCycle } from 'framer-motion';
+import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity.mutation';
 
 type RequiredProps = {};
 
@@ -24,11 +25,40 @@ const Shop: NextPage<RequiredProps> = () => {
     products: [],
   });
 
-  const removeItem = (uuid: string) => {
-    updateCart({
-      ...cart,
-      products: cart.products.filter((r) => r.uuid !== uuid),
-    });
+  const [isSSR, setIsSSR] = useState(true);
+  useEffect(() => {
+    setIsSSR(false);
+  }, []);
+
+  useEffect(() => {
+    cart.products.length === 0 ?? localStorage.clear;
+  }, [cart]);
+
+  const removeItem = async (uuid: string) => {
+    const index = cart.products.findIndex((e) => e.uuid == uuid);
+    let newCart = cart;
+
+    const cartId = cart.id;
+    const lineId = cart.products[index].lineId;
+    const quantity = 0;
+
+    console.log(cartId);
+    console.log(lineId);
+    console.log(quantity);
+    await ShopifyClient.mutate({
+      mutation: updateLineQuantity,
+      variables: { cartId, lineId, quantity },
+    })
+      .then(async (res: any) => {
+        await updateCart({
+          ...cart,
+          products: cart.products.filter((r) => r.uuid !== uuid),
+        });
+      })
+      .catch((err) => {
+        localStorage.clear;
+        console.log(err);
+      });
   };
 
   const updateAmount = (data: any, element: any) => {
@@ -41,7 +71,26 @@ const Shop: NextPage<RequiredProps> = () => {
       removeItem(data.uuid);
     } else if (index !== -1 && +element.target.value <= 25) {
       newCart.products[index].amount = +element.target.value;
-      updateCart(newCart);
+
+      const cartId = cart.id;
+      const lineId = cart.products[index].id;
+      const quantity = cart.products[index].amount;
+
+      ShopifyClient.query({
+        query: updateLineQuantity,
+        variables: { cartId, lineId, quantity },
+      })
+        .then((res: any) => {
+          updateCart({
+            id: res?.data.cart.id,
+            checkoutUrl: res?.data.cart.checkoutUrl,
+            products: newCart?.products,
+          });
+        })
+        .catch((err) => {
+          localStorage.clear;
+          return;
+        });
     } else if (index !== -1 && +element.target.value > 25) {
       newCart.products[index].amount = 25;
       updateCart(newCart);
@@ -55,18 +104,23 @@ const Shop: NextPage<RequiredProps> = () => {
 
     if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
       const cartId = cart.id;
+
       ShopifyClient.query({
         query: getCartById,
         variables: { cartId },
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res: any) => {
+          updateCart({
+            id: res?.data.cart.id,
+            checkoutUrl: res?.data.cart.checkoutUrl,
+            products: localCartData?.products,
+          });
+        })
+        .catch((err) => {
+          localStorage.clear;
+          return;
+        });
 
-      updateCart({
-        id: localCartData?.id,
-        checkoutUrl: localCartData?.checkoutUrl,
-        products: cart?.products,
-      });
       return;
     }
 
@@ -91,7 +145,7 @@ const Shop: NextPage<RequiredProps> = () => {
 
   return (
     <>
-      {cart.products.length > 0 ? (
+      {!isSSR && cart.products.length > 0 ? (
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             showMe={showMe}

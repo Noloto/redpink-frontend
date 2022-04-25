@@ -85,20 +85,22 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     });
   }, []);
 
-  const addToCart = () => {
+  const addToCart = async () => {
     const cartId = cart.id;
     const variantId = product?.variants[0].node.id;
+    let lineId = '';
 
-    ShopifyClient.mutate({
+    await ShopifyClient.mutate({
       mutation: addItemToCart,
       variables: { cartId, variantId },
-    }).then((res) => {
-      console.log(res);
+    }).then((res: any) => {
+      lineId = res?.data?.cartLinesAdd.cart.lines.edges[0].node.id;
     });
 
     if (product) {
       const CartItem: CartItem = {
         id: product.id,
+        lineId: lineId,
         uuid: nanoid(),
         title: product.title,
         price: product.price,
@@ -117,11 +119,11 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
       if (isCartItem == -1) {
         let newProducts = cart.products;
         newProducts.push(CartItem);
-        updateCart({ ...cart, products: newProducts });
+        await updateCart({ ...cart, products: newProducts });
       } else {
         newCart.products[isCartItem].amount =
           1 + newCart.products[isCartItem].amount!;
-        updateCart(newCart);
+        await updateCart(newCart);
       }
     }
   };
@@ -159,7 +161,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
-        <div className="absolute w-full pl-10 pt-6 lg:pl-80 lg:pt-32">
+        <div className="absolute w-full pl-10 pt-6 lg:pl-96 lg:pt-32">
           <Link href="/shop">
             <a className="hover:underline text-xs">shop</a>
           </Link>
@@ -168,7 +170,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
-          <div className="flex md:w-4/6 justify-self-end">
+          <div className="flex md:w-3/6 md:justify-self-end">
             <Image
               src={product?.images[0].node.url ?? '/images/capo.png'}
               alt="product"
@@ -177,12 +179,12 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
               className="object-cover"
             />
           </div>
-          <div className="flex flex-col gap-6 justify-self-start pl-12 md:pl-0 md:w-2/6">
+          <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
             <button
               className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
-              onClick={addToCart}
+              onClick={() => addToCart()}
             >
               Add To Cart
             </button>
