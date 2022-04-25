@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       </Head>
 
       <a href={NAVIGATION_ITEMS.SHOP}>
-        <div className="flex w-screen h-screen">
+        <div className="flex w-screen h-screen max-h-screen">
           <Image
             src="/images/heroAnimation.gif"
             className="object-cover md:object-contain"
