@@ -41,7 +41,6 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
           showMe={showMe}
           setShowMe={() => setShowMe()}
         ></Navigation>
-        {console.log(productData)}
         {!showMe && <ProductList products={products}></ProductList>}
       </div>
     </>
