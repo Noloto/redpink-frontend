@@ -3,7 +3,7 @@ enum SOCIAL_MEDIA_LINK {
 }
 
 enum SOCIAL_MEDIA_TITLE {
-  INSTAGRAM = 'Insta',
+  INSTAGRAM = 'Instagram',
 }
 
 export { SOCIAL_MEDIA_LINK, SOCIAL_MEDIA_TITLE };

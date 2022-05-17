@@ -5,25 +5,44 @@ import { productsQuery } from '../../common/queries/products/products.query';
 import Navigation from '../../components/Navigation/Navigation';
 import ProductList from '../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
+import { useCycle } from 'framer-motion';
 
 type RequiredProps = {
-  productData: Array<Object>;
+  productData: any;
 };
+
 const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
-  const [products, setProducts] = useState<Array<Object>>([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [showMe, setShowMe] = useCycle(false, true);
+
+  const [cart, setCart] = useState<Cart>();
+  useEffect(() => {
+    setCart(JSON.parse(window.localStorage.getItem('CART') as string));
+  }, []);
 
   useEffect(() => {
-    const productsArray: Array<Object> = Object.values(productData);
-    setProducts(productsArray[0] as Array<Object>);
+    setProducts(
+      productData.productData.map((p: any) => {
+        return {
+          id: p.node?.id,
+          title: p.node?.title,
+          price: p.node?.priceRange?.minVariantPrice?.amount,
+          images: p.node?.images?.edges,
+        };
+      })
+    );
   }, []);
 
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation></Navigation>
-        <div className="grid md:grid-cols-3 sm:grid-cols-1">
-          <ProductList products={products}></ProductList>
-        </div>
+        <Navigation
+          cart={cart}
+          showMe={showMe}
+          setShowMe={() => setShowMe()}
+        ></Navigation>
+        {console.log(productData)}
+        {!showMe && <ProductList products={products}></ProductList>}
       </div>
     </>
   );

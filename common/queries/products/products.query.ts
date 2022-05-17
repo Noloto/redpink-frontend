@@ -4,7 +4,9 @@ export const productsQuery = gql`
     products(first: 100) {
       edges {
         node {
+          id
           title
+          description
           priceRange {
             minVariantPrice {
               amount
@@ -16,6 +18,21 @@ export const productsQuery = gql`
               node {
                 url
                 altText
+              }
+            }
+          }
+          variants(first: 100) {
+            edges {
+              node {
+                id
+                title
+                image {
+                  url
+                  altText
+                }
+                priceV2 {
+                  amount
+                }
               }
             }
           }

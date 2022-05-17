@@ -1,27 +1,29 @@
 import Product from '../Product/Product';
 import Link from 'next/link';
 type RequiredProps = {
-  products: Array<Object>;
+  products: Product[];
 };
 
 const Products: React.FC<RequiredProps> = ({ products }) => {
   return (
-    <>
-      {products.map((p: any, idx: number) => {
+    <div className="grid md:grid-cols-3 sm:grid-cols-1 lg:px-48 pb-16 mt-16 items-center h-full">
+      {products.map((p: Product, idx: number) => {
         return (
-          <Link href={`/shop/${p.node.title}`} key={p.node.title} passHref>
+          <Link href={`/shop/${p.title}`} key={p.title} passHref>
             <a>
               <Product
-                imageSrc={p.node.images.edges[0].node.url}
-                price={p.node.priceRange.minVariantPrice.amount}
-                name={p.node.title}
                 key={idx}
+                id={p.id}
+                name={p.title}
+                price={p.price}
+                images={p.images}
+                variants={p.variants}
               ></Product>
             </a>
           </Link>
         );
       })}
-    </>
+    </div>
   );
 };
 export default Products;

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 
 import type { NextPage } from 'next';
-import { NAVIGATION_ITEMS } from '../enums/navigation';
+import { NAVIGATION_ITEMS } from '../common/enums/navigation';
 
 const Home: NextPage = () => {
   return (
@@ -14,11 +14,12 @@ const Home: NextPage = () => {
       </Head>
 
       <a href={NAVIGATION_ITEMS.SHOP}>
-        <div className="w-screen h-screen">
+        <div className="flex w-screen h-screen max-h-screen">
           <Image
-            src="/images/mawsoni-hero-animation.gif"
-            className="relative object-contain w-full h-full"
-            layout="fill"
+            src="/images/heroAnimation.gif"
+            className="object-cover md:object-contain"
+            width={1920}
+            height={1080}
             alt="Click to get to the shop"
           />
         </div>

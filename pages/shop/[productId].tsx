@@ -7,63 +7,140 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
+import { hoodieSizes } from '../../common/enums/constants';
+import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
+import { useCycle } from 'framer-motion';
+import cx from 'classnames';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { createCart } from '../../common/queries/cart/createCart.mutation';
 
 type RequiredProps = {
   productData: any;
 };
 
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
-  const [product, setProduct] = useState<any>([]);
-  const [uuid, setUUID] = useState(nanoid());
-  const [imageSrc, setImageSrc] = useState('/');
-  const [price, setPrice] = useState('');
-  const [name, setName] = useState('');
   const [pathName, setPathName] = useState('');
+  const [showMe, setShowMe] = useCycle(false, true);
+  const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
 
-  const hoodieSizes = ['S-M', 'M-L', 'L-XL'];
-
-  const [cart, setCartItem] = useLocalStorage<Array<CartItem>>('CART', []);
-
-  const addToCart = () => {
-    const CartItem: CartItem = {
-      uuid: uuid,
-      productName: name,
-      price: price,
-      amount: quantity,
-      imageSrc: imageSrc,
-    };
-
-    const isCartItem = cart.findIndex((e: any) => e.productName === name);
-    // TODO: Check for variant
-    if (isCartItem == -1) {
-      setCartItem((prevState) => [...prevState, CartItem]);
-    } else {
-      let newCart = [...cart];
-      newCart[isCartItem].amount = quantity + newCart[isCartItem].amount;
-      setCartItem(newCart);
-    }
-  };
-
-  useEffect(() => {
-    productData.map((p: any) => {
-      if (p != null) {
-        const product: any = Object.values(p)[1];
-        setImageSrc(product.images.edges[0].node.url);
-        setPrice(product.priceRange.minVariantPrice.amount);
-        setName(product.title);
-      }
-    });
-  }, [product, imageSrc, price, name, productData]);
+  const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
     setPathName(window.location.pathname);
   }, []);
+
+  useEffect(() => {
+    let localCartData = JSON.parse(
+      window.localStorage.getItem('CART') as string
+    );
+
+    if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
+      const cartId = cart.id;
+      ShopifyClient.query({
+        query: getCartById,
+        variables: { cartId },
+      }).then((res) => {
+        console.log(res);
+      });
+
+      updateCart({
+        id: localCartData?.id,
+        checkoutUrl: localCartData?.checkoutUrl,
+        products: cart?.products,
+      });
+      return;
+    }
+
+    const getCart = async () => {
+      const { data } = await ShopifyClient.mutate({
+        mutation: createCart,
+      });
+
+      updateCart({
+        id: data.cartCreate.cart.id,
+        checkoutUrl: data.cartCreate.cart.checkoutUrl,
+        products: cart.products,
+      });
+    };
+
+    getCart();
+  }, []);
+
+  useEffect(() => {
+    productData.map((p: any) => {
+      if (p !== null) {
+        setProduct({
+          id: p.node?.id,
+          title: p.node?.title,
+          description: p.node?.description,
+          price: p.node?.priceRange?.minVariantPrice?.amount,
+          images: p.node?.images?.edges,
+          variants: p.node?.variants?.edges,
+        });
+      }
+    });
+  }, []);
+
+  const addToCart = async () => {
+    const cartId = cart.id;
+    const variantId = product?.variants[0].node.id;
+    let lineId = '';
+
+    await ShopifyClient.mutate({
+      mutation: addItemToCart,
+      variables: { cartId, variantId, quantity },
+    }).then((res: any) => {
+      lineId = res?.data?.cartLinesAdd.cart.lines.edges[0].node.id;
+    });
+
+    if (product) {
+      const CartItem: CartItem = {
+        id: product.id,
+        lineId: lineId,
+        uuid: nanoid(),
+        description: product.description,
+        title: product.title,
+        price: product.price,
+        images: product.images,
+        variants: product.variants,
+        onlyOne: false,
+        amount: 1,
+      };
+
+      let newCart: Cart = cart;
+
+      const isCartItem = cart.products.findIndex(
+        (e: CartItem) => e.title === product?.title
+      );
+
+      if (isCartItem == -1) {
+        let newProducts = cart.products;
+        newProducts.push(CartItem);
+        await updateCart({ ...cart, products: newProducts });
+      } else {
+        newCart.products[isCartItem].amount =
+          1 + newCart.products[isCartItem].amount!;
+        await updateCart(newCart);
+      }
+    }
+  };
+
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
-          <Navigation></Navigation>
+          <Navigation
+            cart={cart}
+            showMe={showMe}
+            setShowMe={() => setShowMe()}
+          ></Navigation>
           <div className="grid items-center justify-center mt-32">
             <p className="text-3xl">CHOOSE YOUR SIZE</p>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
@@ -88,25 +165,70 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
-        <Navigation></Navigation>
-        <div className="grid md:grid-cols-2 sm:grid-cols-1 w-full h-[calc(100vh-30vh)] items-center justify-center">
-          <div className="flex items-center justify-center">
+        <Navigation
+          cart={cart}
+          showMe={showMe}
+          setShowMe={() => setShowMe()}
+        ></Navigation>
+        <div className="absolute w-full pl-10 pt-6 lg:pl-96 lg:pt-32">
+          <Link href="/shop">
+            <a className="hover:underline text-xs">shop</a>
+          </Link>
+          <p className="inline text-xs">
+            {' >'} {product?.title.toLowerCase()}
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
+          <div className="flex md:w-3/6 md:justify-self-end">
             <Image
-              src={imageSrc}
+              src={product?.images[0].node.url ?? '/images/capo.png'}
               alt="product"
-              width={500}
-              height={450}
+              width={1920}
+              height={1080}
               className="object-cover"
             />
           </div>
-          <div className="flex items-start justify-center flex-col gap-10 h-full w-full">
-            <p className="text-xl">{name}</p>
-            <p className=" text-lg">{price}</p>
-            <button
-              className="border-[#ed7878] border-[2px] border-solid px-10 py-5 bg-transparent text-redpink"
-              onClick={addToCart}
+          <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
+            <p className="text-xl italic">{product?.title}</p>
+            <p className="text-sm">{product?.price} $</p>
+            <p className="text-sm">{product?.description}</p>
+            <label
+              htmlFor="quantityCounter"
+              className="flex flex-row text-redpink gap-6"
             >
-              Add To Cart
+              <button onClick={() => setQuantity(quantity + 1)}>+</button>
+              <p>{quantity}</p>
+              <button
+                onClick={() =>
+                  setQuantity(quantity <= 1 ? quantity : quantity - 1)
+                }
+              >
+                -
+              </button>
+            </label>
+            <input
+              className="hidden"
+              id="quantityCounter"
+              type="number"
+              min={1}
+            ></input>
+            <button
+              className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
+              onClick={() => {
+                addToCart();
+                setIsAdding(true);
+                setTimeout(() => {
+                  setIsAdding(false);
+                  setIsAdded(true);
+                  setTimeout(() => {
+                    setIsAdded(false);
+                  }, 2000);
+                }, 750);
+              }}
+            >
+              {isAdding && 'Adding...'}
+              {isAdded && 'Added!'}
+              {!isAdded && !isAdding ? 'Add To Cart' : ''}
             </button>
           </div>
         </div>
