@@ -230,7 +230,7 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
                   />
                 </svg>
                 {cart?.products && cart?.products?.length > 0 && (
-                  <p className="flex text-xs border-redpink rounded-full border-4 bg-redpink text-white h-4 items-center">
+                  <p className="flex text-xs border-redpink rounded-full border-4 bg-redpink text-white h-4 items-center scale-90">
                     <div>{cart.products.length}</div>
                   </p>
                 )}

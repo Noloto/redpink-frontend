@@ -6,6 +6,7 @@ export const productsQuery = gql`
         node {
           id
           title
+          description
           priceRange {
             minVariantPrice {
               amount

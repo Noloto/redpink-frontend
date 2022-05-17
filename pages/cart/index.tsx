@@ -152,63 +152,74 @@ const Shop: NextPage<RequiredProps> = () => {
             showMe={showMe}
             setShowMe={() => setShowMe()}
           ></Navigation>
-          {cart.products.map((product, idx) => {
-            return (
-              <div
-                key={idx}
-                className="flex justify-evenly items-center my-16 w-full"
-              >
-                <div className="w-32 md:w-56">
-                  <Image
-                    src={
-                      // TODO: notfound image & hoodie image
-                      product?.images[0]?.node?.url ??
-                      '/images/heroAnimation.gif'
-                    }
-                    alt="Product in the Cart"
-                    width={500}
-                    height={450}
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex gap-10">
-                  <p>{product.title}</p>
-                  <p>{+product.price! * product.amount!}</p>
-                  <input
-                    type="number"
-                    className="text-redpink w-8"
-                    name={product.title}
-                    value={product.amount}
-                    max={25}
-                    onChange={(e) => updateAmount(product, e)}
-                  ></input>
-                </div>
+          <h3 className="text-redpink italic absolute ml-4 md:mt-24 md:ml-44 text-xl">
+            Shopping Cart
+          </h3>
+          <div className="md:mt-44">
+            {cart.products.map((product, idx) => {
+              return (
                 <div
-                  className="cursor-pointer"
-                  onClick={() => removeItem(product.uuid)}
+                  key={idx}
+                  className="flex justify-evenly items-center my-16 w-full"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="#ed7878"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
+                  <div className="flex w-32 md:w-56 flex-row">
+                    <Image
+                      src={
+                        // TODO: notfound image & hoodie image
+                        product?.images[0]?.node?.url ??
+                        '/images/heroAnimation.gif'
+                      }
+                      alt="Product in the Cart"
+                      width={500}
+                      height={450}
+                      className="object-cover"
                     />
-                  </svg>
+                    <p>{product.title}</p>
+                  </div>
+                  <div className="flex gap-10">
+                    <input
+                      type="number"
+                      className="text-redpink w-8"
+                      name={product.title}
+                      value={product.amount}
+                      max={25}
+                      onChange={(e) => updateAmount(product, e)}
+                    ></input>
+                  </div>
+                  <div
+                    className="flex cursor-pointer flex-row"
+                    onClick={() => removeItem(product.uuid)}
+                  >
+                    <p className="mr-12">
+                      ${+product.price! * product.amount!}.00
+                    </p>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="#ed7878"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
-          <div className="flex justify-end px-10">
+              );
+            })}
+          </div>
+          <div className="flex justify-end px-10 flex-col">
+            <div className="flex flex-row justify-between">
+              <p className="text-redpink">Subtotal</p>
+              <p>TOTAL</p>
+            </div>
             <button
               onClick={() => goToCheckout()}
-              className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-1/3 md:w-1/12 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
+              className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-full md:w-1/12 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
             >
               Checkout
             </button>

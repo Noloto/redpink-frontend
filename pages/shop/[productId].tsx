@@ -79,6 +79,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
         setProduct({
           id: p.node?.id,
           title: p.node?.title,
+          description: p.node?.description,
           price: p.node?.priceRange?.minVariantPrice?.amount,
           images: p.node?.images?.edges,
           variants: p.node?.variants?.edges,
@@ -104,6 +105,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
         id: product.id,
         lineId: lineId,
         uuid: nanoid(),
+        description: product.description,
         title: product.title,
         price: product.price,
         images: product.images,
@@ -189,6 +191,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
+            <p className="text-sm">{product?.description}</p>
             <label
               htmlFor="quantityCounter"
               className="flex flex-row text-redpink gap-6"
