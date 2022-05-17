@@ -21,7 +21,9 @@ type RequiredProps = {
 const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   const [pathName, setPathName] = useState('');
   const [showMe, setShowMe] = useCycle(false, true);
-
+  const [isAdding, setIsAdding] = useState(false);
+  const [isAdded, setIsAdded] = useState(false);
+  const [quantity, setQuantity] = useState(1);
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
     checkoutUrl: 'NOT INIZIALIZED',
@@ -92,7 +94,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
 
     await ShopifyClient.mutate({
       mutation: addItemToCart,
-      variables: { cartId, variantId },
+      variables: { cartId, variantId, quantity },
     }).then((res: any) => {
       lineId = res?.data?.cartLinesAdd.cart.lines.edges[0].node.id;
     });
@@ -128,14 +130,12 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     }
   };
 
-  const [isAdding, setIsAdding] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
-
   if (pathName === '/shop/Two%20Face%20Reversible') {
     return (
       <>
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
           <Navigation
+            cart={cart}
             showMe={showMe}
             setShowMe={() => setShowMe()}
           ></Navigation>
@@ -163,7 +163,11 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
-        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
+        <Navigation
+          cart={cart}
+          showMe={showMe}
+          setShowMe={() => setShowMe()}
+        ></Navigation>
         <div className="absolute w-full pl-10 pt-6 lg:pl-96 lg:pt-32">
           <Link href="/shop">
             <a className="hover:underline text-xs">shop</a>
@@ -185,6 +189,26 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
+            <label
+              htmlFor="quantityCounter"
+              className="flex flex-row text-redpink gap-6"
+            >
+              <button onClick={() => setQuantity(quantity + 1)}>+</button>
+              <p>{quantity}</p>
+              <button
+                onClick={() =>
+                  setQuantity(quantity <= 1 ? quantity : quantity - 1)
+                }
+              >
+                -
+              </button>
+            </label>
+            <input
+              className="hidden"
+              id="quantityCounter"
+              type="number"
+              min={1}
+            ></input>
             <button
               className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
               onClick={() => {
@@ -195,8 +219,8 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
                   setIsAdded(true);
                   setTimeout(() => {
                     setIsAdded(false);
-                  }, 500);
-                }, 2000);
+                  }, 2000);
+                }, 750);
               }}
             >
               {isAdding && 'Adding...'}

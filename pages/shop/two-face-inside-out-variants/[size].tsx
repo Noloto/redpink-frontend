@@ -113,7 +113,11 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
+        <Navigation
+          cart={cart}
+          showMe={showMe}
+          setShowMe={() => setShowMe()}
+        ></Navigation>
         <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
             {

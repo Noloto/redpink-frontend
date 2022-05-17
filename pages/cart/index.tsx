@@ -148,6 +148,7 @@ const Shop: NextPage<RequiredProps> = () => {
       {!isSSR && cart.products.length > 0 ? (
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
+            cart={cart}
             showMe={showMe}
             setShowMe={() => setShowMe()}
           ></Navigation>
@@ -217,6 +218,7 @@ const Shop: NextPage<RequiredProps> = () => {
         <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             showMe={showMe}
+            cart={cart}
             setShowMe={() => setShowMe()}
           ></Navigation>
           <div className="flex justify-center flex-col items-center h-[calc(100vh-30vh)] gap-16">
