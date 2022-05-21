@@ -143,6 +143,12 @@ const Shop: NextPage<RequiredProps> = () => {
     router.push(cart.checkoutUrl);
   };
 
+  let total = 0;
+
+  for (let i = 0; i < cart.products.length; i++) {
+    total += +cart.products[i].price * +cart.products[i].amount;
+  }
+
   return (
     <>
       {!isSSR && cart.products.length > 0 ? (
@@ -155,7 +161,7 @@ const Shop: NextPage<RequiredProps> = () => {
           <h3 className="text-redpink italic absolute ml-4 md:mt-24 md:ml-44 text-xl">
             Shopping Cart
           </h3>
-          <div className="md:mt-44">
+          <div>
             {cart.products.map((product, idx) => {
               return (
                 <div
@@ -212,17 +218,20 @@ const Shop: NextPage<RequiredProps> = () => {
               );
             })}
           </div>
-          <div className="flex justify-end px-10 flex-col">
-            <div className="flex flex-row justify-between">
+          <div className="border-b-[1px] border-border md:mt-44 mx-5 md:mx-10" />
+          <div className="flex justify-end px-10 flex-col mt-10 md:mt-10">
+            <div className="flex flex-row justify-between md:justify-end md:gap-72 mb-6">
               <p className="text-redpink">Subtotal</p>
-              <p>TOTAL</p>
+              <p className="mr-0 md:mr-3">{`${total} $`}</p>
             </div>
-            <button
-              onClick={() => goToCheckout()}
-              className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-full md:w-1/12 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
-            >
-              Checkout
-            </button>
+            <div className="md:flex md:justify-end">
+              <button
+                onClick={() => goToCheckout()}
+                className="border-[#ed7878] border-[2px] border-solid py-2 bg-transparent text-redpink w-full md:w-1/4 md:py-3 hover:bg-redpink hover:text-white transition duration-300"
+              >
+                Checkout
+              </button>
+            </div>
           </div>
         </div>
       ) : (

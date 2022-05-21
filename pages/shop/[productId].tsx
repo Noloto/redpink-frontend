@@ -46,8 +46,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
       ShopifyClient.query({
         query: getCartById,
         variables: { cartId },
-      }).then((res) => {
-        console.log(res);
       });
 
       updateCart({
@@ -144,18 +142,16 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           <div className="grid items-center justify-center mt-32">
             <p className="text-3xl">CHOOSE YOUR SIZE</p>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
-              {hoodieSizes.map((size) => {
-                return (
-                  <div
-                    key={size}
-                    className="border-2 border-redpink rounded-sm text-center py-3 text-xl mt-8 md:mr-8 md:px-16"
-                  >
-                    <Link href={`/shop/two-face-inside-out-variants/${size}`}>
-                      <a className="">{size}</a>
-                    </Link>
-                  </div>
-                );
-              })}
+              {hoodieSizes.map((size) => (
+                <div
+                  key={size}
+                  className="border-2 border-redpink rounded-sm text-center py-3 text-xl mt-8 md:mr-8 md:px-16"
+                >
+                  <Link href={`/shop/two-face-inside-out-variants/${size}`}>
+                    <a className="">{size}</a>
+                  </Link>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -170,13 +166,11 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
           showMe={showMe}
           setShowMe={() => setShowMe()}
         ></Navigation>
-        <div className="absolute w-full pl-10 pt-6 lg:pl-96 lg:pt-32">
+        <div className="absolute w-full pl-10  lg:pl-96 lg:pt-32">
           <Link href="/shop">
             <a className="hover:underline text-xs">shop</a>
           </Link>
-          <p className="inline text-xs">
-            {' >'} {product?.title.toLowerCase()}
-          </p>
+          <p className="inline text-xs">{` > ${product?.title.toLowerCase()}`}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
           <div className="flex md:w-3/6 md:justify-self-end">

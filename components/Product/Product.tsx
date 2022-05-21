@@ -23,7 +23,7 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({ name, images }) => {
           height={1080}
           className="cursor-pointer object-cover"
         />
-        <p>{name}</p>
+        <span>{name}</span>
       </div>
     </>
   );
