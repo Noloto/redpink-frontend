@@ -32,6 +32,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
     lineId: string,
     title: string,
     price: string,
+    description: string,
     images: Image[],
     variants: Variant[]
   ) => {
@@ -40,6 +41,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
       lineId: lineId,
       title: title,
       price: price,
+      description: description,
       images: images,
       variants: variants,
       uuid: nanoid(),
@@ -84,7 +86,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
         query: getCartById,
         variables: { cartId },
       }).then((res) => {
-        console.log(res);
+        return res;
       });
 
       updateCart({
@@ -138,6 +140,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
                       productVariant.node.id,
                       productVariant.node.title,
                       productVariant.node.priceV2.amount,
+                      productVariant.node.description,
                       productVariant.node.image,
                       productVariant.node.variants
                     )
