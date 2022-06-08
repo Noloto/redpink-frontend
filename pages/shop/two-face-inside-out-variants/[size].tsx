@@ -32,6 +32,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
     lineId: string,
     title: string,
     price: string,
+    description: string,
     images: Image[],
     variants: Variant[]
   ) => {
@@ -40,6 +41,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
       lineId: lineId,
       title: title,
       price: price,
+      description: description,
       images: images,
       variants: variants,
       uuid: nanoid(),
@@ -84,7 +86,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
         query: getCartById,
         variables: { cartId },
       }).then((res) => {
-        console.log(res);
+        return res;
       });
 
       updateCart({
@@ -113,7 +115,11 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation showMe={showMe} setShowMe={() => setShowMe()}></Navigation>
+        <Navigation
+          cart={cart}
+          showMe={showMe}
+          setShowMe={() => setShowMe()}
+        ></Navigation>
         <div className="grid min-w-screen items-center sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           {productSizeVariants.map((productVariant: any) => {
             {
@@ -134,6 +140,7 @@ const ProductVariants: NextPage<RequiredProps> = ({ productVariants }) => {
                       productVariant.node.id,
                       productVariant.node.title,
                       productVariant.node.priceV2.amount,
+                      productVariant.node.description,
                       productVariant.node.image,
                       productVariant.node.variants
                     )

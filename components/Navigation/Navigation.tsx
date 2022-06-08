@@ -1,7 +1,5 @@
 import Link from 'next/link';
 import cx from 'classnames';
-import Image from 'next/image';
-import styles from './Navigation.module.css';
 
 import {
   NAVIGATION_ITEMS,
@@ -16,6 +14,7 @@ import { useDimensions } from '../../common/utils/use-dimensions';
 type RequiredProps = {
   showMe: boolean;
   setShowMe: () => void;
+  cart: Cart | undefined;
 };
 type OptionalProps = {
   className?: string;
@@ -24,6 +23,7 @@ type OptionalProps = {
 const Navigation: React.FC<RequiredProps & OptionalProps> = ({
   className,
   showMe,
+  cart,
   setShowMe,
 }) => {
   const [whereAmI, setWhereAmI] = useState<string>();
@@ -31,11 +31,8 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
   const containerRef = useRef(null);
   const height = useDimensions(containerRef);
 
-  const [cart, setCart] = useState<Cart>();
-
   useEffect(() => {
     setWhereAmI(`/${window.location.pathname.split('/', 2)[1]}`);
-    setCart(JSON.parse(window.localStorage.getItem('CART') as string));
   }, []);
 
   return (
@@ -88,7 +85,7 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
           </div>
 
           <div
-            className={`h-2/3 flex justify-center items-center flex-col gap-10 text-3xl `}
+            className={`h-2/3 flex justify-center items-center flex-col gap-10 text-3xl`}
           >
             <Link href={NAVIGATION_ITEMS.HOME} passHref>
               <a className="text-[black]">{NAVIGATION_TITLES.HOME}</a>
@@ -118,20 +115,25 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
           <div className="flex justify-center w-1/6">
             <Link href={NAVIGATION_ITEMS.CART} passHref>
               <a>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                  />
-                </svg>
+                <div className="flex">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                    />
+                  </svg>
+                  {cart?.products && cart?.products?.length > 0 && (
+                    <p className="flex text-xs">{cart.products.length}</p>
+                  )}
+                </div>
               </a>
             </Link>
           </div>
@@ -179,7 +181,7 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
         </div>
         <div className="flex w-1/6 justify-evenly">
           <Link href={SOCIAL_MEDIA_LINK.INSTAGRAM} passHref>
-            <a>
+            <a target="_blank">
               <svg
                 className="w-8 h-8"
                 viewBox="0 0 26 25"
@@ -227,8 +229,10 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                   />
                 </svg>
-                {cart && cart.products.length > 0 && (
-                  <p className="flex text-xs">{cart.products.length}</p>
+                {cart?.products && cart?.products?.length > 0 && (
+                  <div className="flex text-xs border-redpink rounded-full border-4 bg-redpink text-white h-4 items-center scale-90">
+                    <p className="text-white">{cart.products.length}</p>
+                  </div>
                 )}
               </div>
             </a>
