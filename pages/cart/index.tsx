@@ -42,9 +42,6 @@ const Shop: NextPage<RequiredProps> = () => {
     const lineId = cart.products[index].lineId;
     const quantity = 0;
 
-    console.log(cartId);
-    console.log(lineId);
-    console.log(quantity);
     await ShopifyClient.mutate({
       mutation: updateLineQuantity,
       variables: { cartId, lineId, quantity },

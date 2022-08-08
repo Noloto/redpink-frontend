@@ -45,8 +45,6 @@ const Home: NextPage = () => {
             <button
               className="text-white border-[1px] px-10 py-2"
               onClick={() => {
-                console.log(password);
-                console.log(process.env.PASSWORD);
                 if (password !== process.env.PASSWORD) return;
                 if (password === process.env.PASSWORD) {
                   router.push(NAVIGATION_ITEMS.SHOP);
