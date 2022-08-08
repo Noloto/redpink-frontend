@@ -3,8 +3,18 @@ import Image from 'next/image';
 
 import type { NextPage } from 'next';
 import { NAVIGATION_ITEMS } from '../common/enums/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  const [password, setPassword] = useState(null);
+
+  const handleChange = (event: any) => {
+    setPassword(event.target.value);
+  };
+
   return (
     <>
       <Head>
@@ -13,17 +23,53 @@ const Home: NextPage = () => {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      <a href={NAVIGATION_ITEMS.SHOP}>
-        <div className="flex w-screen h-screen max-h-screen">
-          <Image
-            src="/images/heroAnimation.gif"
-            className="object-cover md:object-contain"
-            width={1920}
-            height={1080}
-            alt="Click to get to the shop"
-          />
-        </div>
-      </a>
+      {process.env.MAINTENANCE ? (
+        <>
+          <div
+            className="h-screen w-screen flex justify-center items-center flex-col gap-14"
+            style={{
+              backgroundImage: 'url(/images/heroAnimation.gif)',
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover',
+            }}
+          >
+            <h2 className="text-white text-2xl">
+              We are currently under Maintenance ^^
+            </h2>
+            <input
+              type="password"
+              className="text-white px-2 py-2"
+              style={{ background: 'transparent', border: '1px solid white' }}
+              onChange={handleChange}
+            ></input>
+            <button
+              className="text-white border-[1px] px-10 py-2"
+              onClick={() => {
+                console.log(password);
+                console.log(process.env.PASSWORD);
+                if (password !== process.env.PASSWORD) return;
+                if (password === process.env.PASSWORD) {
+                  router.push(NAVIGATION_ITEMS.SHOP);
+                }
+              }}
+            >
+              Enter
+            </button>
+          </div>
+        </>
+      ) : (
+        <a href={NAVIGATION_ITEMS.SHOP}>
+          <div className="flex w-screen h-screen max-h-screen">
+            <Image
+              src="/images/heroAnimation.gif"
+              className="object-cover md:object-contain"
+              width={1920}
+              height={1080}
+              alt="Click to get to the shop"
+            />
+          </div>
+        </a>
+      )}
     </>
   );
 };
