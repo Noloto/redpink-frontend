@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import Image from 'next/image';
 
 type RequiredProps = {
@@ -12,10 +13,22 @@ type OptionalProps = {
   className?: string;
 };
 
-const Product: React.FC<RequiredProps & OptionalProps> = ({ name, images }) => {
+const Product: React.FC<RequiredProps & OptionalProps> = ({
+  id,
+  name,
+  images,
+  price,
+  variants,
+  className,
+}) => {
   return (
     <>
-      <div className="flex place-items-center flex-col text-sm mb-16">
+      <div
+        className={cx(
+          className,
+          'flex place-items-center flex-col text-sm mb-16'
+        )}
+      >
         <Image
           src={images[0].node.url}
           alt={images[0].node.altText}

@@ -6,7 +6,12 @@ type RequiredProps = {
 
 const Products: React.FC<RequiredProps> = ({ products }) => {
   return (
-    <div className="grid md:grid-cols-3 sm:grid-cols-1 lg:px-48 pb-16 mt-16 items-center h-full">
+    <div
+      className={`grid sm:grid-cols-1 lg:px-48 ${
+        products.length > 3 ? 'mt-24' : ' items-center h-[calc(100vh-25vh)]'
+      }
+      ${products.length <= 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}
+    >
       {products.map((p: Product, idx: number) => {
         return (
           <Link href={`/shop/${p.title}`} key={p.title} passHref>
@@ -18,6 +23,7 @@ const Products: React.FC<RequiredProps> = ({ products }) => {
                 price={p.price}
                 images={p.images}
                 variants={p.variants}
+                className={products.length <= 2 ? 'w-4/5' : ''}
               ></Product>
             </a>
           </Link>

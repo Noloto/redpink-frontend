@@ -155,9 +155,10 @@ const Shop: NextPage<RequiredProps> = () => {
             showMe={showMe}
             setShowMe={() => setShowMe()}
           ></Navigation>
-          <h3 className="text-redpink italic absolute ml-4 md:mt-24 md:ml-44 text-xl">
+          <h3 className=" text-redpink italic ml-4 md:mt-24 md:ml-44 text-xl">
             Shopping Cart
           </h3>
+
           <div>
             {cart.products.map((product, idx) => {
               return (
@@ -194,7 +195,7 @@ const Shop: NextPage<RequiredProps> = () => {
                     onClick={() => removeItem(product.uuid)}
                   >
                     <p className="mr-12">
-                      ${+product.price! * product.amount!}.00
+                      $ {+product.price! * product.amount!}.00
                     </p>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +216,7 @@ const Shop: NextPage<RequiredProps> = () => {
               );
             })}
           </div>
-          <div className="border-b-[1px] border-border md:mt-44 mx-5 md:mx-10" />
+          <div className="border-b-[1px] border-redpink md:mt-22 mx-5 md:mx-10" />
           <div className="flex justify-end px-10 flex-col mt-10 md:mt-10">
             <div className="flex flex-row justify-between md:justify-end md:gap-72 mb-6">
               <p className="text-redpink">Subtotal</p>

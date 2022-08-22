@@ -28,12 +28,12 @@ const Home: NextPage = () => {
           <div
             className="h-screen w-screen flex justify-center items-center flex-col gap-14"
             style={{
-              backgroundImage: 'url(/images/heroAnimation.gif)',
-              backgroundRepeat: 'no-repeat',
+              background:
+                'url(/images/heroAnimation.gif) no-repeat center fixed',
               backgroundSize: 'cover',
             }}
           >
-            <h2 className="text-white text-2xl">
+            <h2 className="text-white text-2xl text-center">
               We are currently under Maintenance ^^
             </h2>
             <input

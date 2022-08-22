@@ -176,7 +176,9 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
         </div>
         <div className="flex w-2/6 justify-center items-center m-[0_auto]">
           <Link href={NAVIGATION_ITEMS.SHOP}>
-            <a className="text-2xl">･*。　 　･°　　　°。* 。　　･°</a>
+            <a className="text-2xl ml-6">
+              ･*。 　 　･° 　　　°。 * 。 　　　　　　 　　　　･°
+            </a>
           </Link>
         </div>
         <div className="flex w-1/6 justify-evenly">

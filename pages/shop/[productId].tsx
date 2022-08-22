@@ -130,34 +130,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     }
   };
 
-  if (pathName === '/shop/Two%20Face%20Reversible') {
-    return (
-      <>
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen text-center justify-center">
-          <Navigation
-            cart={cart}
-            showMe={showMe}
-            setShowMe={() => setShowMe()}
-          ></Navigation>
-          <div className="grid items-center justify-center mt-32">
-            <p className="text-3xl">CHOOSE YOUR SIZE</p>
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 mt-16">
-              {hoodieSizes.map((size) => (
-                <div
-                  key={size}
-                  className="border-2 border-redpink rounded-sm text-center py-3 text-xl mt-8 md:mr-8 md:px-16"
-                >
-                  <Link href={`/shop/two-face-inside-out-variants/${size}`}>
-                    <a className="">{size}</a>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </>
-    );
-  }
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
@@ -190,8 +162,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
               htmlFor="quantityCounter"
               className="flex flex-row text-redpink gap-6"
             >
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
-              <p>{quantity}</p>
               <button
                 onClick={() =>
                   setQuantity(quantity <= 1 ? quantity : quantity - 1)
@@ -199,6 +169,8 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
               >
                 -
               </button>
+              <p>{quantity}</p>
+              <button onClick={() => setQuantity(quantity + 1)}>+</button>
             </label>
             <input
               className="hidden"
