@@ -3,7 +3,7 @@ import ShopifyClient from '../../shopify-client';
 import { productsQuery } from '../../common/queries/products/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
-import ProductList from '../../components/ProductList/ProductList';
+import Products from '../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
 import { useCycle } from 'framer-motion';
 
@@ -41,7 +41,7 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
           showMe={showMe}
           setShowMe={() => setShowMe()}
         ></Navigation>
-        {!showMe && <ProductList products={products}></ProductList>}
+        {!showMe && <Products products={products}></Products>}
       </div>
     </>
   );
