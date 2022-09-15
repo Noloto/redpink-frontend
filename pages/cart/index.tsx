@@ -12,9 +12,7 @@ import { useRouter } from 'next/router';
 import { useCycle } from 'framer-motion';
 import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity.mutation';
 
-type RequiredProps = {};
-
-const Shop: NextPage<RequiredProps> = () => {
+const Cart: NextPage = () => {
   const router = useRouter();
 
   const [showMe, setShowMe] = useCycle(false, true);
@@ -134,7 +132,7 @@ const Shop: NextPage<RequiredProps> = () => {
     };
 
     getCart();
-  }, []);
+  }, [cart, updateCart]);
 
   const goToCheckout = () => {
     router.push(cart.checkoutUrl);
@@ -252,4 +250,4 @@ const Shop: NextPage<RequiredProps> = () => {
   );
 };
 
-export default Shop;
+export default Cart;

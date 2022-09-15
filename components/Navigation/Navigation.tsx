@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react';
 import { animate, AnimatePresence, motion, useCycle } from 'framer-motion';
 import { BurgerX } from '../common/BurgerX/BurgerX';
 import { useDimensions } from '../../common/utils/use-dimensions';
+import { useRouter } from 'next/router';
 
 type RequiredProps = {
   showMe: boolean;
@@ -26,14 +27,15 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
   cart,
   setShowMe,
 }) => {
+  const router = useRouter();
   const [whereAmI, setWhereAmI] = useState<string>();
 
   const containerRef = useRef(null);
   const height = useDimensions(containerRef);
 
   useEffect(() => {
-    setWhereAmI(`/${window.location.pathname.split('/', 2)[1]}`);
-  }, []);
+    setWhereAmI(router.pathname);
+  }, [router]);
 
   return (
     <>
@@ -130,9 +132,9 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
                       d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                     />
                   </svg>
-                  {cart?.products && cart?.products?.length > 0 && (
+                  {/*cart?.products && cart?.products?.length > 0 && (
                     <p className="flex text-xs">{cart.products.length}</p>
-                  )}
+                  )*/}
                 </div>
               </a>
             </Link>
@@ -231,11 +233,11 @@ const Navigation: React.FC<RequiredProps & OptionalProps> = ({
                     d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
                   />
                 </svg>
-                {cart?.products && cart?.products?.length > 0 && (
+                {/*cart?.products && cart?.products?.length > 0 && (
                   <div className="flex text-xs border-redpink rounded-full border-4 bg-redpink text-white h-4 items-center scale-90">
                     <p className="text-white">{cart.products.length}</p>
                   </div>
-                )}
+                )*/}
               </div>
             </a>
           </Link>

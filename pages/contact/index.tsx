@@ -3,7 +3,8 @@ import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import { useCycle } from 'framer-motion';
 import { useEffect, useState } from 'react';
-const Home: NextPage = () => {
+
+const Contact: NextPage = () => {
   const [showMe, setShowMe] = useCycle(false, true);
 
   const [cart, setCart] = useState<Cart>();
@@ -35,4 +36,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Contact;

@@ -1,25 +1,23 @@
 import ShopifyClient from '../../shopify-client';
 import { productsQuery } from '../../common/queries/products/products.query';
-import { GetStaticPaths, NextPage } from 'next';
+import { GetStaticPaths, GetStaticPropsContext, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { nanoid } from 'nanoid';
-import { hoodieSizes } from '../../common/enums/constants';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 import { useCycle } from 'framer-motion';
-import cx from 'classnames';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
+import { getProductByHandle } from '../../common/queries/products/product.query';
 
 type RequiredProps = {
-  productData: any;
+  p: any;
 };
 
-const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
-  const [pathName, setPathName] = useState('');
+const ProductName: NextPage<RequiredProps> = ({ p }) => {
   const [showMe, setShowMe] = useCycle(false, true);
   const [isAdding, setIsAdding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
@@ -31,10 +29,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   });
 
   const [product, setProduct] = useState<Product>();
-
-  useEffect(() => {
-    setPathName(window.location.pathname);
-  }, []);
 
   useEffect(() => {
     let localCartData = JSON.parse(
@@ -69,22 +63,21 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     };
 
     getCart();
-  }, []);
+  }, [cart, updateCart]);
 
   useEffect(() => {
-    productData.map((p: any) => {
-      if (p !== null) {
-        setProduct({
-          id: p.node?.id,
-          title: p.node?.title,
-          description: p.node?.description,
-          price: p.node?.priceRange?.minVariantPrice?.amount,
-          images: p.node?.images?.edges,
-          variants: p.node?.variants?.edges,
-        });
-      }
-    });
-  }, []);
+    if (p !== null) {
+      setProduct({
+        id: p.id,
+        handle: p.handle,
+        title: p.title,
+        description: p.description,
+        price: p.priceRange?.minVariantPrice?.amount,
+        images: p.images?.edges,
+        variants: p.variants?.edges,
+      });
+    }
+  }, [p]);
 
   const addToCart = async () => {
     const cartId = cart.id;
@@ -101,6 +94,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
     if (product) {
       const CartItem: CartItem = {
         id: product.id,
+        handle: product.handle,
         lineId: lineId,
         uuid: nanoid(),
         description: product.description,
@@ -133,11 +127,7 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   return (
     <>
       <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
-        <Navigation
-          cart={cart}
-          showMe={showMe}
-          setShowMe={() => setShowMe()}
-        ></Navigation>
+        <Navigation cart={cart} showMe={showMe} setShowMe={() => setShowMe()} />
         <div className="absolute w-full pl-10  lg:pl-96 lg:pt-32">
           <Link href="/shop">
             <a className="hover:underline text-xs">shop</a>
@@ -203,23 +193,6 @@ const ProductDetail: NextPage<RequiredProps> = ({ productData }) => {
   );
 };
 
-export const getStaticProps = async (context: any) => {
-  const productId = context.params.productId;
-
-  const { data } = await ShopifyClient.query({
-    query: productsQuery,
-  });
-
-  const productData = Object.values(data.products.edges).map((product: any) => {
-    if (product.node.title === productId) {
-      return product;
-    }
-  });
-
-  return {
-    props: JSON.parse(JSON.stringify({ productData })),
-  };
-};
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await ShopifyClient.query({
     query: productsQuery,
@@ -227,7 +200,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = Object.values(data.products.edges).map((product: any) => {
     return {
-      params: { productId: product.node.title },
+      params: {
+        productHandle: product.node.handle,
+      },
     };
   });
 
@@ -237,4 +212,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default ProductDetail;
+export const getStaticProps = async (context: GetStaticPropsContext) => {
+  const productHandle = context?.params?.productHandle;
+
+  const { data } = await ShopifyClient.query({
+    query: getProductByHandle,
+    variables: { productHandle },
+  });
+
+  return {
+    props: {
+      p: JSON.parse(JSON.stringify({ data })).data.productByHandle,
+    },
+    revalidate: 60,
+  };
+};
+
+export default ProductName;
