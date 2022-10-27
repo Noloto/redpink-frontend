@@ -3,7 +3,7 @@ import ShopifyClient from '../../shopify-client';
 import { productsQuery } from '../../common/queries/products/products.query';
 
 import Navigation from '../../components/Navigation/Navigation';
-import Products from '../../components/ProductList/ProductList';
+import ProductList from '../../components/ProductList/ProductList';
 import { useEffect, useState } from 'react';
 import { useCycle } from 'framer-motion';
 
@@ -25,23 +25,20 @@ const Shop: NextPage<RequiredProps> = ({ ...productData }) => {
       productData.productData.map((p: any) => {
         return {
           id: p.node?.id,
+          handle: p.node?.handle,
           title: p.node?.title,
           price: p.node?.priceRange?.minVariantPrice?.amount,
           images: p.node?.images?.edges,
         };
       })
     );
-  }, []);
+  }, [productData, setProducts]);
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
-        <Navigation
-          cart={cart}
-          showMe={showMe}
-          setShowMe={() => setShowMe()}
-        ></Navigation>
-        {!showMe && <Products products={products}></Products>}
+      <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+        <Navigation cart={cart} showMe={showMe} setShowMe={() => setShowMe()} />
+        {!showMe && <ProductList products={products}></ProductList>}
       </div>
     </>
   );
@@ -55,6 +52,7 @@ export async function getStaticProps() {
     props: {
       productData: data.products.edges,
     },
+    revalidate: 60,
   };
 }
 

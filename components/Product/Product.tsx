@@ -2,11 +2,8 @@ import cx from 'classnames';
 import Image from 'next/image';
 
 type RequiredProps = {
-  id: string;
   name: string;
-  price: string;
   images: Image[];
-  variants: Variant[];
 };
 
 type OptionalProps = {
@@ -14,27 +11,21 @@ type OptionalProps = {
 };
 
 const Product: React.FC<RequiredProps & OptionalProps> = ({
-  id,
   name,
   images,
-  price,
-  variants,
   className,
 }) => {
   return (
     <>
       <div
-        className={cx(
-          className,
-          'flex place-items-center flex-col text-sm mb-16'
-        )}
+        className={cx(className, 'flex items-center flex-col text-sm mb-16')}
       >
         <Image
           src={images[0].node.url}
           alt={images[0].node.altText}
           width={1920}
           height={1080}
-          className="cursor-pointer object-cover"
+          className="object-contain"
         />
         <span>{name}</span>
       </div>
