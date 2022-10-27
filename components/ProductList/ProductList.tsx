@@ -7,7 +7,7 @@ type RequiredProps = {
 const ProductList: React.FC<RequiredProps> = ({ products }) => {
   return (
     <div
-      className={`grid sm:grid-cols-1 lg:px-48 ${
+      className={`grid grid-cols-1 lg:px-48 h-full md:h-[calc(100vh-25vh)] ${
         products.length > 3 ? 'mt-24' : 'items-center h-[calc(100vh-25vh)]'
       }
       ${products.length <= 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}
