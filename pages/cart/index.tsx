@@ -147,7 +147,7 @@ const Cart: NextPage = () => {
   return (
     <>
       {!isSSR && cart.products.length > 0 ? (
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+        <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             cart={cart}
             showMe={showMe}
@@ -231,7 +231,7 @@ const Cart: NextPage = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+        <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             showMe={showMe}
             cart={cart}
