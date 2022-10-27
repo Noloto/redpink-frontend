@@ -3,7 +3,8 @@ import Navigation from '../../components/Navigation/Navigation';
 import Image from 'next/image';
 import { useCycle } from 'framer-motion';
 import { useEffect, useState } from 'react';
-const Home: NextPage = () => {
+
+const Contact: NextPage = () => {
   const [showMe, setShowMe] = useCycle(false, true);
 
   const [cart, setCart] = useState<Cart>();
@@ -14,7 +15,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+      <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation
           cart={cart}
           showMe={showMe}
@@ -35,4 +36,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Contact;

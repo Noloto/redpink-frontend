@@ -5,6 +5,7 @@ export const productsQuery = gql`
       edges {
         node {
           id
+          handle
           title
           description
           priceRange {

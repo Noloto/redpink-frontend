@@ -12,9 +12,7 @@ import { useRouter } from 'next/router';
 import { useCycle } from 'framer-motion';
 import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity.mutation';
 
-type RequiredProps = {};
-
-const Shop: NextPage<RequiredProps> = () => {
+const Cart: NextPage = () => {
   const router = useRouter();
 
   const [showMe, setShowMe] = useCycle(false, true);
@@ -134,7 +132,7 @@ const Shop: NextPage<RequiredProps> = () => {
     };
 
     getCart();
-  }, []);
+  }, [cart, updateCart]);
 
   const goToCheckout = () => {
     router.push(cart.checkoutUrl);
@@ -149,7 +147,7 @@ const Shop: NextPage<RequiredProps> = () => {
   return (
     <>
       {!isSSR && cart.products.length > 0 ? (
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+        <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             cart={cart}
             showMe={showMe}
@@ -233,7 +231,7 @@ const Shop: NextPage<RequiredProps> = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-[url('/images/howlround.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
+        <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen min-w-screen">
           <Navigation
             showMe={showMe}
             cart={cart}
@@ -252,4 +250,4 @@ const Shop: NextPage<RequiredProps> = () => {
   );
 };
 
-export default Shop;
+export default Cart;
