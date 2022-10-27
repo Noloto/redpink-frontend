@@ -12,6 +12,7 @@ import { useCycle } from 'framer-motion';
 import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { getProductByHandle } from '../../common/queries/products/product.query';
+import { NAVIGATION_ITEMS } from '../../common/enums/navigation';
 
 type RequiredProps = {
   p: any;
@@ -129,9 +130,9 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
       <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation cart={cart} showMe={showMe} setShowMe={() => setShowMe()} />
         <div className="absolute w-full pl-10  lg:pl-96 lg:pt-32">
-          <Link href="/shop">
-            <a className="hover:underline text-xs">shop</a>
-          </Link>
+          <a href={NAVIGATION_ITEMS.SHOP} className="hover:underline text-xs">
+            Shop
+          </a>
           <p className="inline text-xs">{` > ${product?.title.toLowerCase()}`}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">

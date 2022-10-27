@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="favicon.ico" />
       </Head>
 
-      {process.env.MAINTENANCE ? (
+      {process.env.MAINTENANCE == 'true' ? (
         <>
           <div
             className="h-screen w-screen flex justify-center items-center flex-col gap-14"

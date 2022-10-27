@@ -14,11 +14,9 @@ const ProductList: React.FC<RequiredProps> = ({ products }) => {
     >
       {products.map((p: Product) => {
         return (
-          <Link href={`/shop/${p.handle}`} key={p.id} passHref>
-            <a>
-              <Product name={p.title} images={p.images}></Product>
-            </a>
-          </Link>
+          <a href={`/shop/${p.handle}`} key={p.id}>
+            <Product name={p.title} images={p.images}></Product>
+          </a>
         );
       })}
     </div>
