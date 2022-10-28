@@ -25,6 +25,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   const [quantity, setQuantity] = useState(1);
   const [carouselPosition, setCarouselPosition] = useState<number>(0);
   const [dropDownPosition, setDropDownPosition] = useState<number>(0);
+  const [dropDownOpen, setOpenDropDown] = useState<boolean>(false);
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
     checkoutUrl: 'NOT INIZIALIZED',
@@ -87,6 +88,25 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
     const variantId = product?.variants[0].node.id;
     let lineId = '';
 
+    const returnAmount = (): number => {
+      const amount = cart.products.find((p) => {
+        if (p.title === product?.title) {
+          return true;
+        }
+      })?.amount;
+
+      let q: number = 0;
+
+      if (amount === null || amount === undefined) {
+        q = 0;
+      } else {
+        q = amount;
+      }
+
+      const a = q + quantity;
+      return a;
+    };
+
     await ShopifyClient.mutate({
       mutation: addItemToCart,
       variables: { cartId, variantId, quantity },
@@ -106,7 +126,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
         images: product.images,
         variants: product.variants,
         onlyOne: false,
-        amount: 1,
+        amount: returnAmount(),
       };
 
       let newCart: Cart = cart;
@@ -121,7 +141,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
         await updateCart({ ...cart, products: newProducts });
       } else {
         newCart.products[isCartItem].amount =
-          1 + newCart.products[isCartItem].amount!;
+          quantity + newCart.products[isCartItem].amount!;
         await updateCart(newCart);
       }
     }
@@ -212,27 +232,95 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
             <p className="text-sm">{product?.description}</p>
-            <label
-              htmlFor="quantityCounter"
-              className="flex flex-row text-redpink gap-6"
-            >
-              <button
-                onClick={() =>
-                  setQuantity(quantity <= 1 ? quantity : quantity - 1)
-                }
-              >
-                -
-              </button>
-              <p>{quantity}</p>
-              <button onClick={() => setQuantity(quantity + 1)}>+</button>
-            </label>
-            <input
-              className="hidden"
-              id="quantityCounter"
-              type="number"
-              min={1}
-            ></input>
-            <button className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"></button>
+            {product?.title.toLowerCase() !== 'brillenkette' && (
+              <>
+                <label
+                  htmlFor="quantityCounter"
+                  className="flex flex-row text-redpink gap-6"
+                >
+                  <button
+                    onClick={() =>
+                      setQuantity(quantity <= 1 ? quantity : quantity - 1)
+                    }
+                  >
+                    -
+                  </button>
+                  <p>{quantity}</p>
+                  <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                </label>
+                <input
+                  className="hidden"
+                  id="quantityCounter"
+                  type="number"
+                  min={1}
+                ></input>
+              </>
+            )}
+            {product?.title.toLowerCase() === 'brillenkette' && (
+              <div className="flex flex-col border-[#ed7878] border-[2px] border-solid bg-transparent text-redpink md:w-2/3 cursor-pointer">
+                <div className="flex border-b-[2px] py-2">
+                  <p className="ml-2">
+                    {product?.variants[dropDownPosition].node.title}
+                  </p>
+                  <div
+                    className="flex justify-end w-full"
+                    onClick={() => setOpenDropDown((prev) => !prev)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6 mr-2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  {dropDownOpen && (
+                    <div className="ml-2">
+                      {product?.variants.map((v: Variant, idx) => {
+                        if (
+                          product?.variants[dropDownPosition].node.id ===
+                          v.node.id
+                        ) {
+                          return (
+                            <p
+                              key={v.node.id}
+                              onClick={() => {
+                                setDropDownPosition(idx);
+                                setOpenDropDown(false);
+                              }}
+                              className="text-darkRedpink"
+                            >
+                              {v.node.title}
+                            </p>
+                          );
+                        }
+                        return (
+                          <p
+                            key={v.node.id}
+                            onClick={() => {
+                              setDropDownPosition(idx);
+                              setOpenDropDown(false);
+                            }}
+                          >
+                            {v.node.title}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             <button
               className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
               onClick={() => {
