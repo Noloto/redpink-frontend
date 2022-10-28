@@ -1,7 +1,7 @@
 {
   "name": "red-pink",
   "private": true,
-  "version": "0.2.8",
+  "version": "3.0.0",
   "Author": "Noël Willener",
   "scripts": {
     "dev": "next dev",
