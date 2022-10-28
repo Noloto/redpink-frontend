@@ -24,6 +24,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [carouselPosition, setCarouselPosition] = useState<number>(0);
+  const [dropDownPosition, setDropDownPosition] = useState<number>(0);
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
     checkoutUrl: 'NOT INIZIALIZED',
@@ -128,9 +129,6 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
 
   const handleCarouselChange = (operation: 'plus' | 'minus') => {
     setCarouselPosition((prevState) => {
-      console.log(carouselPosition);
-      console.log(product?.images[carouselPosition].node);
-      console.log(prevState, product?.images.length);
       if (prevState + 1 === product?.images.length && operation === 'plus') {
         return 0;
       }
@@ -153,7 +151,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
         <Navigation cart={cart} showMe={showMe} setShowMe={() => setShowMe()} />
         <div className="absolute w-full pl-10  lg:pl-96 lg:pt-32">
           <a href={NAVIGATION_ITEMS.SHOP} className="hover:underline text-xs">
-            Shop
+            shop
           </a>
           <p className="inline text-xs">{` > ${product?.title.toLowerCase()}`}</p>
         </div>
@@ -234,6 +232,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
               type="number"
               min={1}
             ></input>
+            <button className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"></button>
             <button
               className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
               onClick={() => {
