@@ -85,8 +85,13 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
 
   const addToCart = async () => {
     const cartId = cart.id;
-    const variantId = product?.variants[0].node.id;
+    let variantId;
     let lineId = '';
+    if (product?.title.toLowerCase() === 'sun-chain') {
+      variantId = product.variants[dropDownPosition].node.id;
+    } else {
+      variantId = product?.variants[0].node.id;
+    }
 
     const returnAmount = (): number => {
       const amount = cart.products.find((p) => {
@@ -232,7 +237,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
             <p className="text-sm">{product?.description}</p>
-            {product?.title.toLowerCase() !== 'brillenkette' && (
+            {product?.title.toLowerCase() !== 'sun-chain' && (
               <>
                 <label
                   htmlFor="quantityCounter"
@@ -256,7 +261,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
                 ></input>
               </>
             )}
-            {product?.title.toLowerCase() === 'brillenkette' && (
+            {product?.title.toLowerCase() === 'sun-chain' && (
               <div className="flex flex-col border-[#ed7878] border-[2px] border-solid bg-transparent text-redpink md:w-2/3 cursor-pointer">
                 <div className="flex border-b-[2px] py-2">
                   <p className="ml-2">
