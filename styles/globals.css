@@ -7,6 +7,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'SyneMono';
+  height: 100%;
+  width: 100%;
   background: black no-repeat center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;

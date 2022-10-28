@@ -141,7 +141,7 @@ const Cart: NextPage = () => {
   let total = 0;
 
   for (let i = 0; i < cart.products.length; i++) {
-    total += +cart.products[i].price * +cart.products[i].amount;
+    total += +cart.products[i].price * +cart?.products[i].amount;
   }
 
   return (
@@ -167,7 +167,6 @@ const Cart: NextPage = () => {
                   <div className="flex w-32 md:w-56 flex-row">
                     <Image
                       src={
-                        // TODO: notfound image & hoodie image
                         product?.images[0]?.node?.url ??
                         '/images/heroAnimation.gif'
                       }
