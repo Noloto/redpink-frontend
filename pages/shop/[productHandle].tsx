@@ -237,7 +237,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
             <p className="text-sm">{product?.description}</p>
-            {product?.title.toLowerCase() !== 'sun-chain' && (
+            {product?.title.toLowerCase() !== 'sun-chain - sold out' && (
               <>
                 <label
                   htmlFor="quantityCounter"
@@ -261,24 +261,30 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
                 ></input>
               </>
             )}
-            <button
-              className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
-              onClick={() => {
-                addToCart();
-                setIsAdding(true);
-                setTimeout(() => {
-                  setIsAdding(false);
-                  setIsAdded(true);
+            {product?.title.toLowerCase() === 'sun-chain - sold out' ? (
+              <button className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300">
+                SOLD OUT
+              </button>
+            ) : (
+              <button
+                className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
+                onClick={() => {
+                  addToCart();
+                  setIsAdding(true);
                   setTimeout(() => {
-                    setIsAdded(false);
-                  }, 2000);
-                }, 750);
-              }}
-            >
-              {isAdding && 'Adding...'}
-              {isAdded && 'Added!'}
-              {!isAdded && !isAdding ? 'Add To Cart' : ''}
-            </button>
+                    setIsAdding(false);
+                    setIsAdded(true);
+                    setTimeout(() => {
+                      setIsAdded(false);
+                    }, 2000);
+                  }, 750);
+                }}
+              >
+                {isAdding && 'Adding...'}
+                {isAdded && 'Added!'}
+                {!isAdded && !isAdding ? 'Add To Cart' : ''}
+              </button>
+            )}
           </div>
         </div>
       </div>
