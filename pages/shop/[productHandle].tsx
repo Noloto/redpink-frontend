@@ -87,7 +87,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
     const cartId = cart.id;
     let variantId;
     let lineId = '';
-    if (product?.title.toLowerCase() === 'sun-chain') {
+    if (product?.title.toLowerCase() === 'sun-chain - sold out') {
       variantId = product.variants[dropDownPosition].node.id;
     } else {
       variantId = product?.variants[0].node.id;
