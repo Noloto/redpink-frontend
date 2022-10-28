@@ -23,6 +23,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [carouselPosition, setCarouselPosition] = useState<number>(0);
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
     id: 'NOT INIZIALIZED',
     checkoutUrl: 'NOT INIZIALIZED',
@@ -125,6 +126,27 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
     }
   };
 
+  const handleCarouselChange = (operation: 'plus' | 'minus') => {
+    setCarouselPosition((prevState) => {
+      console.log(carouselPosition);
+      console.log(product?.images[carouselPosition].node);
+      console.log(prevState, product?.images.length);
+      if (prevState + 1 === product?.images.length && operation === 'plus') {
+        return 0;
+      }
+      if (prevState === 0 && operation === 'minus' && product?.images.length) {
+        return product?.images.length - 1;
+      }
+      if (operation === 'plus') {
+        return prevState + 1;
+      }
+      if (operation === 'minus') {
+        return prevState - 1;
+      }
+      return 0;
+    });
+  };
+
   return (
     <>
       <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
@@ -136,14 +158,57 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
           <p className="inline text-xs">{` > ${product?.title.toLowerCase()}`}</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 h-[calc(100vh-30vh)] items-center justify-center">
-          <div className="flex md:w-3/6 md:justify-self-end">
-            <Image
-              src={product?.images[0].node.url ?? '/images/capo.png'}
-              alt="product"
-              width={1920}
-              height={1080}
-              className="object-cover"
-            />
+          <div className="flex flex-row items-center justify-center">
+            <div
+              className="text-redpink cursor-pointer flex justify-end items-center w-full h-full"
+              onClick={() => handleCarouselChange('minus')}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.75 19.5L8.25 12l7.5-7.5"
+                />
+              </svg>
+            </div>
+            <div className="">
+              <Image
+                src={
+                  product?.images[carouselPosition].node.url ??
+                  '/images/capo.png'
+                }
+                alt="product"
+                width={1920}
+                height={1080}
+                className="object-contain"
+              />
+            </div>
+            <div
+              className="text-redpink cursor-pointer flex justify-start items-center w-full h-full"
+              onClick={() => handleCarouselChange('plus')}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                />
+              </svg>
+            </div>
           </div>
           <div className="flex flex-col w-3/4 gap-6 md:justify-self-start pl-12 md:pl-0 md:w-2/6">
             <p className="text-xl italic">{product?.title}</p>
