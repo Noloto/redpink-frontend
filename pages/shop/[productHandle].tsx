@@ -172,7 +172,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+      <div className="bg-[url('/images/background-blackwhite.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation cart={cart} showMe={showMe} setShowMe={() => setShowMe()} />
         <div className="absolute w-full pl-10  lg:pl-96 lg:pt-32">
           <a href={NAVIGATION_ITEMS.SHOP} className="hover:underline text-xs">
