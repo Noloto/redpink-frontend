@@ -15,7 +15,7 @@ const Contact: NextPage = () => {
 
   return (
     <>
-      <div className="bg-[url('/images/howlround_effect_v2.2.gif')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
+      <div className="bg-[url('/images/background-colored.jpeg')] bg-no-repeat bg-center bg-fixed bg-cover min-h-screen">
         <Navigation
           cart={cart}
           showMe={showMe}
