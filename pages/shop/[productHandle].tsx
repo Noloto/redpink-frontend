@@ -70,6 +70,8 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   }, [cart, updateCart]);
 
   useEffect(() => {
+    p.images.edges.length > 1 ?? p.images.shift();
+
     if (p !== null) {
       setProduct({
         id: p.id,
@@ -201,7 +203,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
                 />
               </svg>
             </div>
-            <div className="">
+            <div>
               <Image
                 src={
                   product?.images[carouselPosition].node.url ??
