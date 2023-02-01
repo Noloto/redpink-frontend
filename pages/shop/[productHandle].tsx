@@ -70,6 +70,8 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   }, [cart, updateCart]);
 
   useEffect(() => {
+    p.images.edges.length > 1 ?? p.images.shift();
+
     if (p !== null) {
       setProduct({
         id: p.id,
@@ -87,7 +89,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
     const cartId = cart.id;
     let variantId;
     let lineId = '';
-    if (product?.title.toLowerCase() === 'sun-chain') {
+    if (product?.title.toLowerCase() === 'sun-chain - sold out') {
       variantId = product.variants[dropDownPosition].node.id;
     } else {
       variantId = product?.variants[0].node.id;
@@ -201,7 +203,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
                 />
               </svg>
             </div>
-            <div className="">
+            <div>
               <Image
                 src={
                   product?.images[carouselPosition].node.url ??
@@ -237,7 +239,7 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
             <p className="text-xl italic">{product?.title}</p>
             <p className="text-sm">{product?.price} $</p>
             <p className="text-sm">{product?.description}</p>
-            {product?.title.toLowerCase() !== 'sun-chain' && (
+            {product?.title.toLowerCase() !== 'sun-chain - sold out' && (
               <>
                 <label
                   htmlFor="quantityCounter"
@@ -261,89 +263,30 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
                 ></input>
               </>
             )}
-            {product?.title.toLowerCase() === 'sun-chain' && (
-              <div className="flex flex-col border-[#ed7878] border-[2px] border-solid bg-transparent text-redpink md:w-2/3 cursor-pointer">
-                <div className="flex border-b-[2px] py-2">
-                  <p className="ml-2">
-                    {product?.variants[dropDownPosition].node.title}
-                  </p>
-                  <div
-                    className="flex justify-end w-full"
-                    onClick={() => setOpenDropDown((prev) => !prev)}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6 mr-2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  {dropDownOpen && (
-                    <div className="ml-2">
-                      {product?.variants.map((v: Variant, idx) => {
-                        if (
-                          product?.variants[dropDownPosition].node.id ===
-                          v.node.id
-                        ) {
-                          return (
-                            <p
-                              key={v.node.id}
-                              onClick={() => {
-                                setDropDownPosition(idx);
-                                setOpenDropDown(false);
-                              }}
-                              className="text-darkRedpink"
-                            >
-                              {v.node.title}
-                            </p>
-                          );
-                        }
-                        return (
-                          <p
-                            key={v.node.id}
-                            onClick={() => {
-                              setDropDownPosition(idx);
-                              setOpenDropDown(false);
-                            }}
-                          >
-                            {v.node.title}
-                          </p>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            <button
-              className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
-              onClick={() => {
-                addToCart();
-                setIsAdding(true);
-                setTimeout(() => {
-                  setIsAdding(false);
-                  setIsAdded(true);
+            {product?.title.toLowerCase() === 'sun-chain - sold out' ? (
+              <button className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300">
+                SOLD OUT
+              </button>
+            ) : (
+              <button
+                className="border-[#ed7878] border-[2px] border-solid py-3 bg-transparent text-redpink md:w-2/3 hover:bg-redpink hover:text-white transition duration-300"
+                onClick={() => {
+                  addToCart();
+                  setIsAdding(true);
                   setTimeout(() => {
-                    setIsAdded(false);
-                  }, 2000);
-                }, 750);
-              }}
-            >
-              {isAdding && 'Adding...'}
-              {isAdded && 'Added!'}
-              {!isAdded && !isAdding ? 'Add To Cart' : ''}
-            </button>
+                    setIsAdding(false);
+                    setIsAdded(true);
+                    setTimeout(() => {
+                      setIsAdded(false);
+                    }, 2000);
+                  }, 750);
+                }}
+              >
+                {isAdding && 'Adding...'}
+                {isAdded && 'Added!'}
+                {!isAdded && !isAdding ? 'Add To Cart' : ''}
+              </button>
+            )}
           </div>
         </div>
       </div>

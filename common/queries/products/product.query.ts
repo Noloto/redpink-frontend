@@ -6,6 +6,7 @@ export const getProductByHandle = gql`
       handle
       title
       description
+      totalInventory
       priceRange {
         minVariantPrice {
           amount
