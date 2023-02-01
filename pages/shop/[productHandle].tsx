@@ -70,7 +70,9 @@ const ProductName: NextPage<RequiredProps> = ({ p }) => {
   }, [cart, updateCart]);
 
   useEffect(() => {
-    p.images.edges.length > 1 ?? p.images.shift();
+    if (p.images.edges.length > 1) {
+      p.images.edges.shift();
+    }
 
     if (p !== null) {
       setProduct({
