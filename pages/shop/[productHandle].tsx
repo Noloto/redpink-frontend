@@ -16,6 +16,7 @@ type RequiredProps = {
 };
 
 const Product: NextPage<RequiredProps> = ({ product }) => {
+  console.log(product);
   return (
     <main className={styles.container}>
       <div className={styles.product}>
@@ -25,6 +26,10 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
           fill={true}
           style={{ objectFit: 'contain' }}
         />
+      </div>
+      <div className={styles.productDetails}>
+        <p>{product.description}</p>
+        <p>{product.priceRange.minVariantPrice.amount}</p>
       </div>
       <div className={styles.button}>
         <Image

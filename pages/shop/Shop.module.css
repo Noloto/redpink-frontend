@@ -1,6 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
+  min-height: 80vh;
 }
 
 .product {
@@ -9,7 +10,16 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 60vh;
+  height: 48vh;
+}
+
+.productDetails {
+  margin-top: -50px;
+  padding: 20px;
+}
+
+.productDetails > p:first-child {
+  margin-bottom: 20px;
 }
 
 .button {
