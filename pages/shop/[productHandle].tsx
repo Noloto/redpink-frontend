@@ -30,7 +30,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         <Image
           src={
             product.tags.find((tag: string) => tag === 'buy')
-              ? '/images/when.png'
+              ? '/images/bye.png'
               : '/images/want.png'
           }
           fill={true}
