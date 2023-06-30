@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  min-height: 90vh;
+}
+
+.productContainer {
+  display: grid;
+  align-items: center;
+  width: 100vw;
+  height: 20vh;
+  grid-template-columns: repeat(4, 30% 40% 20% 10%);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}

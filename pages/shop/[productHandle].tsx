@@ -1,5 +1,4 @@
-import styles from './Shop.module.css';
-import Head from 'next/head';
+import styles from '../../styles/Shop.module.css';
 import ShopifyClient from '../../shopify-client';
 import { productsQuery } from '../../common/queries/products/products.query';
 import {
@@ -10,13 +9,145 @@ import {
 } from 'next';
 import Image from 'next/image';
 import { getProductByHandle } from '../../common/queries/products/product.query';
+import { useLocalStorage } from '../../common/utils/useLocalStorage';
+import { useEffect, useState } from 'react';
+import { getCartById } from '../../common/queries/cart/getCartById.query';
+import { createCart } from '../../common/queries/cart/createCart.mutation';
+import { nanoid } from 'nanoid';
+import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 
 type RequiredProps = {
   product: any;
 };
 
 const Product: NextPage<RequiredProps> = ({ product }) => {
-  console.log(product);
+  const [cart, updateCart] = useLocalStorage<Cart>('CART', {
+    id: 'NOT INIZIALIZED',
+    checkoutUrl: 'NOT INIZIALIZED',
+    products: [],
+  });
+  const [p, setProduct] = useState<Product>();
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    let localCartData = JSON.parse(
+      window.localStorage.getItem('CART') as string
+    );
+
+    if (localCartData && localCartData.id !== 'NOT INIZIALIZED') {
+      const cartId = cart.id;
+      ShopifyClient.query({
+        query: getCartById,
+        variables: { cartId },
+      });
+
+      updateCart({
+        id: localCartData?.id,
+        checkoutUrl: localCartData?.checkoutUrl,
+        products: cart?.products,
+      });
+      return;
+    }
+
+    const getCart = async () => {
+      const { data } = await ShopifyClient.mutate({
+        mutation: createCart,
+      });
+
+      updateCart({
+        id: data.cartCreate.cart.id,
+        checkoutUrl: data.cartCreate.cart.checkoutUrl,
+        products: cart.products,
+      });
+    };
+
+    getCart();
+  }, []);
+
+  useEffect(() => {
+    if (product.images.edges.length > 1) {
+      product.images.edges.shift();
+    }
+
+    if (product !== null) {
+      setProduct({
+        id: product.id,
+        handle: product.handle,
+        title: product.title,
+        description: product.description,
+        price: product.priceRange?.minVariantPrice?.amount,
+        images: product.images?.edges,
+        variants: product.variants?.edges,
+        tags: product.tags,
+      });
+    }
+  }, [product]);
+
+  const addToCart = async () => {
+    const cartId = cart.id;
+    const variantId = p?.variants[0].node.id;
+    let lineId = '';
+
+    const returnAmount = (): number => {
+      const amount = cart.products.find((p) => {
+        if (product.title === p?.title) {
+          return true;
+        }
+      })?.amount;
+
+      let q: number = 0;
+
+      if (amount === null || amount === undefined) {
+        q = 0;
+      } else {
+        q = amount;
+      }
+
+      const a = q + quantity;
+      return a;
+    };
+
+    await ShopifyClient.mutate({
+      mutation: addItemToCart,
+      variables: { cartId, variantId, quantity },
+    }).then((res: any) => {
+      lineId = res?.data?.cartLinesAdd.cart.lines.edges[0].node.id;
+    });
+
+    if (product && p !== undefined) {
+      const CartItem: CartItem = {
+        id: p.id,
+        handle: p.handle,
+        lineId: lineId,
+        uuid: nanoid(),
+        description: p.description,
+        title: p.title,
+        price: p.price,
+        images: p.images,
+        variants: p.variants,
+        onlyOne: false,
+        amount: returnAmount(),
+        tags: p.tags,
+      };
+
+      let newCart: Cart = cart;
+
+      const isCartItem = cart.products.findIndex(
+        (e: CartItem) => e.title === p?.title
+      );
+
+      if (isCartItem == -1) {
+        let newProducts = cart.products;
+        newProducts.push(CartItem);
+        await updateCart({ ...cart, products: newProducts });
+      } else {
+        newCart.products[isCartItem].amount =
+          quantity + newCart.products[isCartItem].amount!;
+        await updateCart(newCart);
+      }
+    }
+  };
+
   return (
     <main className={styles.container}>
       <div className={styles.product}>
@@ -32,16 +163,24 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         <p>{product.priceRange.minVariantPrice.amount}</p>
       </div>
       <div className={styles.button}>
-        <Image
-          src={
-            product.tags.find((tag: string) => tag === 'buy')
-              ? '/images/bye.png'
-              : '/images/want.png'
-          }
-          fill={true}
-          style={{ objectFit: 'contain' }}
-          alt=""
-        />
+        {product.tags.find((tag: string) => tag === 'buy') ? (
+          <Image
+            src={'/images/bye.png'}
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            alt=""
+            onClick={() => {
+              addToCart();
+            }}
+          />
+        ) : (
+          <Image
+            src={'/images/want.png'}
+            fill={true}
+            style={{ objectFit: 'contain' }}
+            alt=""
+          />
+        )}
       </div>
     </main>
   );

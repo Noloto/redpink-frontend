@@ -1,6 +1,43 @@
 .product {
-  position: relative;
   display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  grid-column: span 2;
+}
+
+.product:nth-child(4n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.product:nth-child(5n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.product:nth-child(7n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.product:nth-child(8n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.product:nth-child(9n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.product:nth-child(10n) {
+  grid-column: span 1;
+  width: 110%;
+}
+
+.imageContainer {
+  position: relative;
   width: 80%;
   height: 46vh;
 }

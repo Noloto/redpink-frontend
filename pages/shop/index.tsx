@@ -1,5 +1,4 @@
-import Head from 'next/head';
-import styles from '@/styles/Home.module.css';
+import styles from '../../styles/Home.module.css';
 import { NextPage } from 'next';
 import ProductList from '../../components/ProductList/ProductList';
 import ShopifyClient from '../../shopify-client';

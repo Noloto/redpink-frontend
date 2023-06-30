@@ -11,24 +11,27 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
   return (
     <>
       <div className={styles.container}>
-        <Link href={'/shop'}>
+        <a href={'/shop'}>
           <Image
             src="/images/redpink-banner.png"
             alt="redpink banner - 2 stripes"
             width={155}
             height={50}
+            priority={true}
+            sizes="(max-width: 768px) 100vw"
             className={styles.banner}
           />
-        </Link>
+        </a>
         <div className={styles.cart}>
-          <Link href={'/cart'}>
+          <a href={'/cart'} className={styles.cartLink}>
             <Image
               src="/images/cart.png"
               alt="redpink cart"
               fill={true}
+              sizes="(max-width: 768px) 100vw"
               style={{ objectFit: 'contain' }}
             />
-          </Link>
+          </a>
         </div>
       </div>
       <main>{children}</main>
