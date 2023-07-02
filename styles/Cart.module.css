@@ -18,3 +18,8 @@
   width: 100px;
   height: 100px;
 }
+
+.checkoutButton {
+  border-radius: 5%;
+  border: 1px solid red;
+}
