@@ -19,7 +19,18 @@
   height: 100px;
 }
 
+.detailsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .checkoutButton {
   border-radius: 5%;
-  border: 1px solid red;
+  border: 1px solid #ed7575;
+  color: #ed7575;
+  background-color: white;
+  font-family: 'Eina01-Light';
+  padding: 3px;
+  width: 30%;
 }

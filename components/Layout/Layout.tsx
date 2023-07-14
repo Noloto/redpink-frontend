@@ -25,7 +25,7 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
         <div className={styles.cart}>
           <a href={'/cart'} className={styles.cartLink}>
             <Image
-              src="/images/cart.png"
+              src="/images/head-cart.png"
               alt="redpink cart"
               fill={true}
               sizes="(max-width: 768px) 100vw"

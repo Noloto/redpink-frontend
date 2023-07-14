@@ -123,13 +123,15 @@ const Cart: NextPage = ({}) => {
               </div>
             );
           })}
-          <p>{total} $</p>
-          <button
-            onClick={() => goToCheckout()}
-            className={styles.checkoutButton}
-          >
-            Checkout
-          </button>
+          <div className={styles.detailsContainer}>
+            <p>{total} $</p>
+            <button
+              onClick={() => goToCheckout()}
+              className={styles.checkoutButton}
+            >
+              Checkout
+            </button>
+          </div>
         </div>
       )}
     </>
