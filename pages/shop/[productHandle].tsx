@@ -151,6 +151,11 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
     }
   };
 
+  function playAudio() {
+    const audio = document.getElementById('thankYou') as HTMLAudioElement;
+    audio?.play();
+  }
+
   return (
     <main className={styles.container}>
       <div className={styles.product}>
@@ -167,15 +172,21 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
       </div>
       <div className={styles.button}>
         {product.tags.find((tag: string) => tag === 'buy') ? (
-          <Image
-            src={'/images/bye.png'}
-            fill={true}
-            style={{ objectFit: 'contain' }}
-            alt=""
-            onClick={() => {
-              addToCart();
-            }}
-          />
+          <>
+            <Image
+              src={'/images/bye.png'}
+              fill={true}
+              style={{ objectFit: 'contain' }}
+              alt=""
+              onClick={() => {
+                addToCart();
+                playAudio();
+              }}
+            />
+            <audio id="thankYou">
+              <source src="/sounds/thank-you.m4a" typeof="audio/x-m4a" />
+            </audio>
+          </>
         ) : (
           <Image
             src={'/images/want.png'}
