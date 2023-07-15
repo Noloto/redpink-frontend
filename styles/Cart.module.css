@@ -10,7 +10,7 @@
   align-items: center;
   width: 100vw;
   height: 20vh;
-  grid-template-columns: repeat(4, 30% 40% 20% 10%);
+  grid-template-columns: repeat(5, 30% 30% 10% 20% 10%);
 }
 
 .imageContainer {
