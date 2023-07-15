@@ -117,8 +117,11 @@ const Cart: NextPage = ({}) => {
                 </div>
                 <p>{product.amount}</p>
                 <p>{+product.price! * product.amount!} $</p>
-                <PiTrashLight
-                  size={20}
+                <Image
+                  src="/images/bones.png"
+                  alt=""
+                  width={30}
+                  height={20}
                   onClick={() => removeItem(product.uuid)}
                 />
               </div>
@@ -130,7 +133,7 @@ const Cart: NextPage = ({}) => {
               onClick={() => goToCheckout()}
               className={styles.checkoutButton}
             >
-              Checkout
+              PEACE OUT
             </button>
           </div>
         </div>

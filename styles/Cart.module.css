@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 100vw;
   min-height: 90vh;
+  color: rgb(203, 210, 217);
 }
 
 .productContainer {
@@ -10,7 +11,7 @@
   align-items: center;
   width: 100vw;
   height: 20vh;
-  grid-template-columns: repeat(5, 30% 30% 10% 20% 10%);
+  grid-template-columns: repeat(5, 30% 30% 7% 20% 13%);
 }
 
 .imageContainer {
@@ -19,18 +20,28 @@
   height: 100px;
 }
 
+.imageContainer > img {
+  padding: 10px;
+}
+
 .detailsContainer {
   display: flex;
-  align-items: center;
   justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detailsContainer > p {
+  font-size: 24px;
 }
 
 .checkoutButton {
-  border-radius: 5%;
-  border: 1px solid #ed7575;
-  color: #ed7575;
+  border: none;
+  margin-top: 60px;
   background-color: white;
-  font-family: 'Eina01-Light';
+  font-family: 'Eina01-SemiBold';
+  color: rgba(203, 210, 217, 0.71);
+  font-size: 52px;
   padding: 3px;
-  width: 30%;
+  width: 100%;
 }

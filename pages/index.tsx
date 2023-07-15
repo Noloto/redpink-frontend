@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ['latin'] });
 const Home: NextPage = ({}) => {
   return (
     <main className={`${styles.main} ${inter.className}`}>
+      <audio id="intro" autoPlay>
+        <source src="/sounds/main.mp4" typeof="audio/mp4" />
+      </audio>
       <Link href={'/shop'}>
         <video autoPlay loop muted playsInline className={styles.video}>
           <source src="/videos/main_mobile.mp4" type="video/mp4" />

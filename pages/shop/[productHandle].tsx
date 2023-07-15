@@ -167,8 +167,10 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         />
       </div>
       <div className={styles.productDetails}>
+        <p>
+          {product.title} {product.priceRange.minVariantPrice.amount} $
+        </p>
         <p>{product.description}</p>
-        <p>{product.priceRange.minVariantPrice.amount}</p>
       </div>
       <div className={styles.button}>
         {product.tags.find((tag: string) => tag === 'buy') ? (
