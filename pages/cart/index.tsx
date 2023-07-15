@@ -115,6 +115,7 @@ const Cart: NextPage = ({}) => {
                   <p>{product.title}</p>
                   <p>{product.variants[0].node.title}</p>
                 </div>
+                <p>{product.amount}</p>
                 <p>{+product.price! * product.amount!} $</p>
                 <PiTrashLight
                   size={20}
