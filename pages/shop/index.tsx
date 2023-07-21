@@ -31,7 +31,7 @@ const Home: NextPage<RequiredProps> = ({ productsData }) => {
 
   return (
     <>
-      <main className={`${styles.main}`}>
+      <main className={styles.shopContainer}>
         <ProductList products={products}></ProductList>
       </main>
     </>

@@ -1,8 +1,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
-  color: rgb(193, 200, 207);
+  min-height: 100vh;
+}
+
+.shopContainer {
+  min-height: 100vh;
 }
 
 .product {
@@ -42,4 +45,5 @@
   align-items: center;
   width: 100vw;
   height: 20vh;
+  cursor: pointer;
 }

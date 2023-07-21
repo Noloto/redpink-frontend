@@ -1,9 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  min-height: 90vh;
-  color: rgb(203, 210, 217);
+  min-height: 100vh;
 }
 
 .productContainer {
@@ -38,9 +36,8 @@
 .checkoutButton {
   border: none;
   margin-top: 60px;
-  background-color: white;
   font-family: 'Eina01-SemiBold';
-  color: rgba(203, 210, 217, 0.71);
+  background: none;
   font-size: 52px;
   padding: 3px;
   width: 100%;

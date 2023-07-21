@@ -15,7 +15,7 @@ const Home: NextPage = ({}) => {
       </audio>
       <Link href={'/shop'}>
         <video autoPlay loop muted playsInline className={styles.video}>
-          <source src="/videos/main_mobile.mp4" type="video/mp4" />
+          <source src="/videos/main-mobile-new.mp4" type="video/mp4" />
         </video>
       </Link>
     </main>
