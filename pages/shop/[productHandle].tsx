@@ -111,9 +111,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
       mutation: addItemToCart,
       variables: { cartId, variantId, quantity },
     }).then((res: any) => {
-      //TODO: get the right line id its always taking first one
       const index = res?.data?.cartLinesAdd.cart.lines.edges.length - 1;
-      console.log(index);
       lineId = res?.data?.cartLinesAdd.cart.lines.edges[index].node.id;
     });
 
