@@ -7,6 +7,21 @@ import { useRouter } from 'next/router';
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
+  if (process.env.MAINTENANCE === 'true') {
+    return (
+      <main>
+        <audio id="intro" autoPlay>
+          <source src="/sounds/main.mp4" typeof="audio/mp4" />
+        </audio>
+        <div className="maintenanceContainer">
+          <h2>UNDER MAINTENANCE</h2>
+          <video autoPlay loop muted playsInline className="video">
+            <source src="/videos/main-mobile-new.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </main>
+    );
+  }
   const layoutNotNeeded = ![`/`].includes(router.pathname);
   return (
     <>

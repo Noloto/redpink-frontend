@@ -3,6 +3,11 @@
   src: url(/fonts/Eina01-Light.ttf);
 }
 
+@font-face {
+  font-family: 'Eina01-Bold';
+  src: url(/fonts/Eina01-Bold.ttf);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -21,4 +26,25 @@ body {
 
 button {
   cursor: pointer;
+}
+
+.video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.maintenanceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  color: red;
+  font-family: 'Eina01-Bold';
+  font-size: 20px;
 }
