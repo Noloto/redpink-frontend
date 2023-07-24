@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.shopContainer {
+  min-height: 100vh;
+}
+
+.product {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 48vh;
+}
+
+.product > img {
+  padding: 30px;
+}
+
+.productDetails {
+  margin-top: -50px;
+  padding: 20px;
+}
+
+.productDetails > p:first-child {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 44px;
+  font-family: 'Eina01-SemiBold';
+  margin-bottom: 20px;
+}
+
+.productDetails > p:nth-child(2) {
+  margin-bottom: 20px;
+}
+
+.button {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 20vh;
+  cursor: pointer;
+}

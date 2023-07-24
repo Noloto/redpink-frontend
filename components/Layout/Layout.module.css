@@ -1,0 +1,36 @@
+.mainContainer {
+  padding-top: 80px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  height: 10vh;
+  position: absolute;
+  justify-content: space-between;
+}
+
+.banner {
+  margin-left: -20px;
+  margin-top: 30px;
+}
+
+.cartLink {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 120px;
+  cursor: pointer;
+}
+
+.amountIndicator {
+  color: black;
+  position: absolute;
+  right: 0;
+  background-color: white;
+  min-width: 20px;
+  min-height: 20px;
+  border-radius: 10px;
+  z-index: 10;
+}

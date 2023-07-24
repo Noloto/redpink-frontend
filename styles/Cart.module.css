@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.productContainer {
+  display: grid;
+  align-items: center;
+  width: 100vw;
+  height: 20vh;
+  grid-template-columns: repeat(5, 30% 30% 7% 20% 13%);
+}
+
+.imageContainer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.imageContainer > img {
+  padding: 10px;
+}
+
+.detailsContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detailsContainer > p {
+  font-size: 24px;
+}
+
+.checkoutButton {
+  border: none;
+  margin-top: 60px;
+  font-family: 'Eina01-SemiBold';
+  background: none;
+  font-size: 52px;
+  padding: 3px;
+  width: 100%;
+}

@@ -1,0 +1,6 @@
+.productList {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  width: 100vw;
+  min-height: 100vh;
+}
