@@ -25,12 +25,14 @@
 }
 
 .amountIndicator {
-  color: black;
+  display: flex;
+  flex-direction: column;
   position: absolute;
-  right: 0;
-  background-color: white;
+  border-radius: 10px;
   min-width: 20px;
   min-height: 20px;
-  border-radius: 10px;
+  right: 20px;
+  top: 24px;
+  color: black;
   z-index: 10;
 }

@@ -4,8 +4,6 @@ import { NextPage } from 'next';
 
 import Image from 'next/image';
 
-import { PiTrashLight } from 'react-icons/pi';
-
 import ShopifyClient from '../../shopify-client';
 import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity.mutation';
 import { useLocalStorage } from '../../common/utils/useLocalStorage';

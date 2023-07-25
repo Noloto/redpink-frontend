@@ -32,6 +32,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       // Save to local storage
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
+        window.dispatchEvent(new Event('storage'));
       }
     } catch (error) {
       // TODO: A more advanced implementation would handle the error case
