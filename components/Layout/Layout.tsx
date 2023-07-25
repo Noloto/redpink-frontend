@@ -41,7 +41,7 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
         </a>
         <div className={styles.cart}>
           <a href={'/cart'} className={styles.cartLink}>
-            {amount && amount > 0 && (
+            {amount !== undefined && amount > 0 && (
               <div className={styles.amountIndicator}>{tallys[amount - 1]}</div>
             )}
             <Image
