@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-  uri: 'https://red-p-nk.myshopify.com/api/2023-04/graphql.json',
+  uri: process.env.STOREFRONT_API_URL,
 });
 
 const authLink = setContext((_, { headers }) => {
