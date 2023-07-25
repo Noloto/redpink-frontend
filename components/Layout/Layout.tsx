@@ -15,7 +15,11 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
 
   useEffect(() => {
     setBackground(randomBackground());
-    setLength(JSON.parse(window.localStorage.getItem('CART')!).products.length);
+    if (window.localStorage.getItem('CART') !== null) {
+      setLength(
+        JSON.parse(window.localStorage.getItem('CART')!).products.length
+      );
+    }
   }, []);
 
   useEffect(() => {
