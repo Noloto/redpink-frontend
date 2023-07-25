@@ -4,6 +4,7 @@ import Layout from '../components/Layout/Layout';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Analytics } from '@vercel/analytics/react';
+import { Eina } from '../common/utils/fonts/fonts';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -22,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <audio id="intro" autoPlay>
             <source src="/sounds/main.mp4" typeof="audio/mp4" />
           </audio>
-          <div className="maintenanceContainer">
+          <div className={`maintenanceContainer ${Eina.className}`}>
             <h2>UNDER MAINTENANCE</h2>
             <video autoPlay loop muted playsInline className="video">
               <source src="/videos/main-mobile-new.mp4" type="video/mp4" />

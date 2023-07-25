@@ -36,9 +36,10 @@
 .checkoutButton {
   border: none;
   margin-top: 60px;
-  font-family: 'Eina01-SemiBold';
   background: none;
   font-size: 52px;
+  color: rgb(44, 245, 44);
+  font-weight: 400;
   padding: 3px;
   width: 100%;
 }

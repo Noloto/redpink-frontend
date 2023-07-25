@@ -9,6 +9,7 @@ import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Eina } from '../../common/utils/fonts/fonts';
 
 const Cart: NextPage = ({}) => {
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
@@ -129,7 +130,7 @@ const Cart: NextPage = ({}) => {
             <p>{total} $</p>
             <button
               onClick={() => goToCheckout()}
-              className={styles.checkoutButton}
+              className={`${styles.checkoutButton} ${Eina.className}`}
             >
               PEACE OUT
             </button>

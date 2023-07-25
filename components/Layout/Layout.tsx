@@ -3,6 +3,7 @@ import styles from './Layout.module.css';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { randomBackground } from '../../common/utils/background';
 import { tallys } from '../../common/data/tallys';
+import { Eina } from '../../common/utils/fonts/fonts';
 
 type RequiredProps = {
   children: ReactNode;
@@ -59,7 +60,7 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
         </div>
       </div>
       <main
-        className={styles.mainContainer}
+        className={`${styles.mainContainer} ${Eina.className}`}
         style={{
           backgroundImage: background,
         }}

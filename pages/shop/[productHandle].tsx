@@ -15,6 +15,7 @@ import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { nanoid } from 'nanoid';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
+import { Eina } from '../../common/utils/fonts/fonts';
 
 type RequiredProps = {
   product: any;
@@ -167,7 +168,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         />
       </div>
       <div className={styles.productDetails}>
-        <p>
+        <p className={Eina.className}>
           {product.title} {product.priceRange.minVariantPrice.amount} $
         </p>
         <p>{product.description}</p>

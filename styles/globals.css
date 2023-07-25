@@ -1,18 +1,3 @@
-@font-face {
-  font-family: 'Eina01-Light';
-  src: url(/fonts/Eina01-Light.ttf);
-}
-
-@font-face {
-  font-family: 'Eina01-Bold';
-  src: url(/fonts/Eina01-Bold.ttf);
-}
-
-@font-face {
-  font-family: 'Eina01-SemiBold';
-  src: url(/fonts/Eina01-SemiBold.ttf);
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
@@ -24,9 +9,7 @@ body {
   max-width: 100vw;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: 'Eina01-Light';
-  font-weight: bold;
-  color: black;
+  color: white;
 }
 
 button {
@@ -50,6 +33,6 @@ button {
   width: 100vw;
   height: 100vh;
   color: red;
-  font-family: 'Eina01-Bold';
+  font-weight: 700;
   font-size: 20px;
 }
