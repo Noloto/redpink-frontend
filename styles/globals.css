@@ -8,6 +8,11 @@
   src: url(/fonts/Eina01-Bold.ttf);
 }
 
+@font-face {
+  font-family: 'Eina01-SemiBold';
+  src: url(/fonts/Eina01-SemiBold.ttf);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
