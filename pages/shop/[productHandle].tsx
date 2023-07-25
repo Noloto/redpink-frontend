@@ -160,9 +160,10 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         <Image
           src={product.images.edges[0].node.url}
           alt={product.images.edges[0].node.altText ?? ''}
+          style={{ objectFit: 'contain' }}
+          sizes="100vw"
           fill={true}
           priority={true}
-          style={{ objectFit: 'contain' }}
         />
       </div>
       <div className={styles.productDetails}>
@@ -176,9 +177,10 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
           <>
             <Image
               src={'/images/bye.png'}
-              fill={true}
+              alt="Add to cart"
               style={{ objectFit: 'contain' }}
-              alt=""
+              fill={true}
+              sizes="30vw"
               onClick={() => {
                 addToCart();
                 playAudio();
@@ -191,9 +193,10 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         ) : (
           <Image
             src={'/images/want.png'}
-            fill={true}
+            alt="Sign up for product notifications"
             style={{ objectFit: 'contain' }}
-            alt=""
+            fill={true}
+            sizes="30vw"
           />
         )}
       </div>

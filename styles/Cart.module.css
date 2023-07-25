@@ -14,8 +14,8 @@
 
 .imageContainer {
   position: relative;
-  width: 100px;
-  height: 100px;
+  width: 24vw;
+  height: 24vh;
 }
 
 .imageContainer > img {

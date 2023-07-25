@@ -105,8 +105,8 @@ const Cart: NextPage = ({}) => {
                     src={product?.images[0]?.node?.url}
                     fill={true}
                     style={{ objectFit: 'contain' }}
-                    alt=""
-                    sizes="(max-width: 768px) 100vw"
+                    alt="Product image in the shoppingcart"
+                    sizes="24vw"
                   />
                 </div>
                 <div className={styles.productDetail}>
@@ -117,7 +117,7 @@ const Cart: NextPage = ({}) => {
                 <p>{+product.price! * product.amount!} $</p>
                 <Image
                   src="/images/bones.png"
-                  alt=""
+                  alt="Remove an item from your shopping cart"
                   width={30}
                   height={20}
                   onClick={() => removeItem(product.uuid)}

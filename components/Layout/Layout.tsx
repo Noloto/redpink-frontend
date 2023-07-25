@@ -36,10 +36,9 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
         <a href={'/shop'}>
           <Image
             src="/images/banner-new.png"
-            alt="redpink banner - 2 stripes"
+            alt="Redpink Banner"
             width={180}
             height={150}
-            sizes="(max-width: 768px) 100vw"
             className={styles.banner}
           />
         </a>
@@ -50,11 +49,11 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
             )}
             <Image
               src="/images/disco-ball.gif"
-              alt="redpink cart"
-              fill={true}
-              priority={true}
-              sizes="(max-width: 768px) 100vw"
+              alt="Shopping Cart"
               style={{ objectFit: 'contain' }}
+              priority={true}
+              fill={true}
+              sizes="20vw"
             />
           </a>
         </div>

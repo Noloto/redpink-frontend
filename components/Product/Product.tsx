@@ -22,9 +22,9 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({
         <Image
           src={product.images[0].node.url}
           alt={product.images[0].node.altText ?? ''}
-          fill={true}
           style={{ objectFit: 'contain', cursor: 'pointer' }}
-          sizes="(max-width: 768px) 100vw"
+          sizes="100vw"
+          fill={true}
           priority={true}
           onClick={() => router.push(`/shop/${product.handle}`)}
         />
