@@ -161,6 +161,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
           src={product.images.edges[0].node.url}
           alt={product.images.edges[0].node.altText ?? ''}
           fill={true}
+          priority={true}
           style={{ objectFit: 'contain' }}
         />
       </div>
