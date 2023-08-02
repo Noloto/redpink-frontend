@@ -21,6 +21,7 @@
 .cartContainer {
   position: relative;
   overflow: hidden;
+  margin-top: 18px;
 }
 
 .cartLink {
