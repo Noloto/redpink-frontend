@@ -36,7 +36,7 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
       <div className={styles.container}>
         <a href={'/shop'}>
           <Image
-            src="/images/banner-new.png"
+            src="/images/banner.webp"
             alt="Redpink Banner"
             width={220}
             height={170}

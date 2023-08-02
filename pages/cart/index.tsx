@@ -117,7 +117,7 @@ const Cart: NextPage = ({}) => {
                 </div>
                 <p>{+product.price! * product.amount!} $</p>
                 <Image
-                  src="/images/bones.png"
+                  src="/images/bones.webp"
                   alt="Remove an item from your shopping cart"
                   width={30}
                   height={20}
