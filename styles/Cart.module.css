@@ -9,7 +9,8 @@
   align-items: center;
   width: 100vw;
   height: 20vh;
-  grid-template-columns: repeat(5, 30% 30% 7% 20% 13%);
+  font-size: 18px;
+  grid-template-columns: repeat(5, 30% 35% 20% 15%);
 }
 
 .imageContainer {
@@ -19,7 +20,7 @@
 }
 
 .imageContainer > img {
-  padding: 10px;
+  padding: 5px;
 }
 
 .detailsContainer {

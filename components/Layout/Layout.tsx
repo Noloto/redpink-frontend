@@ -38,25 +38,29 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
           <Image
             src="/images/banner-new.png"
             alt="Redpink Banner"
-            width={180}
-            height={150}
+            width={220}
+            height={170}
             className={styles.banner}
           />
         </a>
         <div className={styles.cart}>
-          <a href={'/cart'} className={styles.cartLink}>
-            {amount !== undefined && amount > 0 && (
-              <div className={styles.amountIndicator}>{tallys[amount - 1]}</div>
-            )}
-            <Image
-              src="/images/disco-ball.gif"
-              alt="Shopping Cart"
-              style={{ objectFit: 'contain' }}
-              priority={true}
-              fill={true}
-              sizes="20vw"
-            />
-          </a>
+          <div className={styles.cartContainer}>
+            <a href={'/cart'} className={styles.cartLink}>
+              {amount !== undefined && amount > 0 && (
+                <div className={styles.amountIndicator}>
+                  {tallys[amount - 1]}
+                </div>
+              )}
+              <Image
+                src="/images/disco-ball.gif"
+                alt="Shopping Cart"
+                style={{ objectFit: 'contain' }}
+                priority={true}
+                fill={true}
+                sizes="20vw"
+              />
+            </a>
+          </div>
         </div>
       </div>
       <main

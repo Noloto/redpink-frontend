@@ -21,13 +21,14 @@
 
 .productDetails {
   margin-top: -50px;
+  text-align: center;
   padding: 20px;
+  font-size: 24px;
 }
 
 .productDetails > p:first-child {
-  text-align: center;
   margin-top: 40px;
-  font-size: 44px;
+  font-size: 52px;
   font-weight: 400;
   margin-bottom: 20px;
 }
@@ -42,6 +43,6 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 20vh;
+  height: 24vh;
   cursor: pointer;
 }
