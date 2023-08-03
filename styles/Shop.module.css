@@ -36,13 +36,3 @@
 .productDetails > p:nth-child(2) {
   margin-bottom: 20px;
 }
-
-.button {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 24vh;
-  cursor: pointer;
-}

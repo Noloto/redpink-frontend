@@ -8,6 +8,7 @@ import { Eina } from '../common/utils/fonts/fonts';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const layoutNotNeeded = ![`/`].includes(router.pathname);
 
   if (process.env.MAINTENANCE === 'true') {
     return (
@@ -33,7 +34,7 @@ export default function App({ Component, pageProps }: AppProps) {
       </>
     );
   }
-  const layoutNotNeeded = ![`/`].includes(router.pathname);
+
   return (
     <>
       <Head>

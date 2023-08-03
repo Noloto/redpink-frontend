@@ -1,0 +1,34 @@
+.button {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 24vh;
+  cursor: pointer;
+}
+
+.heart {
+  animation: animateHeart 2s infinite;
+}
+
+@keyframes animateHeart {
+  0% {
+    transform: scale(0.8);
+  }
+  5% {
+    transform: scale(0.9);
+  }
+  10% {
+    transform: scale(0.8);
+  }
+  15% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
