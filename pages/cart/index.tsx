@@ -113,11 +113,11 @@ const Cart: NextPage = ({}) => {
                 <div className={styles.productDetail}>
                   <p>{product.title}</p>
                   <p>{product.variants[0].node.title}</p>
+                  <p>Amount: {product.amount}</p>
                 </div>
-                <p>{product.amount}</p>
                 <p>{+product.price! * product.amount!} $</p>
                 <Image
-                  src="/images/bones.png"
+                  src="/images/bones.webp"
                   alt="Remove an item from your shopping cart"
                   width={30}
                   height={20}

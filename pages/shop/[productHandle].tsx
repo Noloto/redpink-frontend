@@ -16,6 +16,7 @@ import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { nanoid } from 'nanoid';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 import { Eina } from '../../common/utils/fonts/fonts';
+import { Heart } from '../../components/Heart/Heart';
 
 type RequiredProps = {
   product: any;
@@ -173,34 +174,11 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         </p>
         <p>{product.description}</p>
       </div>
-      <div className={styles.button}>
-        {product.tags.find((tag: string) => tag === 'buy') ? (
-          <>
-            <Image
-              src={'/images/bye.png'}
-              alt="Add to cart"
-              style={{ objectFit: 'contain' }}
-              fill={true}
-              sizes="30vw"
-              onClick={() => {
-                addToCart();
-                playAudio();
-              }}
-            />
-            <audio id="thankYou">
-              <source src="/sounds/thank-you.m4a" typeof="audio/x-m4a" />
-            </audio>
-          </>
-        ) : (
-          <Image
-            src={'/images/want.png'}
-            alt="Sign up for product notifications"
-            style={{ objectFit: 'contain' }}
-            fill={true}
-            sizes="30vw"
-          />
-        )}
-      </div>
+      <Heart
+        product={product}
+        addToCart={() => addToCart()}
+        playAudio={() => playAudio()}
+      />
     </main>
   );
 };

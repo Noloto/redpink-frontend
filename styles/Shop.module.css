@@ -21,27 +21,18 @@
 
 .productDetails {
   margin-top: -50px;
+  text-align: center;
   padding: 20px;
+  font-size: 24px;
 }
 
 .productDetails > p:first-child {
-  text-align: center;
   margin-top: 40px;
-  font-size: 44px;
+  font-size: 52px;
   font-weight: 400;
   margin-bottom: 20px;
 }
 
 .productDetails > p:nth-child(2) {
   margin-bottom: 20px;
-}
-
-.button {
-  display: flex;
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 20vh;
-  cursor: pointer;
 }
