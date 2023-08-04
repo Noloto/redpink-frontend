@@ -15,6 +15,8 @@ import { getCartById } from '../../common/queries/cart/getCartById.query';
 import { createCart } from '../../common/queries/cart/createCart.mutation';
 import { nanoid } from 'nanoid';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
+import { Eina } from '../../common/utils/fonts/fonts';
+import { Heart } from '../../components/Heart/Heart';
 
 type RequiredProps = {
   product: any;
@@ -160,43 +162,23 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         <Image
           src={product.images.edges[0].node.url}
           alt={product.images.edges[0].node.altText ?? ''}
+          style={{ objectFit: 'contain' }}
+          sizes="100vw"
           fill={true}
           priority={true}
-          style={{ objectFit: 'contain' }}
         />
       </div>
       <div className={styles.productDetails}>
-        <p>
+        <p className={Eina.className}>
           {product.title} {product.priceRange.minVariantPrice.amount} $
         </p>
         <p>{product.description}</p>
       </div>
-      <div className={styles.button}>
-        {product.tags.find((tag: string) => tag === 'buy') ? (
-          <>
-            <Image
-              src={'/images/bye.png'}
-              fill={true}
-              style={{ objectFit: 'contain' }}
-              alt=""
-              onClick={() => {
-                addToCart();
-                playAudio();
-              }}
-            />
-            <audio id="thankYou">
-              <source src="/sounds/thank-you.m4a" typeof="audio/x-m4a" />
-            </audio>
-          </>
-        ) : (
-          <Image
-            src={'/images/want.png'}
-            fill={true}
-            style={{ objectFit: 'contain' }}
-            alt=""
-          />
-        )}
-      </div>
+      <Heart
+        product={product}
+        addToCart={() => addToCart()}
+        playAudio={() => playAudio()}
+      />
     </main>
   );
 };

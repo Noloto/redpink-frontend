@@ -9,6 +9,7 @@ import { updateLineQuantity } from '../../common/queries/cart/updateLineQuantity
 import { useLocalStorage } from '../../common/utils/useLocalStorage';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { Eina } from '../../common/utils/fonts/fonts';
 
 const Cart: NextPage = ({}) => {
   const [cart, updateCart] = useLocalStorage<Cart>('CART', {
@@ -105,19 +106,19 @@ const Cart: NextPage = ({}) => {
                     src={product?.images[0]?.node?.url}
                     fill={true}
                     style={{ objectFit: 'contain' }}
-                    alt=""
-                    sizes="(max-width: 768px) 100vw"
+                    alt="Product image in the shoppingcart"
+                    sizes="24vw"
                   />
                 </div>
                 <div className={styles.productDetail}>
                   <p>{product.title}</p>
                   <p>{product.variants[0].node.title}</p>
+                  <p>Amount: {product.amount}</p>
                 </div>
-                <p>{product.amount}</p>
                 <p>{+product.price! * product.amount!} $</p>
                 <Image
-                  src="/images/bones.png"
-                  alt=""
+                  src="/images/bones.webp"
+                  alt="Remove an item from your shopping cart"
                   width={30}
                   height={20}
                   onClick={() => removeItem(product.uuid)}
@@ -129,7 +130,7 @@ const Cart: NextPage = ({}) => {
             <p>{total} $</p>
             <button
               onClick={() => goToCheckout()}
-              className={styles.checkoutButton}
+              className={`${styles.checkoutButton} ${Eina.className}`}
             >
               PEACE OUT
             </button>

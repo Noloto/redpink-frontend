@@ -1,5 +1,6 @@
 .mainContainer {
-  padding-top: 6vh;
+  padding-top: 10vh;
+  font-weight: 200;
 }
 
 .container {
@@ -12,16 +13,24 @@
 }
 
 .banner {
-  margin-left: -20px;
-  margin-top: 30px;
+  margin-left: -64px;
+  margin-top: 92px;
+  transform: rotate(90deg);
+}
+
+.cartContainer {
+  position: relative;
+  overflow: hidden;
+  margin-top: 18px;
 }
 
 .cartLink {
   position: relative;
-  display: inline-block;
-  width: 120px;
-  height: 120px;
+  display: block;
+  width: 180px;
+  height: 180px;
   cursor: pointer;
+  margin-right: -20px;
   text-decoration: none;
 }
 
@@ -32,8 +41,8 @@
   border-radius: 10px;
   min-width: 20px;
   min-height: 20px;
-  right: 20px;
-  top: 24px;
-  color: black;
+  right: 28px;
+  top: 48px;
+  color: rgb(44, 245, 44);
   z-index: 10;
 }
