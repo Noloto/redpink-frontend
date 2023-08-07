@@ -468,6 +468,13 @@
   dependencies:
     react "18.2.0"
 
+"@react-email/font@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@react-email/font/-/font-0.0.3.tgz#1fba36eff89c79298efc96b34ced79f24f9de0c0"
+  integrity sha512-lhUDMX3bGGXOAY1uviH3OKn2aG6VR+NQf4RqmynHm+Vx+G9eXLJFUDiDeaVJSQFh0+7zCQK8eUGD/+DbEntmtw==
+  dependencies:
+    react "18.2.0"
+
 "@react-email/heading@0.0.8":
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/@react-email/heading/-/heading-0.0.8.tgz#871d76d091b820c7eda923f0bc89874a49c83659"
@@ -507,6 +514,13 @@
     pretty "2.0.0"
     react "18.2.0"
     react-dom "18.2.0"
+
+"@react-email/section@0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@react-email/section/-/section-0.0.9.tgz#77151d94d2ee883e8ade4c48c218313ba972fb94"
+  integrity sha512-3EbcWJ1jUZrzquWSvXrv8Hbk9V+BGvLcMWQIli4NdIpQlddmlGKUYfXU2mB2d2pf+5ojqkGcFZZ9fWxycB84jQ==
+  dependencies:
+    react "18.2.0"
 
 "@react-email/text@0.0.5":
   version "0.0.5"
