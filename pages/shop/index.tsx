@@ -38,15 +38,15 @@ const Home: NextPage<RequiredProps> = ({ productsData }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data } = await ShopifyClient.query({
     query: productsQuery,
   });
+
   return {
     props: {
       productsData: data.products.edges,
     },
-    revalidate: 60,
   };
 }
 
