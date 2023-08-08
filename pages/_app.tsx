@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <main>
           <Analytics />
-          <audio id="intro" autoPlay>
+          <audio id="intro" autoPlay playsInline>
             <source src="/sounds/main.mp4" typeof="audio/mp4" />
           </audio>
           <div className={`maintenanceContainer ${Eina.className}`}>

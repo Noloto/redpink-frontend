@@ -1,16 +1,15 @@
 import { Resend } from 'resend';
 import Want from '../../components/Emails/Want';
-import { NextResponse } from 'next/server';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: Request, res: Response) {
-  if (req.method === 'GET') {
+  if (req.method === 'POST') {
     await resend.sendEmail({
       from: 'business@redpink.pink',
       to: 'noel.willener@gmail.com',
       subject: 'Want a product',
-      react: <Want />,
+      react: <Want productName={''} productImage={'req.body.image'} />,
     });
 
     return res.json();

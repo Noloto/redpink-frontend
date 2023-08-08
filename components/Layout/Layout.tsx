@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { randomBackground } from '../../common/utils/background';
 import { tallys } from '../../common/data/tallys';
 import { Eina } from '../../common/utils/fonts/fonts';
+import { useRouter } from 'next/router';
 
 type RequiredProps = {
   children: ReactNode;
@@ -12,6 +13,8 @@ type RequiredProps = {
 const Layout: React.FC<RequiredProps> = ({ children }) => {
   const [background, setBackground] = useState<string>();
   const [length, setLength] = useState<number>();
+  const router = useRouter();
+  const bannerHorizontal = ![`/cart`].includes(router.pathname);
   const amount = useMemo(() => length, [length]);
 
   useEffect(() => {
@@ -40,7 +43,9 @@ const Layout: React.FC<RequiredProps> = ({ children }) => {
             alt="Redpink Banner"
             width={220}
             height={170}
-            className={styles.banner}
+            className={
+              bannerHorizontal ? styles.bannerVertical : styles.bannerHorizontal
+            }
           />
         </a>
         <div className={styles.cart}>
