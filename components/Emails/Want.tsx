@@ -7,7 +7,7 @@ import { Section } from '@react-email/section';
 import { Font } from '@react-email/font';
 
 import banner from '../../public/images/banner.webp';
-import background from '../../public/images/backgrounds/bg3.jpeg';
+import background from '../../public/images/backgrounds/bg1.jpeg';
 import Image from 'next/image';
 import { Eina } from '../../common/utils/fonts/fonts';
 
@@ -56,7 +56,7 @@ const Want: React.FC<RequiredProps> = ({ productName, productImage }) => {
         <Text>EARLY ACCESSs</Text>
         <Text>+</Text>
         <Image src={banner} alt="Whatever" width="300" height="300" />
-        <Text style={{ color: 'white' }}>LOVE GETS LOVE</Text>
+        <Text style={{ color: 'black' }}>LOVE GETS LOVE</Text>
       </Section>
     </Html>
   );
