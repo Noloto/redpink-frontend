@@ -10,7 +10,7 @@
     "email": "email dev --dir components/Emails"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.0",
+    "@apollo/client": "^3.8.1",
     "@react-email/button": "0.0.9",
     "@react-email/font": "0.0.3",
     "@react-email/heading": "0.0.8",
@@ -18,10 +18,10 @@
     "@react-email/img": "0.0.5",
     "@react-email/section": "0.0.9",
     "@react-email/text": "0.0.5",
-    "@types/node": "20.4.8",
-    "@types/react": "18.2.18",
+    "@types/node": "20.4.9",
+    "@types/react": "18.2.20",
     "@types/react-dom": "18.2.4",
-    "@vercel/analytics": "^1.0.1",
+    "@vercel/analytics": "^1.0.2",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
     "graphql": "^16.7.1",
