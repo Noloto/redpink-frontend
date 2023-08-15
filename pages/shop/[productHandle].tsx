@@ -30,7 +30,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
   });
   const [p, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState(1);
-  const [showEmailModal, setShowEmailModal] = useState<boolean>(true);
+  const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
 
   useEffect(() => {
     let localCartData = JSON.parse(
