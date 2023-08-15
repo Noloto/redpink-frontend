@@ -58,9 +58,7 @@ const Want: React.FC<RequiredProps> = ({ productName, productImage }) => {
             }}
           >
             <Img
-              src={
-                'https://cdn.shopify.com/s/files/1/0624/1078/5007/files/image_6f1c44a7-61ea-4ecd-bb4a-2b73357aab9a.png?v=1690218518'
-              }
+              src={productImage}
               alt="Product Image"
               width="300"
               height="300"

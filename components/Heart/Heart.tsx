@@ -6,24 +6,16 @@ type RequiredProps = {
   product: Product;
   addToCart: () => void;
   playAudio: () => void;
+  onSendEmail: () => void;
 };
 export const Heart: React.FC<RequiredProps> = ({
   product,
   addToCart,
   playAudio,
+  onSendEmail,
 }) => {
   const [beat, setBeat] = useState<boolean>(false);
   const [data, setData] = useState<any>();
-
-  const sendListEmail = (productName: string, productImage: string) => {
-    fetch('/api/email', {
-      method: 'POST',
-      body: JSON.stringify({
-        productName: productName,
-        productImage: productImage,
-      }),
-    });
-  };
 
   return (
     <div className={`${styles.button} ${beat && styles.heart}`}>
@@ -56,7 +48,7 @@ export const Heart: React.FC<RequiredProps> = ({
           fill={true}
           sizes="30vw"
           onClick={() => {
-            sendListEmail(product.title, product.images.edges[0].node.url);
+            onSendEmail();
           }}
         />
       )}

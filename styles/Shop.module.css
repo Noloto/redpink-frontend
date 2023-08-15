@@ -36,3 +36,29 @@
 .productDetails > p:nth-child(2) {
   margin-bottom: 20px;
 }
+
+.modalContainer {
+  position: absolute;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  min-height: 120vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+.emailModal {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  top: 40%;
+  width: 80%;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.emailModal > p {
+  margin-bottom: 10px;
+}

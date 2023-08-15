@@ -10,7 +10,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
       const data = await resend.sendEmail({
-        from: 'onboarding@resend.dev',
+        from: 'business@redpink.pink',
         to: request.sendTo,
         subject: 'Want a product',
         react: (
