@@ -6,11 +6,6 @@ import { Text } from '@react-email/text';
 import { Section } from '@react-email/section';
 import { Font } from '@react-email/font';
 
-import banner from '../../public/images/banner.webp';
-import background from '../../public/images/backgrounds/bg1.jpeg';
-import Image from 'next/image';
-import { Eina } from '../../common/utils/fonts/fonts';
-
 type RequiredProps = {
   productName: string;
   productImage: string;
@@ -18,45 +13,72 @@ type RequiredProps = {
 
 const Want: React.FC<RequiredProps> = ({ productName, productImage }) => {
   return (
-    <Html>
+    <Html style={{ overflowX: 'hidden' }}>
       <Font
-        fontFamily="Noto Serif Vithkuqi"
-        fallbackFontFamily="Arial"
+        fontFamily="Raleway"
+        fallbackFontFamily="Verdana"
         webFont={{
-          url: 'https://fonts.googleapis.com/css2?family=Noto+Serif+Vithkuqi&display=swap',
+          url: 'https://fonts.gstatic.com/s/raleway/v28/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrEVIT9d0c8.woff2',
           format: 'woff2',
         }}
         fontWeight={400}
         fontStyle="normal"
       />
-      <Image
-        src={background}
-        alt="Background Image"
-        fill={true}
+      <Section
         style={{
-          objectFit: 'cover',
-          objectPosition: 'center',
-          zIndex: 0,
+          position: 'relative',
+          zIndex: 1,
+          color: 'black',
+          // backgroundImage: `url(${background.src})`,
+          // backgroundRepeat: 'no-repeat',
+          // backgroundSize: 'cover',
+          backgroundColor: '#FFF',
         }}
-      />
-      <Section style={{ position: 'relative', zIndex: 1 }}>
+      >
         <Heading as="h1">Added to List</Heading>
         <Button pX={0} pY={0} href="https://redpink.pink">
-          <Image src={banner} alt="Redpink banner" width="300" height="200" />
+          <Img
+            src="https://cdn.shopify.com/s/files/1/0624/1078/5007/files/banner-new.png?v=1692089746"
+            alt="Redpink banner"
+            width="300"
+            height="200"
+            style={{ marginTop: '-80px', marginLeft: '-40px' }}
+          />
         </Button>
-        <Text>
-          Hey you. thank you for the interest in a piece that’s not out yet.
-          Love gets love ! you will get priority on this piece , early
-          access/privat code to bye… stay updated ! Peace
-        </Text>
-        <Img src={productImage} alt="Product Image" width="300" height="300" />
-        <Text>YOUR ADDED TO LIST</Text>
-        <Text>{productName}</Text>
-        <Text>=</Text>
-        <Text>EARLY ACCESSs</Text>
-        <Text>+</Text>
-        <Image src={banner} alt="Whatever" width="300" height="300" />
-        <Text style={{ color: 'black' }}>LOVE GETS LOVE</Text>
+        <Section style={{ marginLeft: '30px' }}>
+          <Text style={{ marginTop: '-50px', width: '90%' }}>
+            HEY YOU. THANK YOU FOR THE INTEREST IN A PIECE THAT&#39;S NOT OUT
+            YET. LOVE GETS LOVE ! YOU WILL GET PRIORITY ON THIS PIECE, EARLY
+            ACCESS/PRIVAT CODE TO BYE… STAY UPDATED ! PEACE
+          </Text>
+          <Section
+            style={{
+              display: 'flex',
+              textAlign: 'center',
+            }}
+          >
+            <Img
+              src={
+                'https://cdn.shopify.com/s/files/1/0624/1078/5007/files/image_6f1c44a7-61ea-4ecd-bb4a-2b73357aab9a.png?v=1690218518'
+              }
+              alt="Product Image"
+              width="300"
+              height="300"
+            />
+            <Text style={{ lineHeight: '0.1' }}>YOUR ADDED TO LIST</Text>
+            <Text style={{ lineHeight: '0.1' }}>&quot;{productName}&quot;</Text>
+            <Text style={{ lineHeight: '0.1' }}>=</Text>
+            <Text style={{ lineHeight: '0.1' }}>EARLY ACCESSs</Text>
+            <Text style={{ lineHeight: '0.1' }}>+</Text>
+            <Img
+              src="https://cdn.shopify.com/s/files/1/0624/1078/5007/files/banner-new.png?v=1692089746"
+              alt="Whatever"
+              width="300"
+              height="100"
+            />
+          </Section>
+          <Text style={{ color: 'black' }}>LOVE GETS LOVE</Text>
+        </Section>
       </Section>
     </Html>
   );

@@ -78,7 +78,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         title: product.title,
         description: product.description,
         price: product.priceRange?.minVariantPrice?.amount,
-        images: product.images?.edges,
+        images: product.images,
         variants: product.variants?.edges,
         tags: product.tags,
       });

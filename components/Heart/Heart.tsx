@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Heart.module.css';
 import Image from 'next/image';
 
@@ -13,6 +13,18 @@ export const Heart: React.FC<RequiredProps> = ({
   playAudio,
 }) => {
   const [beat, setBeat] = useState<boolean>(false);
+  const [data, setData] = useState<any>();
+
+  const sendListEmail = (productName: string, productImage: string) => {
+    fetch('/api/email', {
+      method: 'POST',
+      body: JSON.stringify({
+        productName: productName,
+        productImage: productImage,
+      }),
+    });
+  };
+
   return (
     <div className={`${styles.button} ${beat && styles.heart}`}>
       {product.tags.find((tag: string) => tag === 'buy') ? (
@@ -43,6 +55,9 @@ export const Heart: React.FC<RequiredProps> = ({
           style={{ objectFit: 'contain' }}
           fill={true}
           sizes="30vw"
+          onClick={() => {
+            sendListEmail(product.title, product.images.edges[0].node.url);
+          }}
         />
       )}
     </div>
