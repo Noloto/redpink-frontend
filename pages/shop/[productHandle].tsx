@@ -30,6 +30,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
   });
   const [p, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState(1);
+  const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
 
   useEffect(() => {
     let localCartData = JSON.parse(
@@ -78,7 +79,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         title: product.title,
         description: product.description,
         price: product.priceRange?.minVariantPrice?.amount,
-        images: product.images?.edges,
+        images: product.images,
         variants: product.variants?.edges,
         tags: product.tags,
       });
@@ -151,10 +152,30 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
     }
   };
 
-  function playAudio() {
+  const playAudio = () => {
     const audio = document.getElementById('thankYou') as HTMLAudioElement;
     audio?.play();
-  }
+  };
+
+  const sendListEmail = (
+    productName: string,
+    productImage: string,
+    sendTo: string
+  ) => {
+    console.log(sendTo);
+    fetch('/api/email', {
+      method: 'POST',
+      body: JSON.stringify({
+        productName: productName,
+        productImage: productImage,
+        sendTo: sendTo,
+      }),
+    });
+  };
+
+  const onSendEmail = () => {
+    setShowEmailModal(true);
+  };
 
   return (
     <main className={styles.container}>
@@ -174,11 +195,37 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         </p>
         <p>{product.description}</p>
       </div>
+
       <Heart
         product={product}
         addToCart={() => addToCart()}
         playAudio={() => playAudio()}
+        onSendEmail={() => onSendEmail()}
       />
+      {showEmailModal && (
+        <div className={styles.modalContainer}>
+          <div className={styles.emailModal}>
+            <p>
+              Be the first person to be notified for the release and get that
+              extra redpink drip
+            </p>
+            <input id="email" type="email"></input>
+
+            <button
+              onClick={async () => {
+                await sendListEmail(
+                  product.title,
+                  product.images.edges[0].node.url,
+                  (document.getElementById('email') as HTMLInputElement).value
+                );
+                setShowEmailModal(false);
+              }}
+            >
+              submit
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

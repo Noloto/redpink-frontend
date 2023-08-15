@@ -1,19 +1,29 @@
 import { Resend } from 'resend';
 import Want from '../../components/Emails/Want';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-export default async function handler(req: Request, res: Response) {
-  if (req.method === 'POST') {
-    await resend.sendEmail({
-      from: 'business@redpink.pink',
-      to: 'noel.willener@gmail.com',
-      subject: 'Want a product',
-      react: <Want productName={''} productImage={'req.body.image'} />,
-    });
+export default async function handler(req: Request, res: NextApiResponse) {
+  const request = JSON.parse(JSON.parse(JSON.stringify(req.body)));
 
-    return res.json();
-  } else {
-    return 'NOT FOUND';
+  if (req.method === 'POST') {
+    try {
+      const data = await resend.sendEmail({
+        from: 'business@redpink.pink',
+        to: request.sendTo,
+        subject: 'Want a product',
+        react: (
+          <Want
+            productName={request.productName}
+            productImage={request.productImage}
+          />
+        ),
+      });
+
+      res.status(200).json('data');
+    } catch (error) {
+      res.status(400).json(error);
+    }
   }
 }

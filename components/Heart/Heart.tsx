@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './Heart.module.css';
 import Image from 'next/image';
 
@@ -6,13 +6,17 @@ type RequiredProps = {
   product: Product;
   addToCart: () => void;
   playAudio: () => void;
+  onSendEmail: () => void;
 };
 export const Heart: React.FC<RequiredProps> = ({
   product,
   addToCart,
   playAudio,
+  onSendEmail,
 }) => {
   const [beat, setBeat] = useState<boolean>(false);
+  const [data, setData] = useState<any>();
+
   return (
     <div className={`${styles.button} ${beat && styles.heart}`}>
       {product.tags.find((tag: string) => tag === 'buy') ? (
@@ -43,6 +47,9 @@ export const Heart: React.FC<RequiredProps> = ({
           style={{ objectFit: 'contain' }}
           fill={true}
           sizes="30vw"
+          onClick={() => {
+            onSendEmail();
+          }}
         />
       )}
     </div>

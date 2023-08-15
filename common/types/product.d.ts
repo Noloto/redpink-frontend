@@ -4,7 +4,7 @@ type Product = {
   title: string;
   description: string;
   price: string;
-  images: Image[];
+  images: { edges: Image[] };
   variants: Variant[];
   tags: string[];
 };
