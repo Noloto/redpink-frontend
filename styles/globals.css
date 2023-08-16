@@ -36,3 +36,10 @@ button {
   font-weight: 700;
   font-size: 20px;
 }
+
+.playMusic {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+}
