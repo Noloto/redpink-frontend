@@ -103,7 +103,7 @@ const Cart: NextPage = ({}) => {
               <div className={styles.productContainer} key={idx}>
                 <div className={styles.imageContainer}>
                   <Image
-                    src={product?.images[0]?.node?.url}
+                    src={product?.images.edges[0]?.node?.url}
                     fill={true}
                     style={{ objectFit: 'contain' }}
                     alt="Product image in the shoppingcart"

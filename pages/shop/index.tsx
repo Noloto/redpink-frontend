@@ -20,7 +20,7 @@ const Home: NextPage<RequiredProps> = ({ productsData }) => {
           handle: p.node?.handle,
           title: p.node?.title,
           price: p.node?.priceRange?.minVariantPrice?.amount,
-          images: p.node?.images?.edges,
+          images: p.node?.images,
           description: p.node?.description,
           variants: p.node?.variants,
           tags: p.node?.tags,

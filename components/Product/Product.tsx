@@ -20,8 +20,8 @@ const Product: React.FC<RequiredProps & OptionalProps> = ({
     <div className={`${styles.product} ${className}`}>
       <div className={styles.imageContainer}>
         <Image
-          src={product.images[0].node.url}
-          alt={product.images[0].node.altText ?? ''}
+          src={product.images.edges[0].node.url}
+          alt={product.images.edges[0].node.altText ?? ''}
           style={{ objectFit: 'contain', cursor: 'pointer' }}
           sizes="100vw"
           fill={true}
