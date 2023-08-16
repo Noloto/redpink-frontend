@@ -31,6 +31,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
   const [p, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState(1);
   const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
+  const [wrongValue, setWrongValue] = useState<boolean>(false);
 
   useEffect(() => {
     let localCartData = JSON.parse(
@@ -178,7 +179,11 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
   };
 
   return (
-    <main className={styles.container}>
+    <main
+      className={`${styles.container} ${
+        showEmailModal ? styles.restrictHight : ''
+      }`}
+    >
       <div className={styles.product}>
         <Image
           src={product.images.edges[0].node.url}
@@ -203,28 +208,54 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         onSendEmail={() => onSendEmail()}
       />
       {showEmailModal && (
-        <div className={styles.modalContainer}>
+        <>
+          <div
+            className={styles.modalContainer}
+            onClick={() => setShowEmailModal(false)}
+          ></div>
           <div className={styles.emailModal}>
             <p>
               Be the first person to be notified for the release and get that
               extra redpink drip
             </p>
-            <input id="email" type="email"></input>
-
+            <input
+              id="email"
+              type="email"
+              placeholder="Email"
+              className={wrongValue ? styles.wrongValue : ''}
+              onChange={(e) => {
+                const validtity = new RegExp(
+                  '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
+                );
+                console.log(e.target.value);
+                if (!validtity.test(e.target.value)) {
+                  setWrongValue(true);
+                  return;
+                }
+                setWrongValue(false);
+              }}
+            ></input>
+            {wrongValue && <span>Please enter a valid Email Adress</span>}
             <button
+              disabled={wrongValue ? true : false}
               onClick={async () => {
+                const inputValue = (
+                  document.getElementById('email') as HTMLInputElement
+                ).value;
+
                 await sendListEmail(
                   product.title,
                   product.images.edges[0].node.url,
-                  (document.getElementById('email') as HTMLInputElement).value
+                  inputValue
                 );
+                setWrongValue(false);
                 setShowEmailModal(false);
               }}
             >
-              submit
+              Yes please
             </button>
           </div>
-        </div>
+        </>
       )}
     </main>
   );
