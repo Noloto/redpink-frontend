@@ -8,6 +8,7 @@ import { Eina } from '../common/utils/fonts/fonts';
 import { IoVolumeHighSharp } from 'react-icons/io5';
 import { IoMdVolumeOff } from 'react-icons/io';
 import { useState } from 'react';
+import MusicPlayer from '../components/MusicPlayer/MusicPlayer';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -26,28 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </Head>
         <main>
           <Analytics />
-          <div className="playMusic">
-            <audio id="audio" src="/sounds/main.mp4"></audio>
-            {play ? (
-              <IoVolumeHighSharp
-                size={32}
-                onClick={() => {
-                  setPlay((prev) => !prev);
-                  audio?.pause();
-                }}
-                style={{ color: 'red' }}
-              />
-            ) : (
-              <IoMdVolumeOff
-                size={32}
-                onClick={() => {
-                  setPlay((prev) => !prev);
-                  audio?.play();
-                }}
-                style={{ color: 'red' }}
-              />
-            )}
-          </div>
+          <MusicPlayer />
           <div className={`maintenanceContainer ${Eina.className}`}>
             <h2>UNDER MAINTENANCE</h2>
             <video autoPlay loop muted playsInline className="video">
