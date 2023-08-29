@@ -215,7 +215,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
           ></div>
           <div className={styles.emailModal}>
             <p>
-              thank you for the interest , love gets love ! Add mail to get
+              thank you for the interest , love gets love ! add mail to get
               exclusivity on swag + more
             </p>
             <input
