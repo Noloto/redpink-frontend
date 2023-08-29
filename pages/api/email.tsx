@@ -13,7 +13,7 @@ export default async function handler(req: Request, res: NextApiResponse) {
       await resend.sendEmail({
         from: 'business@redpink.pink',
         to: request.sendTo,
-        subject: 'Want a product',
+        subject: 'Added to exclusive list',
         react: (
           <Want
             productName={request.productName}
@@ -24,8 +24,8 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
       await resend.sendEmail({
         from: 'business@redpink.pink',
-        to: request.sendTo,
-        subject: 'business@redpink.pink',
+        to: 'business@redpink.pink',
+        subject: 'Added to exclusive lsit',
         react: (
           <Redpink
             productName={request.productName}

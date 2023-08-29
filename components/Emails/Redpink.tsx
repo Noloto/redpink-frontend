@@ -67,7 +67,6 @@ const Redpink: React.FC<RequiredProps & OptionalProps> = ({
               width="300"
               height="300"
             />
-            <Text style={{ lineHeight: '0.1' }}>YOUR ADDED TO LIST</Text>
             <Text style={{ lineHeight: '0.1' }}>&quot;{productName}&quot;</Text>
             <Text style={{ lineHeight: '0.1' }}>=</Text>
             <Text style={{ lineHeight: '0.1' }}>EARLY ACCESSs</Text>
