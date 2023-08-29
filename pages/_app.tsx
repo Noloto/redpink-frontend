@@ -23,7 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <title>REDPINK</title>
           <meta name="description" content="REDPINK" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/images/banner-new.png" />
+          <link rel="icon" href="/images/banner.webp" />
         </Head>
         <main>
           <Analytics />
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>REDPINK</title>
         <meta name="description" content="REDPINK" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/images/banner-new.png" />
+        <link rel="icon" href="/images/banner.webp" />
       </Head>
       {layoutNotNeeded ? (
         <Layout>
