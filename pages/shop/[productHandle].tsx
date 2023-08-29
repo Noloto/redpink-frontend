@@ -215,8 +215,8 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
           ></div>
           <div className={styles.emailModal}>
             <p>
-              Be the first person to be notified for the release and get that
-              extra redpink drip
+              thank you for the interest , love gets love ! Add mail to get
+              exclusivity on swag + more
             </p>
             <input
               id="email"
