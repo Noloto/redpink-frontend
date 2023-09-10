@@ -10,7 +10,7 @@
     "email": "email dev --dir components/Emails"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.1",
+    "@apollo/client": "^3.8.2",
     "@react-email/button": "0.0.9",
     "@react-email/font": "0.0.3",
     "@react-email/heading": "0.0.8",
