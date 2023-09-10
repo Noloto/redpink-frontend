@@ -128,12 +128,14 @@ const Cart: NextPage = ({}) => {
           })}
           <div className={styles.detailsContainer}>
             <p>{total} $</p>
-            <button
-              onClick={() => goToCheckout()}
-              className={`${styles.checkoutButton} ${Eina.className}`}
-            >
-              PEACE OUT
-            </button>
+            {cart.products.length > 0 && (
+              <button
+                onClick={() => goToCheckout()}
+                className={`${styles.checkoutButton} ${Eina.className}`}
+              >
+                PEACE OUT
+              </button>
+            )}
           </div>
         </div>
       )}

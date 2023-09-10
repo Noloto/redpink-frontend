@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import Want from '../../components/Emails/Want';
 import { NextApiResponse } from 'next';
-import Redpink from '../../components/Emails/Redpink';
+import WantRedpink from '../../components/Emails/Want-Redpink';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -24,10 +24,10 @@ export default async function handler(req: Request, res: NextApiResponse) {
 
       await resend.sendEmail({
         from: 'business@redpink.pink',
-        to: 'business@redpink.pink',
+        to: 'redpink-business@hotmail.com',
         subject: 'Added to exclusive lsit',
         react: (
-          <Redpink
+          <WantRedpink
             productName={request.productName}
             productImage={request.productImage}
             emailTo={request.sendTo}

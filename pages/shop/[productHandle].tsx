@@ -164,7 +164,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
     sendTo: string
   ) => {
     console.log(sendTo);
-    fetch('/api/email', {
+    fetch('/api/email-want', {
       method: 'POST',
       body: JSON.stringify({
         productName: productName,
