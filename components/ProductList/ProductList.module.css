@@ -3,4 +3,5 @@
   grid-template-columns: repeat(2, 50%);
   width: 100vw;
   min-height: 100vh;
+  margin-top: 40px;
 }
