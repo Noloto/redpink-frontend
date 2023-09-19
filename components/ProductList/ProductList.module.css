@@ -1,6 +1,6 @@
 .productList {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
+  display: flex;
+  flex-direction: column;
   width: 100vw;
   min-height: 100vh;
   margin-top: 40px;
