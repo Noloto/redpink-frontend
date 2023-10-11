@@ -2754,7 +2754,7 @@ next@13.5.4:
     "@next/swc-win32-ia32-msvc" "13.5.4"
     "@next/swc-win32-x64-msvc" "13.5.4"
 
-node-fetch@2.6.12, node-fetch@^2.6.7:
+node-fetch@^2.6.7:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.12.tgz#02eb8e22074018e3d5a83016649d04df0e348fba"
   integrity sha512-C/fGU2E8ToujUivIO0H+tpQ6HWo4eEmchoPIoXtxCrVghxdKq+QOHqEZW7tuP3KlV3bC8FRMO5nMCC7Zm1VP6g==
@@ -3256,13 +3256,12 @@ regexp.prototype.flags@^1.5.1:
     define-properties "^1.2.0"
     set-function-name "^2.0.0"
 
-resend@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/resend/-/resend-1.0.0.tgz#b344658b4450f317a7e4467e95897aa472829cf3"
-  integrity sha512-8LEE4gncmcm8bsvxvahZFpFk5hxUrKdagqWoX/MRXVU2YZ9coYxqZDeDYXG9pexz1A694bjE1hiQbBAA+bHAow==
+resend@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/resend/-/resend-1.1.0.tgz#b7170339fde1257b6550b65bfc5373fb51b90ca3"
+  integrity sha512-it8TIDVT+/gAiJsUlv2tdHuvzwCCv4Zwu+udDqIm/dIuByQwe68TtFDcPccxqpSVVrNCBxxXLzsdT1tsV+P3GA==
   dependencies:
     "@react-email/render" "0.0.7"
-    node-fetch "2.6.12"
     type-fest "3.13.0"
 
 resolve-from@^4.0.0:
