@@ -22,7 +22,7 @@ const MusicPlayer: React.FC = ({}) => {
             setPlay((prev) => !prev);
             audio?.pause();
           }}
-          style={{ color: 'red' }}
+          style={{ color: 'rgb(44, 245, 44)' }}
         />
       ) : (
         <IoMdVolumeOff
@@ -31,7 +31,7 @@ const MusicPlayer: React.FC = ({}) => {
             setPlay((prev) => !prev);
             audio?.play();
           }}
-          style={{ color: 'red' }}
+          style={{ color: 'rgb(44, 245, 44)' }}
         />
       )}
     </div>

@@ -15,7 +15,6 @@ export const Heart: React.FC<RequiredProps> = ({
   onSendEmail,
 }) => {
   const [beat, setBeat] = useState<boolean>(false);
-  const [data, setData] = useState<any>();
 
   return (
     <div className={`${styles.button} ${beat && styles.heart}`}>

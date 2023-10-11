@@ -7,19 +7,10 @@ import { Section } from '@react-email/section';
 import { Font } from '@react-email/font';
 
 type RequiredProps = {
-  productName: string;
-  productImage: string;
-};
-
-type OptionalProps = {
   emailTo: string;
 };
 
-const Redpink: React.FC<RequiredProps & OptionalProps> = ({
-  productName,
-  productImage,
-  emailTo,
-}) => {
+const UpdateRedpink: React.FC<RequiredProps> = ({ emailTo }) => {
   return (
     <Html style={{ overflowX: 'hidden' }}>
       <Font
@@ -61,23 +52,7 @@ const Redpink: React.FC<RequiredProps & OptionalProps> = ({
               textAlign: 'center',
             }}
           >
-            <Img
-              src={productImage}
-              alt="Product Image"
-              width="300"
-              height="300"
-            />
-            <Text style={{ lineHeight: '0.1' }}>YOUR ADDED TO LIST</Text>
-            <Text style={{ lineHeight: '0.1' }}>&quot;{productName}&quot;</Text>
-            <Text style={{ lineHeight: '0.1' }}>=</Text>
-            <Text style={{ lineHeight: '0.1' }}>EARLY ACCESSs</Text>
-            <Text style={{ lineHeight: '0.1' }}>+</Text>
-            <Img
-              src="https://cdn.shopify.com/s/files/1/0624/1078/5007/files/banner-new.png?v=1692089746"
-              alt="Whatever"
-              width="300"
-              height="100"
-            />
+            <Text>WANTS TO GET NOTIFIED ABOUT UPDATES REGARDING THE PAGE</Text>
           </Section>
           <Text style={{ color: 'black' }}>LOVE GETS LOVE</Text>
         </Section>
@@ -86,4 +61,4 @@ const Redpink: React.FC<RequiredProps & OptionalProps> = ({
   );
 };
 
-export default Redpink;
+export default UpdateRedpink;
