@@ -47,7 +47,10 @@ const Update: React.FC = () => {
               textAlign: 'center',
             }}
           >
-            <Text>WANTS TO GET NOTIFIED ABOUT UPDATES REGARDING THE PAGE</Text>
+            <Text>
+              WE HAVE ADDED YOU TO THE LIST AND YOU WILL GET NOTIFIED ABOUT SHOP
+              UPDATES
+            </Text>
           </Section>
           <Text style={{ color: 'black' }}>LOVE GETS LOVE</Text>
         </Section>

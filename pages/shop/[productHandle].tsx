@@ -17,6 +17,7 @@ import { nanoid } from 'nanoid';
 import { addItemToCart } from '../../common/queries/cart/addItemToCart.mutation';
 import { Eina } from '../../common/utils/fonts/fonts';
 import { Heart } from '../../components/Heart/Heart';
+import { Dialog } from '../../components/Dialog/Dialog';
 
 type RequiredProps = {
   product: any;
@@ -31,7 +32,6 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
   const [p, setProduct] = useState<Product>();
   const [quantity, setQuantity] = useState(1);
   const [showEmailModal, setShowEmailModal] = useState<boolean>(false);
-  const [wrongValue, setWrongValue] = useState<boolean>(false);
 
   useEffect(() => {
     let localCartData = JSON.parse(
@@ -163,7 +163,6 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
     productImage: string,
     sendTo: string
   ) => {
-    console.log(sendTo);
     fetch('/api/email-want', {
       method: 'POST',
       body: JSON.stringify({
@@ -174,8 +173,15 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
     });
   };
 
-  const onSendEmail = () => {
-    setShowEmailModal(true);
+  const onSendEmail = async () => {
+    const inputValue = (document.getElementById('email') as HTMLInputElement)
+      .value;
+
+    await sendListEmail(
+      product.title,
+      product.images.edges[0].node.url,
+      inputValue
+    );
   };
 
   return (
@@ -200,62 +206,20 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         </p>
         <p>{product.description}</p>
       </div>
-
       <Heart
         product={product}
         addToCart={() => addToCart()}
         playAudio={() => playAudio()}
-        onSendEmail={() => onSendEmail()}
+        onSendEmail={() => setShowEmailModal(true)}
       />
       {showEmailModal && (
-        <>
-          <div
-            className={styles.modalContainer}
-            onClick={() => setShowEmailModal(false)}
-          ></div>
-          <div className={styles.emailModal}>
-            <p>
-              thank you for the interest , love gets love ! add mail to get
-              exclusivity on swag + more
-            </p>
-            <input
-              id="email"
-              type="email"
-              placeholder="Email"
-              className={wrongValue ? styles.wrongValue : ''}
-              onChange={(e) => {
-                const validtity = new RegExp(
-                  '^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'
-                );
-                console.log(e.target.value);
-                if (!validtity.test(e.target.value)) {
-                  setWrongValue(true);
-                  return;
-                }
-                setWrongValue(false);
-              }}
-            ></input>
-            {wrongValue && <span>Please enter a valid Email Adress</span>}
-            <button
-              disabled={wrongValue ? true : false}
-              onClick={async () => {
-                const inputValue = (
-                  document.getElementById('email') as HTMLInputElement
-                ).value;
-
-                await sendListEmail(
-                  product.title,
-                  product.images.edges[0].node.url,
-                  inputValue
-                );
-                setWrongValue(false);
-                setShowEmailModal(false);
-              }}
-            >
-              Yes please
-            </button>
-          </div>
-        </>
+        <Dialog
+          text="thank you for the interest , love gets love ! add mail to get
+      exclusivity on swag + more"
+          wrongValueText="Please enter a valid Email Adress"
+          hideIt={() => setShowEmailModal(false)}
+          callback={() => onSendEmail()}
+        />
       )}
     </main>
   );
