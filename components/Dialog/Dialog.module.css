@@ -15,9 +15,10 @@
   top: 34%;
   left: 11%;
   width: 80%;
-  background-color: white;
   border-radius: 5px;
   z-index: 4;
+  background-image: url('/images/backgrounds/dialog-background.jpeg');
+  background-size: cover;
 }
 
 .emailModal > p {
@@ -39,9 +40,9 @@
   align-self: center;
   width: 30%;
   z-index: 4;
-  background-color: white;
   border: none;
   margin-top: 20px;
+  background: none;
   color: inherit;
 }
 
