@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.shopify.com'],
+    remotePatterns: [{ hostname: 'cdn.shopify.com' }],
   },
   env: {
     STOREFRONT_API_URL: process.env.STOREFRONT_API_URL,
