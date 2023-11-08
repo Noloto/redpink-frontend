@@ -12,7 +12,7 @@
   "dependencies": {
     "@apollo/client": "^3.8.7",
     "@react-email/button": "0.0.9",
-    "@react-email/font": "0.0.3",
+    "@react-email/font": "0.0.4",
     "@react-email/heading": "0.0.9",
     "@react-email/html": "0.0.4",
     "@react-email/img": "0.0.5",
