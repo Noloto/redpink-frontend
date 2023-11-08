@@ -206,12 +206,18 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
         </p>
         <p>{product.description}</p>
       </div>
-      <Heart
-        product={product}
-        addToCart={() => addToCart()}
-        playAudio={() => playAudio()}
-        onSendEmail={() => setShowEmailModal(true)}
-      />
+      {product.totalInventory <= 0 ? (
+        <div style={{ width: '100%', textAlign: 'center' }}>
+          <h2>SOLD OUT</h2>
+        </div>
+      ) : (
+        <Heart
+          product={product}
+          addToCart={() => addToCart()}
+          playAudio={() => playAudio()}
+          onSendEmail={() => setShowEmailModal(true)}
+        />
+      )}
       {showEmailModal && (
         <Dialog
           text="thank you for the interest , love gets love ! add mail to get

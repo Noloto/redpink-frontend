@@ -15,7 +15,7 @@
 .bannerVertical {
   position: relative;
   margin-left: -64px;
-  margin-top: 92px;
+  margin-top: 100px;
   transform: rotate(90deg);
   z-index: 1;
 }
