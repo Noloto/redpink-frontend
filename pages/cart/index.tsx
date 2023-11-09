@@ -112,7 +112,6 @@ const Cart: NextPage = ({}) => {
                 </div>
                 <div className={styles.productDetail}>
                   <p>{product.title}</p>
-                  <p>{product.variants[0].node.title}</p>
                   <p>Amount: {product.amount}</p>
                 </div>
                 <p>{+product.price! * product.amount!} $</p>
