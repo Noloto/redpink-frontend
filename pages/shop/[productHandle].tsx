@@ -202,7 +202,7 @@ const Product: NextPage<RequiredProps> = ({ product }) => {
       </div>
       <div className={styles.productDetails}>
         <p className={Eina.className}>
-          {product.title} {product.priceRange.minVariantPrice.amount} $
+          {product.title} {product.priceRange.minVariantPrice.amount} €
         </p>
         <p>{product.description}</p>
       </div>
