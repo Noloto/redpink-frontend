@@ -4,21 +4,17 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import MusicPlayer from '../components/MusicPlayer/MusicPlayer';
+import { useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
 const Home: NextPage = ({}) => {
   const router = useRouter();
 
-  return (
-    <main>
-      <MusicPlayer />
-      <Link href={'/shop'} className={styles.videoLink}>
-        <video autoPlay loop muted playsInline className={styles.video}>
-          <source src="/videos/main-mobile-new.mp4" type="video/mp4" />
-        </video>
-      </Link>
-    </main>
-  );
+  useEffect(() => {
+    router.push('/shop');
+  });
+
+  return <main></main>;
 };
 export default Home;
